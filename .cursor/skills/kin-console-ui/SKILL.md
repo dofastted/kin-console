@@ -44,7 +44,7 @@ Do not switch to JetBrains Mono, IBM Plex, or a light theme unless the user asks
 
 ## Views
 
-`data-view` routes: `overview`, `cluster`, `vm`, `import`, `usage`, `proxies`, `protocol`, `settings`. Login is `#loginGate`. Keep the sidebar + topbar + content shell.
+`data-view` routes: `overview`, `cluster`, `vm`, `import`, `usage`, `proxies`, `protocol`, `keys`, `logs`, `settings`. Login is `#loginGate`. Keep the sidebar + topbar + content shell. API key and request-log endpoint contracts live in `docs/API_KEYS_AND_LOGS.md`.
 
 ## Workflow
 
