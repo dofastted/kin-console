@@ -209,7 +209,7 @@ tr.dead-row{opacity:.6}
 
 .empty-box{padding:34px 20px;text-align:center;color:var(--faint);font-size:12.5px;border:1px dashed var(--line-2);border-radius:var(--r-lg)}
 .toolbar{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
-.toolbar .input{max-width:220px;height:32px}
+.toolbar .input{max-width:168px;height:32px}
 .seg{display:inline-flex;border:1px solid var(--line-2);border-radius:var(--r-sm);padding:2px;gap:2px;background:oklch(1 0 0/3%)}
 .seg button{border:0;background:transparent;color:var(--faint);font-size:12px;padding:5px 10px;cursor:pointer;border-radius:6px;transition:background .12s,color .12s}
 .seg button:hover{color:var(--fg)}
@@ -219,14 +219,24 @@ tr.dead-row{opacity:.6}
 .tabs button:hover{color:var(--muted)}
 .tabs button.on{color:var(--fg);border-bottom-color:var(--ok)}
 
-/* ── overview: health bar ───────────────────────────────── */
-.hcard{display:flex;align-items:center;gap:22px;background:var(--panel);border:1px solid var(--line);border-radius:var(--r-lg);padding:18px 20px}
-.hcard .score{display:flex;flex-direction:column;gap:3px;flex-shrink:0;min-width:104px;padding-right:22px;border-right:1px solid var(--line)}
-.hcard .score .n{display:flex;align-items:baseline;gap:2px}
-.hcard .score .n b{font-size:40px;font-weight:600;line-height:1;letter-spacing:-0.04em;font-variant-numeric:tabular-nums}
-.hcard .score .n i{font-style:normal;font-size:15px;color:var(--faint)}
-.hcard .score .l{font-size:11.5px;color:var(--faint)}
-.hcard .body{flex:1;min-width:0;display:flex;flex-direction:column;gap:11px}
+/* ── overview: hero ─────────────────────────────────────── */
+.hero{display:flex;align-items:center;gap:22px;background:linear-gradient(135deg,oklch(1 0 0/2.5%),transparent 55%),var(--panel);border:1px solid var(--line);border-radius:var(--r-lg);padding:18px 20px}
+.hero .gauge{flex-shrink:0;display:grid;place-items:center}
+.hero .mid{flex:1;min-width:0;display:flex;flex-direction:column;gap:11px}
+.hero .hostcol{flex-shrink:0;width:220px;display:flex;flex-direction:column;gap:9px;padding-left:20px;border-left:1px solid var(--line)}
+.hrow{display:flex;align-items:center;gap:9px;font-size:11.5px;color:var(--faint)}
+.hrow u{text-decoration:none;width:30px;flex-shrink:0}
+.hrow .bar{flex:1}
+.hrow b{width:38px;text-align:right;font-weight:550;color:var(--muted);font-variant-numeric:tabular-nums;flex-shrink:0}
+.donut text{font-family:var(--font);fill:var(--fg)}
+.donut .dn{font-size:19px;font-weight:650;letter-spacing:-0.04em}
+.donut .dl{font-size:8.5px;fill:var(--faint)}
+.kpi-row{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.kpi{display:flex;align-items:center;gap:13px;border:1px solid var(--line);border-radius:var(--r-lg);padding:14px 16px;background:var(--panel);min-width:0}
+.kpi svg{flex-shrink:0}
+.kpi .v{font-size:26px;font-weight:600;letter-spacing:-0.035em;font-variant-numeric:tabular-nums;line-height:1.05}
+.kpi .v small{font-size:13px;font-weight:500;color:var(--faint);letter-spacing:-0.01em}
+.kpi .k{font-size:11.5px;color:var(--faint);margin-top:4px}
 .hbar{display:flex;gap:2px;height:10px;border-radius:99px;overflow:hidden;background:oklch(1 0 0/6%)}
 .hbar i{display:block;min-width:2px;border-radius:2px;transition:flex-grow .35s ease}
 .hbar i.s-ok{background:var(--ok)}
@@ -245,17 +255,6 @@ tr.dead-row{opacity:.6}
 .fact .v{color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 
 .alert-item{display:inline-flex;align-items:center;gap:6px;padding:5px 10px;border-radius:999px;border:1px solid rgba(245,158,11,.35);background:rgba(245,158,11,.12);color:#F6D38B;font-size:11.5px;line-height:1.3;cursor:pointer;font-family:inherit}
-
-.stat-hero{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
-
-.stat-tile{background:var(--panel);border:1px solid var(--line);border-radius:var(--r-lg);padding:16px 18px 18px;position:relative;overflow:hidden;min-width:0}
-.stat-tile .k{font-size:11.5px;color:var(--faint)}
-.stat-tile .v{font-size:34px;font-weight:600;margin-top:8px;letter-spacing:-0.035em;line-height:1.05;font-variant-numeric:tabular-nums}
-.stat-tile .v small{font-size:15px;font-weight:500;color:var(--faint);letter-spacing:-0.01em}
-.stat-tile .s{font-size:11px;color:var(--faint);margin-top:9px}
-.stat-tile .ring{position:absolute;right:14px;top:14px}
-.stat-tile .edge{position:absolute;left:0;right:0;bottom:0;height:2px;background:oklch(1 0 0/7%)}
-.stat-tile .edge>i{display:block;height:100%;background:var(--ok);transition:width .35s ease}
 
 /* ── vm cards ───────────────────────────────────────────── */
 .vm-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px}
@@ -368,9 +367,6 @@ tr.dead-row{opacity:.6}
 /* ── misc ───────────────────────────────────────────────── */
 .endpoint-row{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:9px 0;border-bottom:1px solid var(--line);font-size:12.5px}
 .endpoint-row:last-child{border-bottom:none;padding-bottom:0}
-.model-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:10px}
-.model-card{border:1px solid var(--line);border-radius:var(--r-md);padding:12px;background:var(--panel)}
-.model-card .id{font-family:var(--mono);font-size:10.5px;color:var(--faint);margin-top:4px;word-break:break-all}
 details.import-box{border:1px solid var(--line);border-radius:var(--r-md);padding:11px 13px;background:var(--panel)}
 details.import-box summary{cursor:pointer;font-size:12.5px;font-weight:500;list-style:none;color:var(--muted)}
 details.import-box summary::-webkit-details-marker{display:none}
@@ -378,6 +374,8 @@ details.import-box summary::before{content:'＋ ';color:var(--faint)}
 details.import-box[open] summary::before{content:'－ '}
 details.import-box .body{margin-top:11px;display:flex;flex-direction:column;gap:9px}
 pre.json{font-size:11px;overflow:auto;max-height:200px;background:oklch(0 0 0/25%);border:1px solid var(--line);border-radius:var(--r-sm);padding:11px;margin:0;color:var(--muted)}
+
+.keybox{font-family:var(--mono);font-size:12.5px;line-height:1.6;background:oklch(0 0 0/25%);border:1px solid oklch(0.76 0.15 152/35%);border-radius:var(--r-sm);padding:11px 12px;word-break:break-all;cursor:copy;user-select:all}
 
 .skeleton{background:linear-gradient(90deg,oklch(1 0 0/4%) 25%,oklch(1 0 0/8%) 37%,oklch(1 0 0/4%) 63%);background-size:400% 100%;animation:sk 1.3s ease infinite;border-radius:var(--r-md)}
 @keyframes sk{0%{background-position:100% 0}100%{background-position:0 0}}
@@ -410,11 +408,13 @@ pre.json{font-size:11px;overflow:auto;max-height:200px;background:oklch(0 0 0/25
 .modal .foot{display:flex;justify-content:flex-end;gap:8px;margin-top:3px}
 
 @media(max-width:1180px){
-  .stat-hero{grid-template-columns:repeat(2,1fr)}
+  .kpi-row{grid-template-columns:repeat(2,1fr)}
   /* 右对齐弹层，窄屏不越出内容区 */
   .kernel-panel{left:auto;right:0;width:min(520px,calc(100vw - 300px))}
   .grid-3,.grid-4{grid-template-columns:repeat(2,minmax(0,1fr))}
   .form-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .hero{flex-wrap:wrap}
+  .hero .hostcol{width:100%;padding-left:0;border-left:none;border-top:1px solid var(--line);padding-top:12px}
 }
 @media(max-width:760px){
   .app{flex-direction:column}
@@ -424,11 +424,10 @@ pre.json{font-size:11px;overflow:auto;max-height:200px;background:oklch(0 0 0/25
   .sidebar-foot .btn{width:auto!important}
   .content{padding:16px}
   .topbar{padding:0 16px}
-  .stat-hero,.grid-3,.grid-4,.form-grid{grid-template-columns:1fr}
+  .kpi-row,.grid-3,.grid-4,.form-grid{grid-template-columns:1fr}
   .kpick,.create-box .base-row .name-in{max-width:none}
   .kv dd{text-align:left}
-  .hcard{flex-direction:column;align-items:stretch;gap:14px}
-  .hcard .score{border-right:none;border-bottom:1px solid var(--line);padding:0 0 12px;min-width:0}
+  .hero{flex-direction:column;align-items:stretch;gap:14px}
   .kernel-panel{left:0;right:0;width:auto}
 }
 
@@ -451,7 +450,12 @@ pre.json{font-size:11px;overflow:auto;max-height:200px;background:oklch(0 0 0/25
 .view-tog button:last-child{border-right:0}
 .view-tog button.on{background:rgba(248,250,252,.08);color:var(--fg)}
 .vm-list{border:1px solid var(--line);border-radius:var(--r-lg);overflow:hidden;background:var(--panel)}
-.vm-row{display:grid;grid-template-columns:minmax(140px,1.2fr) minmax(120px,1fr) 110px 88px 72px auto;gap:10px;align-items:center;padding:9px 14px;border-bottom:1px solid var(--line);cursor:pointer;min-height:44px}
+.vm-row,.vm-lh{display:grid;grid-template-columns:minmax(130px,1.1fr) minmax(150px,1.2fr) minmax(120px,1fr) 88px 128px 96px;gap:10px;align-items:center;padding:9px 14px;border-bottom:1px solid var(--line)}
+.vm-row{cursor:pointer;min-height:44px}
+.vm-lh{padding-top:7px;padding-bottom:7px;background:oklch(1 0 0/2%)}
+.vm-lh button{border:0;background:transparent;padding:0;color:var(--faint);font-size:11.5px;text-align:left;cursor:pointer;display:inline-flex;align-items:center;gap:3px}
+.vm-lh button:hover,.vm-lh button.on{color:var(--fg)}
+.vm-lh .dir{font-weight:500}
 .vm-row:last-child{border-bottom:0}
 .vm-row:hover{background:var(--panel-2)}
 .vm-row .nm{display:flex;align-items:center;gap:8px;min-width:0;font-weight:550}
@@ -461,9 +465,14 @@ pre.json{font-size:11px;overflow:auto;max-height:200px;background:oklch(0 0 0/25
 .vm-row:hover .ops,.vm-row:focus-within .ops{opacity:1}
 @media(hover:none){.vm-row .ops{opacity:1}}
 @media(max-width:760px){
-  .vm-row{grid-template-columns:1fr auto;gap:6px 10px}
-  .vm-row .em,.vm-row .k-tag{display:none}
+  .vm-row,.vm-lh{grid-template-columns:1fr auto}
+  .vm-row{gap:6px 10px}
+  .vm-lh button:nth-child(n+3),.vm-row .em,.vm-row .k-tag{display:none}
 }
+.model-row{display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--line)}
+.model-row:last-child{border-bottom:0}
+.model-row .nm{width:170px;flex-shrink:0;font-size:12.5px;font-weight:550}
+.model-row code{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .modal .opt{align-items:center}
 .modal .opt em{display:none}
 
@@ -482,27 +491,14 @@ pre.json{font-size:11px;overflow:auto;max-height:200px;background:oklch(0 0 0/25
 .life .ln{width:16px;height:1px;background:var(--line-2)}
 
 
-.host-bar{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
-.host-m{border:1px solid var(--line);border-radius:var(--r-md);background:var(--panel);padding:10px 12px;display:flex;flex-direction:column;gap:6px}
-.host-m .row{display:flex;justify-content:space-between;align-items:baseline;gap:8px}
-.host-m .k{font-size:11px;color:var(--faint)}
-.host-m .v{font-size:14px;font-weight:600;font-variant-numeric:tabular-nums;letter-spacing:-.02em}
-.host-m .s{font-size:11px;color:var(--faint)}
 .qgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
 .qcard{display:flex;align-items:center;gap:12px;border:1px solid var(--line);border-radius:var(--r-md);padding:12px 14px;background:var(--panel)}
 .qcard .v{font-size:22px;font-weight:600;letter-spacing:-.03em;font-variant-numeric:tabular-nums;line-height:1}
 .qcard .v small{font-size:12px;font-weight:500;color:var(--faint);margin-left:3px}
 .qcard .s{font-size:11px;color:var(--faint);margin-top:4px}
-@media(max-width:760px){.host-bar,.qgrid{grid-template-columns:1fr}}
+@media(max-width:760px){.qgrid{grid-template-columns:1fr}}
 
 /* ── page reconstruction ────────────────────────────────── */
-.cmd-strip{display:flex;align-items:stretch;background:var(--panel);border:1px solid var(--line);border-radius:var(--r-lg);overflow:hidden}
-.cmd-strip .score{min-width:100px;padding:16px 18px;border-right:1px solid var(--line);display:flex;flex-direction:column;justify-content:center}
-.cmd-strip .score .n{display:flex;align-items:baseline;gap:2px}
-.cmd-strip .score .n b{font-size:36px;font-weight:600;letter-spacing:-.04em;font-variant-numeric:tabular-nums;line-height:1}
-.cmd-strip .score .n i{font-style:normal;font-size:13px;color:var(--faint)}
-.cmd-strip .score .l{font-size:11px;color:var(--faint);margin-top:4px}
-.cmd-strip .mid{flex:1;min-width:0;padding:14px 16px;display:flex;flex-direction:column;justify-content:center;gap:10px}
 .workbench{border:1px solid var(--line);border-radius:var(--r-lg);background:var(--panel);overflow:hidden}
 .wb-head{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 16px;border-bottom:1px solid var(--line);flex-wrap:wrap}
 .wb-id{display:flex;flex-direction:column;gap:3px;min-width:0}
@@ -515,6 +511,8 @@ pre.json{font-size:11px;overflow:auto;max-height:200px;background:oklch(0 0 0/25
 .fact-cell .v{font-size:14px;font-weight:550;letter-spacing:-.01em}
 .fact-cell .m{font-family:var(--mono);font-size:11px;color:var(--faint);margin-top:4px;word-break:break-all}
 .set-list{display:flex;flex-direction:column}
+.set-sub{font-size:11px;font-weight:600;color:var(--faint);letter-spacing:.04em;padding:14px 0 4px}
+.set-sub:first-child{padding-top:0}
 .set-row{display:grid;grid-template-columns:108px minmax(0,1fr);gap:8px 16px;align-items:center;padding:10px 0;border-bottom:1px solid var(--line)}
 .set-row:last-child{border-bottom:none}
 .set-row>span{font-size:12px;color:var(--faint)}
@@ -529,8 +527,6 @@ pre.json{font-size:11px;overflow:auto;max-height:200px;background:oklch(0 0 0/25
 .zone.danger{border-color:rgba(239,68,68,.3)}
 .empty-box .btn{margin-top:12px}
 @media(max-width:760px){
-  .cmd-strip{flex-direction:column}
-  .cmd-strip .score{border-right:none;border-bottom:1px solid var(--line)}
   .dock,.fact-grid{grid-template-columns:1fr}
   .set-row{grid-template-columns:1fr}
   .sidebar-nav{flex-wrap:nowrap;overflow-x:auto}
@@ -574,6 +570,8 @@ pre.json{font-size:11px;overflow:auto;max-height:200px;background:oklch(0 0 0/25
         <div class="nav-item" data-view="usage"><svg class="ni" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 19V9"/><path d="M10 19V5"/><path d="M16 19v-7"/><path d="M22 19V8"/></svg>用量</div>
         <div class="nav-item" data-view="proxies"><svg class="ni" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="6" cy="12" r="2.4"/><circle cx="18" cy="7" r="2.4"/><circle cx="18" cy="17" r="2.4"/><path d="M8.2 11.2 15.6 8.1M8.2 12.8l7.4 3.1"/></svg>代理池</div>
         <div class="nav-item" data-view="protocol"><svg class="ni" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 10H5a2 2 0 0 0-2 2v7h18v-7a2 2 0 0 0-2-2h-3"/><rect x="8" y="3" width="8" height="9" rx="1.5"/></svg>协议</div>
+        <div class="nav-item" data-view="keys"><svg class="ni" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="8" cy="15.5" r="4"/><path d="m10.8 12.7 9.2-9.2M15.5 8l3 3"/></svg>密钥</div>
+        <div class="nav-item" data-view="logs"><svg class="ni" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5h16M4 10h16M4 15h10M4 20h6"/></svg>日志</div>
         <div class="nav-item" data-view="settings"><svg class="ni" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9c.3.7.9 1.2 1.6 1.3H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg>设置</div>
       </nav>
       <div class="sidebar-foot">
@@ -589,9 +587,9 @@ pre.json{font-size:11px;overflow:auto;max-height:200px;background:oklch(0 0 0/25
           <p id="pageDesc"></p>
         </div>
         <div class="topbar-actions">
-          <span id="healthPill" class="badge">—</span><span id="hostPill" class="badge">CPU —</span>
+          <span id="sysChip" class="badge" title="网关状态 · 宿主负载">—</span>
           <button class="btn btn-outline" onclick="refresh()">刷新</button>
-          <button class="btn btn-outline" onclick="probeAll()" title="CLI 探测">CLI 探测</button>
+          <button class="btn btn-outline" onclick="probeAll()" title="虚拟机额度探测（5h/7d/fable）">额度探测</button>
         </div>
       </header>
 
@@ -614,6 +612,8 @@ const titles = {
   import: ['导入', ''],
   usage: ['用量', ''],
   protocol: ['协议', ''],
+  keys: ['密钥', ''],
+  logs: ['日志', ''],
   proxies: ['代理池', ''],
   settings: ['设置', ''],
 }
@@ -621,11 +621,10 @@ const titles = {
 
 /* 官方内核档案 */
 const KERNELS = [
-  { id:'unikernel-min', name:'Unikernel Minimal', base:'solo5/min',       size:'~32MB',  feats:['单地址空间','无 shell','冷启最快'] },
-  { id:'claude-cli',    name:'Claude Code CLI',   base:'node22',          size:'~180MB', feats:['官方 CLI','stream-json','Node 22'] },
-  { id:'alpine-min',    name:'Alpine Minimal',    base:'alpine3.20',      size:'~48MB',  feats:['apk','busybox','socks5'] },
-  { id:'debian-slim',   name:'Debian Slim',       base:'debian12-slim',   size:'~90MB',  feats:['apt','glibc','兼容性好'] },
-  { id:'ubuntu-minimal',name:'Ubuntu Minimal',    base:'ubuntu24.04-min', size:'~110MB', feats:['LTS','systemd 可选','deb'] },
+  { id:'ubuntu-24.04', name:'Ubuntu 24.04', base:'kin-os/ubuntu:24.04', size:'标准机', feats:['LTS','apt','Claude 2.1.234','host-net'] },
+  { id:'debian-12',    name:'Debian 12',    base:'kin-os/debian:12',    size:'标准机', feats:['glibc','apt','Claude 2.1.234','host-net'] },
+  { id:'archlinux',    name:'Arch Linux',   base:'kin-os/arch:latest',  size:'标准机', feats:['rolling','pacman','Claude 2.1.234','host-net'] },
+  { id:'fedora-41',    name:'Fedora 41',    base:'kin-os/fedora:41',    size:'标准机', feats:['dnf','glibc','Claude 2.1.234','host-net'] },
 ]
 function kernelProfile(id) {
   const k = String(id || '').trim()
@@ -635,7 +634,7 @@ function kernelFeats(p) { return (p && Array.isArray(p.feats) ? p.feats : []) }
 function kernelTag(id) {
   const p = kernelProfile(id)
   if (!p) return `<span class="k-tag"><i></i>未指定内核</span>`
-  return `<span class="k-tag" title="${esc(p.id)}${p.base?' · '+esc(p.base):''}"><i></i>${esc(p.name)}${p.size?' · '+esc(p.size):''}</span>`
+  return `<span class="k-tag" title="${esc(p.id)}${p.base ? ' · ' + esc(p.base) : ''}${p.size ? ' · ' + esc(p.size) : ''}"><i></i>${esc(p.name)}</span>`
 }
 
 const SEED_FLAGS = [
@@ -666,30 +665,37 @@ function seedPresetBar(cur, fn) {
   return `<div class="preset" role="group">${items.map(([k,l]) => `<button type="button" data-p="${k}" class="${cur===k?'on':''}" aria-pressed="${cur===k}" onclick="${fn}('${k}')">${l}</button>`).join('')}${cur==='custom'?`<button type="button" class="on" aria-pressed="true">自定义</button>`:''}</div>`
 }
 const VM_TEMPLATES = [
-  { id:'strict-min', name:'严格最小', kernel:'unikernel-min', seed:'strict',   after:'idle',  region:'',        tz:'America/Los_Angeles', locale:'en_US.UTF-8', conc:2, weight:1 },
-  { id:'strict-run', name:'严格即开', kernel:'claude-cli',    seed:'strict',   after:'full',  region:'us-west', tz:'America/Los_Angeles', locale:'en_US.UTF-8', conc:2, weight:2 },
-  { id:'std-west',   name:'标准美西', kernel:'alpine-min',    seed:'standard', after:'proxy', region:'us-west', tz:'America/Los_Angeles', locale:'en_US.UTF-8', conc:2, weight:1 },
-  { id:'std-east',   name:'标准美东', kernel:'alpine-min',    seed:'standard', after:'proxy', region:'us-east', tz:'America/New_York',    locale:'en_US.UTF-8', conc:2, weight:1 },
-  { id:'ap-strict',  name:'亚太严格', kernel:'claude-cli',    seed:'strict',   after:'start', region:'ap-east', tz:'Asia/Tokyo',          locale:'ja_JP.UTF-8', conc:2, weight:1 },
-  { id:'open-dev',   name:'开放调试', kernel:'debian-slim',   seed:'open',     after:'start', region:'',        tz:'UTC',                 locale:'C.UTF-8',     conc:4, weight:1 },
+  { id:'std-ubuntu', name:'标准 Ubuntu', kernel:'ubuntu-24.04', seed:'strict', after:'start', region:'us-west', tz:'America/Los_Angeles', locale:'en_US.UTF-8', conc:2, weight:1 },
+  { id:'std-debian', name:'标准 Debian', kernel:'debian-12',    seed:'strict', after:'start', region:'us-east', tz:'America/New_York',    locale:'en_US.UTF-8', conc:2, weight:1 },
+  { id:'std-arch',   name:'标准 Arch',   kernel:'archlinux',    seed:'strict', after:'start', region:'us-central', tz:'America/Chicago', locale:'en_US.UTF-8', conc:2, weight:1 },
+  { id:'std-fedora', name:'标准 Fedora', kernel:'fedora-41',    seed:'strict', after:'start', region:'us-west', tz:'America/Denver',      locale:'en_US.UTF-8', conc:2, weight:1 },
 ]
+function parseVmNum(s) {
+  const x = String(s || '')
+  const m = x.match(/^vm-(\d+)$/i) || x.match(/^0*(\d+)$/)
+  return m ? Number(m[1]) : null
+}
 function nextVmSeq(vms) {
   const used = new Set()
   for (const v of vms || []) {
-    const m = String(v.name || v.id || '').match(/^vm-(\d+)$/i)
-    if (m) used.add(Number(m[1]))
+    const n = parseVmNum(v.name) ?? parseVmNum(v.id)
+    if (n) used.add(n)
   }
   let n = 1
   while (used.has(n)) n++
   return n
 }
-function vmNameOf(n) { return 'vm-' + String(n).padStart(2, '0') }
+function vmNameOf(n) { return String(n).padStart(2, '0') }
+function vmIdOf(name) {
+  const n = parseVmNum(name)
+  return n ? ('vm-' + String(n).padStart(2, '0')) : String(name || '').replace(/[^a-zA-Z0-9_-]/g, '')
+}
 function vmNameOptions(selected) {
   const vms = state.dashboard?.vms || []
   const used = new Set()
   for (const v of vms) {
-    const m = String(v.name || v.id || '').match(/^vm-(\d+)$/i)
-    if (m) used.add(Number(m[1]))
+    const n = parseVmNum(v.name) ?? parseVmNum(v.id)
+    if (n) used.add(n)
   }
   const next = nextVmSeq(vms)
   const pick = selected || vmNameOf(next)
@@ -736,8 +742,46 @@ function quotaCard(label, used, reset) {
   const remain = Math.max(0, 100 - u)
   return `<div class="qcard">${quotaRing(u, 52)}<div><div class="k">${esc(label)}</div><div class="v" style="color:${barColor(u)}">${remain.toFixed(0)}<small>% 剩余</small></div><div class="s">已用 ${u.toFixed(1)}%${reset ? ' · ' + esc(fmtReset(reset)) : ''}</div></div></div>`
 }
-function sortSelect(cur, dir, fn, opts) {
-  return `<select class="input" style="width:118px;height:32px" aria-label="排序" onchange="${fn}(this.value)">${opts.map(([k,l]) => `<option value="${k}" ${cur===k?'selected':''}>${l}</option>`).join('')}</select><button class="btn btn-ghost btn-sm" onclick="toggleSortDir('${fn}')">${dir==='asc'?'升序':'降序'}</button>`
+function fableBadge(fb) {
+  if (!fb) return '<span class="badge">未探测</span>'
+  if (fb.banned) return '<span class="badge danger">拒</span>'
+  if (fb.limited) return '<span class="badge warn">满</span>'
+  if (fb.ok) return '<span class="badge ok">可用</span>'
+  return '<span class="badge">—</span>'
+}
+function fableLine(fb) {
+  if (!fb) return '<div class="m">fable 未探测</div>'
+  const txt = fb.banned ? '账号拒' : fb.limited ? '周额度满' : fb.ok ? '可用' : (fb.error || '—')
+  return `<div class="m">fable ${esc(txt)}${fb.reset ? ' · ' + esc(fmtReset(fb.reset)) : ''}</div>`
+}
+function fableCard(fb) {
+  const txt = !fb ? '未探测' : fb.banned ? '账号拒' : fb.limited ? '周额度满' : fb.ok ? '可用' : (fb.error || '—')
+  const cls = !fb ? '' : fb.banned ? 'danger' : fb.limited ? 'warn' : 'ok'
+  return `<div class="qcard"><div><div class="k">Fable</div><div class="v"><span class="badge ${cls}">${esc(txt)}</span></div><div class="s">${esc(fb && fb.model || 'claude-fable-5')}${fb && fb.reset ? ' · ' + esc(fmtReset(fb.reset)) : ''}</div></div></div>`
+}
+function extraUsageText(ex) {
+  if (!ex) return '—'
+  const on = ex.is_enabled ? '开' : '关'
+  const u = ex.utilization != null ? (pct(ex.utilization).toFixed(0) + '%') : '—'
+  return on + ' · ' + u + (ex.status ? ' · ' + ex.status : '')
+}
+/* 大号健康环：分数 + 标签画进 SVG，一个图形承载一个数字 */
+function donut(score, label, size = 92) {
+  const p = Math.max(0, Math.min(100, Number(score) || 0))
+  const r = 30, c = 2 * Math.PI * r
+  const col = p >= 80 ? 'var(--ok)' : p >= 50 ? 'var(--warn)' : 'var(--bad)'
+  return `<svg class="donut" viewBox="0 0 72 72" width="${size}" height="${size}" role="img" aria-label="${esc(label)} ${p}%">
+    <circle cx="36" cy="36" r="${r}" fill="none" stroke="oklch(1 0 0/8%)" stroke-width="5"/>
+    <circle cx="36" cy="36" r="${r}" fill="none" stroke="${col}" stroke-width="5" stroke-linecap="round" stroke-dasharray="${c.toFixed(1)}" stroke-dashoffset="${(c * (1 - p / 100)).toFixed(1)}" transform="rotate(-90 36 36)"/>
+    <text x="36" y="36" text-anchor="middle" dominant-baseline="central" class="dn">${p}</text>
+    <text x="36" y="49" text-anchor="middle" class="dl">${esc(label)}</text>
+  </svg>`
+}
+function kpi(label, valueHTML, ringPct) {
+  return `<div class="kpi">${ringPct != null ? quotaRing(ringPct, 46) : ''}<div style="min-width:0"><div class="v">${valueHTML}</div><div class="k">${esc(label)}</div></div></div>`
+}
+function hostRow(label, p, valText) {
+  return `<div class="hrow"><u>${esc(label)}</u><div class="bar"><i style="width:${Math.min(100, p)}%;background:${barColor(p)}"></i></div><b>${valText}</b></div>`
 }
 function sortVms(list) {
   const key = state.clusterSort || 'name'
@@ -755,28 +799,26 @@ function sortVms(list) {
   const g = val[key] || val.name
   return (list || []).slice().sort((a,b) => cmp(g(a), g(b), dir))
 }
-function hostBar(host) {
+/* 宿主指标：hero 右列三条 slim 指标，数值只出现一次，细节进 title */
+function hostCol(host) {
   host = host || {}
   const cpu = Number(host.cpu_pct || 0)
   const mem = Number(host.mem_pct || 0)
-  return `<div class="host-bar">
-    <div class="host-m"><div class="row"><span class="k">CPU</span><span class="v">${cpu.toFixed(0)}%</span></div>${meter('', cpu)}<div class="s">${host.cpu_count || 0} 核 · load ${host.load1 != null ? Number(host.load1).toFixed(2) : '—'}</div></div>
-    <div class="host-m"><div class="row"><span class="k">内存</span><span class="v">${mem.toFixed(0)}%</span></div>${meter('', mem)}<div class="s">${fmtBytes(host.mem_used)} / ${fmtBytes(host.mem_total)}</div></div>
-    <div class="host-m"><div class="row"><span class="k">进程</span><span class="v">${fmtBytes(host.rss)}</span></div>${meter('', host.heap_total ? (host.heap_used/host.heap_total*100) : 0)}<div class="s">heap ${fmtBytes(host.heap_used)} · up ${relMs((host.proc_uptime||0)*1000)}</div></div>
+  const heap = host.heap_total ? (host.heap_used / host.heap_total * 100) : 0
+  return `<div class="hostcol" title="${host.cpu_count || 0} 核 · load ${host.load1 != null ? Number(host.load1).toFixed(2) : '—'} · ${fmtBytes(host.mem_used)}/${fmtBytes(host.mem_total)} · up ${relMs((host.proc_uptime || 0) * 1000)}">
+    ${hostRow('CPU', cpu, cpu.toFixed(0) + '%')}
+    ${hostRow('内存', mem, mem.toFixed(0) + '%')}
+    ${hostRow('进程', heap, fmtBytes(host.rss))}
   </div>`
 }
-function setClusterSort(k) { state.clusterSort = k; render() }
-function setModelSort(k) { state.modelSort = k; render() }
-function toggleSortDir(fn) {
-  if (fn === 'setClusterSort') state.clusterDir = state.clusterDir === 'asc' ? 'desc' : 'asc'
-  else if (fn === 'setUsageSort') state.usageDir = state.usageDir === 'asc' ? 'desc' : 'asc'
-  else if (fn === 'setProxySort') state.proxyDir = state.proxyDir === 'asc' ? 'desc' : 'asc'
-  else if (fn === 'setModelSort') state.modelDir = state.modelDir === 'asc' ? 'desc' : 'asc'
+function setClusterSort(k) {
+  state.clusterDir = sortDir(state.clusterSort, k, state.clusterDir)
+  state.clusterSort = k
   render()
 }
 
 
-let state = { view: 'overview', selectedVm: null, dashboard: null, usage: null, models: null, routing: null, detail: null, proxies: null, clusterQ: '', clusterFilter: 'all', clusterView: 'list', clusterSort: 'name', clusterDir: 'asc', vmTab: 'overview', loading: false, kernel: 'unikernel-min', createName: '', advOpen: false, usageSort: 'u5', usageDir: 'desc', proxySort: 'status', proxyDir: 'asc', modelSort: 'name', modelDir: 'asc', seedPreset: 'strict', createPreset: 'strict', createAfter: 'idle', createTemplate: 'strict-min' }
+let state = { view: 'overview', selectedVm: null, dashboard: null, usage: null, models: null, routing: null, detail: null, proxies: null, apiKeys: null, logs: null, logMode: 'normal', clusterQ: '', clusterFilter: 'all', clusterView: 'list', clusterSort: 'name', clusterDir: 'asc', vmTab: 'overview', loading: false, kernel: 'ubuntu-24.04', createName: '', advOpen: false, usageSort: 'u5', usageDir: 'desc', proxySort: 'status', proxyDir: 'asc', seedPreset: 'strict', createPreset: 'strict', createAfter: 'start', createTemplate: 'std-ubuntu' }
 let bootstrapped = false
 
 function apiBase() {
@@ -923,6 +965,12 @@ async function api(path, opts = {}) {
 
 /* ── helpers ─────────────────────────────────────────────── */
 function pct(u) { if (u == null) return 0; const n = Number(u); return n > 1 ? n : n * 100 }
+function fmtTok(l) {
+  const inn = l && (l.input_tokens != null ? l.input_tokens : (l.usage && l.usage.input_tokens))
+  const out = l && (l.output_tokens != null ? l.output_tokens : (l.usage && l.usage.output_tokens))
+  if (inn == null && out == null) return '—'
+  return (inn || 0) + '/' + (out || 0)
+}
 function barColor(p) { if (p >= 95) return 'var(--bad)'; if (p >= 85) return 'var(--warn)'; return 'var(--ok)' }
 function fmtNum(n) {
   const v = Number(n) || 0
@@ -1001,7 +1049,7 @@ function vmListRow(v) {
     <div class="nm"><span class="status-dot ${statusDot(v)}"></span><span class="txt">${esc(v.name || v.id)}</span></div>
     <div class="em">${esc(v.email || '—')}</div>
     <div>${meter('', u5)}</div>
-    <span class="acc-pill ${acc.cls}">${acc.text}</span>
+    <span class="acc-pill ${acc.cls}" title="凭证状态">${v.has_token && acc.key !== 'none' ? '有凭证 · ' : ''}${acc.text}</span>
     ${kernelTag(v.kernel)}
     <div class="ops">
       <button class="btn btn-ghost btn-xs faint" onclick="event.stopPropagation();openResetVm('${esc(v.id)}')">重置</button>
@@ -1009,10 +1057,20 @@ function vmListRow(v) {
     </div>
   </div>`
 }
+/* 列表排序表头：与 vm-row 同网格，点击列名即排序（取代排序下拉） */
+function vmListHead() {
+  const cur = state.clusterSort, dir = state.clusterDir
+  const cols = [['name', '名称'], ['email', '账号'], ['u5', '5h 用量'], ['status', '状态'], ['kernel', '内核']]
+  return `<div class="vm-lh">${cols.map(([k, l]) => {
+    const on = cur === k
+    return `<button class="${on ? 'on' : ''}" onclick="setClusterSort('${k}')" aria-pressed="${on}">${l}${on ? `<span class="dir">${dir === 'asc' ? '↑' : '↓'}</span>` : ''}</button>`
+  }).join('')}<span></span></div>`
+}
+function vmListHTML(vms) { return `<div class="vm-list">${vmListHead()}${vms.map(vmListRow).join('')}</div>` }
 function renderVmCollection(vms, emptyMsg) {
   if (!vms.length) return emptyBox(emptyMsg || '空')
   if (state.clusterView === 'grid') return `<div class="vm-grid">${vms.map(vmCard).join('')}</div>`
-  return `<div class="vm-list">${vms.map(vmListRow).join('')}</div>`
+  return vmListHTML(vms)
 }
 
 document.getElementById('loginPassInput') && document.getElementById('loginPassInput').addEventListener('keydown', function (e) { if (e.key === 'Enter') doLogin() })
@@ -1053,20 +1111,15 @@ async function refresh() {
     state.proxies = proxies?.__error ? { error: proxies.__error } : (proxies.data || proxies)
     if (!state.selectedVm && state.dashboard.vms?.[0]) state.selectedVm = state.dashboard.vms[0].id
     const h = state.dashboard.health
-    const pill = document.getElementById('healthPill')
-    if (pill) {
-      const ok = (h?.status || 'ok') === 'ok'
-      pill.className = 'badge ' + (ok ? 'ok' : 'err')
-      pill.innerHTML = `<span class="status-dot ${ok ? 'on' : 'danger'}"></span>${esc(h?.status || 'ok')}`
-      pill.title = h?.base_url || ''
-    }
-    const hp = document.getElementById('hostPill')
     const host = state.dashboard.host || {}
-    if (hp) {
-      const cpu = host.cpu_pct != null ? host.cpu_pct : '—'
-      const mem = host.mem_pct != null ? host.mem_pct : '—'
-      hp.textContent = 'CPU ' + cpu + '% · RAM ' + mem + '%'
-      hp.title = 'load ' + (host.load1 != null ? Number(host.load1).toFixed(2) : '—') + ' · rss ' + fmtBytes(host.rss)
+    const chip = document.getElementById('sysChip')
+    if (chip) {
+      const ok = (h?.status || 'ok') === 'ok'
+      chip.className = 'badge ' + (ok ? 'ok' : 'err')
+      const cpu = host.cpu_pct != null ? host.cpu_pct + '%' : '—'
+      const mem = host.mem_pct != null ? host.mem_pct + '%' : '—'
+      chip.innerHTML = `<span class="status-dot ${ok ? 'on' : 'danger'}"></span>${esc(h?.status || 'ok')} · CPU ${cpu} · 内存 ${mem}`
+      chip.title = (h?.base_url || '') + ' · load ' + (host.load1 != null ? Number(host.load1).toFixed(2) : '—') + ' · rss ' + fmtBytes(host.rss)
     }
   } catch (e) {
     toast('刷新失败: ' + e.message, 'err')
@@ -1078,20 +1131,31 @@ async function refresh() {
   }
 }
 
+function fmtProbeToast(d) {
+  if (!d || (d.ok === false && d.error)) return String((d && (d.error && d.error.message || d.error)) || '探测失败')
+  const p5 = pct(d.five_hour && d.five_hour.utilization != null ? d.five_hour.utilization : d.utilization_5h)
+  const p7 = pct(d.seven_day && d.seven_day.utilization != null ? d.seven_day.utilization : d.utilization_7d)
+  const fb = d.fable
+  const ftxt = !fb ? 'fable —' : fb.banned ? 'fable 拒' : fb.limited ? 'fable 满' : 'fable 可用'
+  return '5h ' + p5.toFixed(0) + '% · 7d ' + p7.toFixed(0) + '% · ' + ftxt
+}
 async function probeAll() {
   try {
-    toast('正在用官方 Claude Code 探测…')
-    await api('/api/panel/probe', { method: 'POST', body: JSON.stringify({ hop: true }) })
-    toast('CLI 探测完成')
+    toast('正在虚拟机探测额度…')
+    const d = await api('/api/panel/probe', { method: 'POST', body: JSON.stringify({}) })
+    const items = d.items || []
+    const ok = items.filter(x => x && x.ok).length
+    toast('探测完成 ' + ok + '/' + items.length + (items[0] ? ' · ' + fmtProbeToast(items[0]) : ''))
     await refresh()
   } catch (e) { toast(e.message, 'err') }
 }
 async function probeOne(id) {
   try {
-    toast('CLI 探测 ' + id + '…')
-    await api('/api/panel/vms/' + id + '/probe', { method: 'POST', body: JSON.stringify({ hop: true }) })
-    toast('CLI 探测完成')
+    toast('正在虚拟机探测 ' + id + '…')
+    const d = await api('/api/panel/vms/' + id + '/probe', { method: 'POST', body: JSON.stringify({}) })
+    toast(fmtProbeToast(d))
     await refresh()
+    if (state.view === 'vm' && state.selectedVm === id) openVm(id)
   } catch (e) { toast(e.message, 'err') }
 }
 
@@ -1121,29 +1185,45 @@ function vmRunning(v) {
   return !!(v.active || v.has_token || s === 'running' || s === 'ok' || !s)
 }
 function statusDot(v) {
-  if (!v.has_token) return 'warn'
+  const acc = accountStatus(v)
+  if (acc.key === 'none') return 'warn'
+  if (acc.key === 'bad') return 'danger'
+  if (acc.key === 'warn') return 'warn'
   if (!vmRunning(v)) return 'off'
-  const u = pct(v.utilization_5h)
-  if (u >= 95) return 'danger'
-  if (u >= 85) return 'warn'
   return 'on'
 }
 /* 账号状态胶囊：五态互斥，颜色即语义 */
+function windowLimited(status, utilPct) {
+  const s = String(status || '').toLowerCase()
+  return s === 'rejected' || s === 'rate_limited' || Number(utilPct || 0) >= 100
+}
+function windowWarn(status, utilPct) {
+  const s = String(status || '').toLowerCase()
+  return s === 'allowed_warning' || s === 'warning' || Number(utilPct || 0) >= 85
+}
 function accountStatus(v) {
-  if (!v.has_token) return { cls: 'none', key: 'none', text: '无凭证' }
+  if (v && v.cred_status && v.cred_status.text) {
+    const k = v.cred_status.key || v.cred_status.tone || 'ok'
+    return { cls: k, key: k, text: v.cred_status.text }
+  }
+  if (!v || !v.has_token) return { cls: 'none', key: 'none', text: '无凭证' }
+  const fb = v.fable || {}
+  if (fb.banned) return { cls: 'bad', key: 'bad', text: '不可用' }
   const exp = credExpiry(v)
-  if (exp.cls === 'bad') return { cls: 'bad', key: 'bad', text: '已过期' }
-  if (!vmRunning(v)) return { cls: 'off', key: 'off', text: '已停止' }
-  const u = pct(v.utilization_5h)
-  if (u >= 95 || v.near_limit) return { cls: 'bad', key: 'bad', text: '近限额' }
-  if (u >= 85) return { cls: 'warn', key: 'warn', text: '偏高' }
-  if (exp.cls === 'warn') return { cls: 'warn', key: 'warn', text: exp.text }
+  if (exp.cls === 'bad') return { cls: 'bad', key: 'bad', text: '不可用' }
+  const u5 = pct(v.utilization_5h)
+  const u7 = pct(v.utilization_7d)
+  if (windowLimited(v.status_5h, u5)) return { cls: 'warn', key: 'warn', text: '5h 限制' }
+  if (windowLimited(v.status_7d, u7)) return { cls: 'warn', key: 'warn', text: '7d 限制' }
+  if (fb.limited) return { cls: 'warn', key: 'warn', text: 'Fable 限制' }
+  if (windowWarn(v.status_5h, u5) || v.near_limit) return { cls: 'warn', key: 'warn', text: '5h 限制' }
+  if (windowWarn(v.status_7d, u7)) return { cls: 'warn', key: 'warn', text: '7d 限制' }
   return { cls: 'ok', key: 'ok', text: '可用' }
 }
 const HEALTH_SEG = [
   { key: 'ok',   label: '可用',   color: 'var(--ok)' },
-  { key: 'warn', label: '偏高',   color: 'var(--warn)' },
-  { key: 'bad',  label: '近限额', color: 'var(--bad)' },
+  { key: 'warn', label: '限制',   color: 'var(--warn)' },
+  { key: 'bad',  label: '不可用', color: 'var(--bad)' },
   { key: 'off',  label: '已停止', color: 'oklch(0.5 0.01 265)' },
   { key: 'none', label: '无凭证', color: 'oklch(1 0 0/20%)' },
 ]
@@ -1201,7 +1281,7 @@ function vmCard(v) {
   <div class="vm-viz" onclick="openVm('${esc(v.id)}')" title="${esc(v.name || v.id)} · 查看详情">
     <div class="top">
       <div class="name"><span class="status-dot ${statusDot(v)}"></span><span class="txt">${esc(v.name || v.id)}</span></div>
-      <span class="acc-pill ${acc.cls}">${acc.text}</span>
+      <span class="acc-pill ${acc.cls}" title="凭证状态">${v.has_token && acc.key !== 'none' ? '有凭证 · ' : ''}${acc.text}</span>
     </div>
     <div class="sub"><span class="e">${esc(v.email || '未绑定账号')}</span></div>
     <div class="vm-use">
@@ -1235,7 +1315,6 @@ function renderOverview() {
   const vms = d.vms || []
   const s = d.summary || {}
   const tot = (state.usage && state.usage.totals) || {}
-  const health = d.health || {}
   const gstat = d.gateway_stats || {}
   const running = vms.filter(vmRunning).length
   const withToken = vms.filter(v => v.has_token).length
@@ -1246,73 +1325,45 @@ function renderOverview() {
   const tokensOut = tot.tokens_out ?? s.tokens_out ?? 0
   const reqs = tot.requests ?? s.requests ?? 0
   const peak5 = pct(s.peak_5h ?? tot.peak_5h)
-  const peak7 = pct(s.peak_7d ?? tot.peak_7d)
-  const ok = (health.status || 'ok') === 'ok'
   const errs = gstat.errors || 0
   const buckets = vmBuckets(vms)
   const score = healthScore(vms)
-  const scoreColor = score >= 80 ? 'var(--ok)' : score >= 50 ? 'var(--warn)' : 'var(--bad)'
   const alerts = []
   if (available === 0 && vms.length) alerts.push({ t: '无可用节点', go: 'import' })
   if (nearLimit > 0) alerts.push({ t: `${nearLimit} 近限额`, go: 'usage' })
   if (noToken > 0 && withToken === 0) alerts.push({ t: '无凭证', go: 'import' })
   if (errs > 0) alerts.push({ t: `错误 ${errs}`, go: 'overview' })
+  const hot = vms.slice().sort((a, b) => pct(b.utilization_5h) - pct(a.utilization_5h)).slice(0, 6)
   return `
   <section class="section">
-    <div class="cmd-strip">
-      <div class="score">
-        <div class="n"><b style="color:${scoreColor}">${score}</b><i>%</i></div>
-        <div class="l">健康</div>
-      </div>
+    <div class="hero">
+      <div class="gauge">${donut(score, '健康')}</div>
       <div class="mid">
         ${healthBar(buckets, vms.length)}
         ${healthLegend(buckets)}
         <div class="facts">
-          <span class="fact"><span class="status-dot ${ok ? 'on' : 'danger'}"></span>${esc(health.status || 'ok')}</span>
-          <span class="fact"><span class="status-dot ${s.active_vm ? 'on' : 'off'}"></span>${esc(s.active_vm || '未指定')}</span>
-          <span class="fact">请求 <b>${fmtNum(gstat.requests || 0)}</b></span>
+          <span class="fact"><span class="status-dot ${s.active_vm ? 'on' : 'off'}"></span>活跃 <span class="v">${esc(s.active_vm || '未指定')}</span></span>
           ${alerts.map(a => `<button class="alert-item" onclick="go('${a.go}')">${esc(a.t)}</button>`).join('')}
         </div>
       </div>
+      ${hostCol(d.host)}
     </div>
-    ${hostBar(d.host)}
 
-    <div class="stat-hero">
-      <div class="stat-tile">
-        <div class="k">可用</div>
-        <div class="v">${available}<small> / ${withToken}</small></div>
-        <div class="s">${s.vm_count ?? vms.length} 节点</div>
-        ${quotaRing(withToken ? (available / Math.max(withToken, 1)) * 100 : 0)}
-      </div>
-      <div class="stat-tile">
-        <div class="k">在线</div>
-        <div class="v">${running}<small> / ${vms.length}</small></div>
-        <div class="s">停 ${vms.length - running}</div>
-        ${quotaRing(vms.length ? running / vms.length * 100 : 0)}
-      </div>
-      <div class="stat-tile">
-        <div class="k">Tokens</div>
-        <div class="v">${fmtNum(tokensIn)}<small> / ${fmtNum(tokensOut)}</small></div>
-        <div class="s">${fmtNum(reqs)} 请求</div>
-        <div class="edge"><i style="width:${Math.min(100, (tokensIn + tokensOut) ? tokensOut / (tokensIn + tokensOut) * 100 : 0)}%"></i></div>
-      </div>
-      <div class="stat-tile">
-        <div class="k">5h</div>
-        <div class="v">${peak5.toFixed(0)}<small>%</small></div>
-        <div class="s">7d ${peak7.toFixed(0)}%</div>
-        ${quotaRing(peak5)}
-      </div>
+    <div class="kpi-row">
+      ${kpi('可用节点', `${available}<small> / ${withToken}</small>`, withToken ? (available / Math.max(withToken, 1)) * 100 : 0)}
+      ${kpi('在线', `${running}<small> / ${vms.length}</small>`, vms.length ? running / vms.length * 100 : 0)}
+      ${kpi('5h 峰值', `${peak5.toFixed(0)}<small>%</small>`, peak5)}
+      ${kpi(`请求 · Tokens ${fmtNum(tokensIn)}/${fmtNum(tokensOut)}`, fmtNum(reqs), null)}
     </div>
 
     <div class="head">
-      <div class="section-title">${running}/${vms.length}</div>
+      <div class="section-title">高水位节点</div>
       <div class="actions">
-        ${sortSelect(state.clusterSort, state.clusterDir, 'setClusterSort', [['name','名称'],['u5','5h'],['remain','剩余'],['status','状态'],['expire','过期']])}
         <button class="btn btn-outline btn-sm" onclick="go('import')">导入</button>
-        <button class="btn btn-outline btn-sm" onclick="go('cluster')">全部</button>
+        <button class="btn btn-outline btn-sm" onclick="go('cluster')">全部 ${vms.length}</button>
       </div>
     </div>
-    <div class="vm-grid">${sortVms(vms).slice(0, 6).map(vmCard).join('') || emptyBox('暂无节点', `<button class="btn btn-primary btn-sm" onclick="openCreateVm()">创建</button>`)}</div>
+    <div class="vm-grid">${hot.map(vmCard).join('') || emptyBox('暂无节点', `<button class="btn btn-primary btn-sm" onclick="openCreateVm()">创建</button>`)}</div>
   </section>`
 }
 
@@ -1339,7 +1390,7 @@ function onClusterSearch(el) {
   const box = document.getElementById('clusterBox')
   if (!box) { render(); return }
   const vms = filteredVms()
-  box.innerHTML = vms.length ? (state.clusterView === 'grid' ? `<div class="vm-grid">${vms.map(vmCard).join('')}</div>` : `<div class="vm-list">${vms.map(vmListRow).join('')}</div>`) : emptyBox('无匹配')
+  box.innerHTML = vms.length ? (state.clusterView === 'grid' ? `<div class="vm-grid">${vms.map(vmCard).join('')}</div>` : vmListHTML(vms)) : emptyBox('无匹配')
 }
 function renderCluster() {
   const d = state.dashboard || {}
@@ -1360,11 +1411,10 @@ function renderCluster() {
   return `
   <section class="section">
     <div class="head">
-      <div class="section-title">${b.ok}/${all.length}</div>
+      <div class="section-title">可用 ${b.ok} / 共 ${all.length}</div>
       <div class="toolbar">
         <input class="input" placeholder="搜索" aria-label="搜索" value="${esc(state.clusterQ || '')}" oninput="onClusterSearch(this)" />
         <div class="seg">${segs.map(([k, lab]) => `<button class="${f === k ? 'on' : ''}" onclick="setClusterFilter('${k}')">${lab} ${counts[k]}</button>`).join('')}</div>
-        ${sortSelect(state.clusterSort, state.clusterDir, 'setClusterSort', [['name','名称'],['u5','5h'],['u7','7d'],['remain','剩余'],['status','状态'],['email','账号'],['expire','过期'],['kernel','内核']])}
         <div class="view-tog" role="group" aria-label="视图">
           <button class="${state.clusterView!=='grid'?'on':''}" onclick="setClusterView('list')">列表</button>
           <button class="${state.clusterView==='grid'?'on':''}" onclick="setClusterView('grid')">网格</button>
@@ -1372,7 +1422,7 @@ function renderCluster() {
         <button class="btn btn-primary btn-sm" onclick="openCreateVm()">创建</button>
       </div>
     </div>
-    <div id="clusterBox">${vms.length ? (state.clusterView==='grid' ? `<div class="vm-grid">${vms.map(vmCard).join('')}</div>` : `<div class="vm-list">${vms.map(vmListRow).join('')}</div>`) : emptyBox(all.length ? '无匹配' : '空', all.length ? '' : `<button class="btn btn-primary btn-sm" onclick="openCreateVm()">创建</button>`)}</div>
+    <div id="clusterBox">${vms.length ? (state.clusterView==='grid' ? `<div class="vm-grid">${vms.map(vmCard).join('')}</div>` : vmListHTML(vms)) : emptyBox(all.length ? '无匹配' : '空', all.length ? '' : `<button class="btn btn-primary btn-sm" onclick="openCreateVm()">创建</button>`)}</div>
   </section>`
 }
 
@@ -1458,7 +1508,7 @@ document.addEventListener('keydown', (e) => {
 function createSheetHTML() {
   const after = state.createAfter || 'idle'
   const preset = state.createPreset || 'strict'
-  const k = state.kernel || 'unikernel-min'
+  const k = state.kernel || 'ubuntu-24.04'
   const tpl = state.createTemplate || 'strict-min'
   const name = state.createName || vmNameOf(nextVmSeq(state.dashboard?.vms || []))
   return `
@@ -1509,7 +1559,7 @@ function createSheetHTML() {
         </label>
         <label>时区
           <select id="vmCreateTz" class="input">
-            ${[['America/Los_Angeles','洛杉矶'],['America/New_York','纽约'],['UTC','UTC'],['Europe/London','伦敦'],['Asia/Shanghai','上海'],['Asia/Tokyo','东京'],['Asia/Singapore','新加坡']].map(([v,l]) => `<option value="${v}" ${(state.createTz||'America/Los_Angeles')===v?'selected':''}>${l}</option>`).join('')}
+            ${[['America/Los_Angeles','洛杉矶 PT'],['America/Denver','丹佛 MT'],['America/Chicago','芝加哥 CT'],['America/New_York','纽约 ET']].map(([v,l]) => `<option value="${v}" ${(state.createTz||'America/Los_Angeles')===v?'selected':''}>${l}</option>`).join('')}
           </select>
         </label>
         <label>语言
@@ -1526,7 +1576,7 @@ function createSheetHTML() {
         </label>
         <label>并发
           <select id="vmCreateConc" class="input">
-            ${[1,2,4,8].map(v => `<option value="${v}" ${Number(state.createConc||2)===v?'selected':''}>${v}</option>`).join('')}
+            ${[1,2,4,8,16,20,32].map(v => `<option value="${v}" ${Number(state.createConc||defaultConc())===v?'selected':''}>${v}</option>`).join('')}
           </select>
         </label>
         <label>权重
@@ -1674,18 +1724,18 @@ function renderVm() {
           <select class="input" style="width:168px;height:32px" aria-label="切换节点" onchange="if(this.value)openVm(this.value)">
             ${vms.map(v => `<option value="${esc(v.id)}" ${v.id === vm.id ? 'selected' : ''}>${esc(v.name || v.id)}</option>`).join('')}
           </select>
-          <button class="btn btn-outline btn-sm" onclick="startVm('${esc(vm.id)}')">开机</button>
-          <button class="btn btn-outline btn-sm" onclick="stopVm('${esc(vm.id)}')">关机</button>
-          <button class="btn btn-outline btn-sm" onclick="probeOne('${esc(vm.id)}')">CLI 探测</button>
-          <button class="btn btn-primary btn-sm" onclick="openCreateVm()">创建</button>
+          ${running
+            ? `<button class="btn btn-outline btn-sm" onclick="stopVm('${esc(vm.id)}')">关机</button>`
+            : `<button class="btn btn-primary btn-sm" onclick="startVm('${esc(vm.id)}')">开机</button>`}
+          <button class="btn btn-outline btn-sm" onclick="probeOne('${esc(vm.id)}')">额度探测</button>
         </div>
       </div>
       <div class="tabs">
         ${tabs.map(([k,l]) => `<button class="${tab===k?'on':''}" onclick="setVmTab('${k}')${k==='seed'?';loadSeedSettings()':''}">${l}</button>`).join('')}
       </div>
       <div class="wb-body">
-      ${tab === 'overview' ? `
       ${lifeSteps(vm)}
+      ${tab === 'overview' ? `
       <div class="fact-grid">
         <div class="fact-cell">
           <div class="k">内核</div>
@@ -1695,8 +1745,8 @@ function renderVm() {
         </div>
         <div class="fact-cell">
           <div class="k">用量</div>
-          <div class="stack-sm">${meter('5h', u5)}${meter('7d', u7)}</div>
-          <div class="m" style="margin-top:8px">${vm.inflight || 0}/${vm.max_concurrency || 2} 并发 · CLI ${esc(vm.claude_code_version || '—')}</div>
+          <div class="stack-sm">${meter('5h', u5)}${meter('7d', u7)}${fableLine(acc.fable || vm.fable)}</div>
+          <div class="m" style="margin-top:8px">${vm.inflight || 0}/${vm.max_concurrency || defaultConc()} 并发 <button class="btn btn-ghost btn-sm" onclick="event.stopPropagation();openEditVmConc('${esc(vm.id)}', ${vm.max_concurrency || defaultConc()})">改</button> · CLI ${esc(vm.claude_code_version || '—')}</div>
         </div>
         <div class="fact-cell">
           <div class="k">绑定</div>
@@ -1706,25 +1756,25 @@ function renderVm() {
       </div>` : ''}
 
       ${tab === 'account' ? `
-      ${lifeSteps(vm)}
       <div class="qgrid">
         ${quotaCard('5 小时', acc.utilization_5h ?? vm.utilization_5h, acc.reset_5h || vm.reset_5h)}
         ${quotaCard('7 天', acc.utilization_7d ?? vm.utilization_7d, acc.reset_7d || vm.reset_7d)}
+        ${quotaCard('7 天 Sonnet', acc.utilization_7d_sonnet ?? vm.utilization_7d_sonnet, acc.reset_7d_sonnet || vm.reset_7d_sonnet)}
+        ${fableCard(acc.fable || vm.fable)}
       </div>
       <dl class="kv" style="margin-top:12px">
+        <dt>探测</dt><dd class="mono">${esc((acc.last_probe || vm.last_probe || {}).at || '未探测')} · ${esc(acc.probe_source || vm.probe_source || '—')}</dd>
+        <dt>超额</dt><dd>${extraUsageText(acc.extra_usage || vm.extra_usage)}</dd>
         <dt>凭证</dt><dd><span class="acc-pill ${credExpiry(vm).cls}">${credExpiry(vm).text}</span></dd>
         <dt>邮箱</dt><dd>${esc(vm.email || acc.email || '—')}</dd>
         <dt>UUID</dt><dd class="mono">${esc(vm.account_uuid || acc.account_id || '—')}</dd>
         <dt>Org</dt><dd class="mono">${esc(vm.org_uuid || '—')}</dd>
         <dt>过期</dt><dd class="mono">${esc(vm.expires_at || '—')}</dd>
-        <dt>5h 状态</dt><dd>${esc(acc.status_5h || vm.status_5h || '—')}</dd>
-        <dt>7d 状态</dt><dd>${esc(acc.status_7d || vm.status_7d || '—')}</dd>
-        <dt>并发</dt><dd class="num">${(acc.inflight ?? vm.inflight) || 0} / ${acc.max_concurrency || vm.max_concurrency || 2}</dd>
+        <dt>并发</dt><dd class="num">${(acc.inflight ?? vm.inflight) || 0} / ${acc.max_concurrency || vm.max_concurrency || defaultConc()} <button class="btn btn-ghost btn-sm" onclick="openEditVmConc('${esc(vm.id)}', ${acc.max_concurrency || vm.max_concurrency || defaultConc()})">改</button></dd>
         <dt>请求</dt><dd class="num">${fmtNum(acc.requests ?? vm.requests ?? 0)}</dd>
         <dt>Tokens</dt><dd class="num">${fmtNum(acc.tokens_in ?? vm.tokens_in ?? 0)} / ${fmtNum(acc.tokens_out ?? vm.tokens_out ?? 0)}</dd>
       </dl>
       <div class="actions" style="margin-top:14px">
-        <button class="btn btn-outline btn-sm" onclick="probeOne('${esc(vm.id)}')">CLI 探测</button>
         <button class="btn btn-primary btn-sm" onclick="go('import')">导入</button>
       </div>` : ''}
 
@@ -1738,7 +1788,6 @@ function renderVm() {
       <div class="actions" style="margin-top:14px"><button class="btn btn-outline btn-sm" onclick="allocateProxy('${esc(vm.id)}')">分配 SOCKS5</button></div>` : ''}
 
       ${tab === 'ops' ? `
-      ${lifeSteps(vm)}
       <div class="zone">
         <div class="actions">
           <button class="btn btn-outline btn-sm" onclick="activateVm('${esc(vm.id)}')">设为活跃</button>
@@ -1759,7 +1808,6 @@ function renderVm() {
       </div>` : ''}
 
       ${tab === 'seed' ? `
-      ${lifeSteps(vm)}
       <div class="set-row">
         <span>模板</span>
         <select class="input" onchange="applySeedPreset(this.value)">
@@ -1854,9 +1902,6 @@ function renderImport() {
 
 
 /* ── usage ───────────────────────────────────────────────── */
-function statTile(k, v, s) {
-  return `<div class="stat-tile"><div class="k">${esc(k)}</div><div class="v">${v}</div>${s ? `<div class="s">${esc(s)}</div>` : ''}</div>`
-}
 function renderUsage() {
   const u = state.usage || {}
   if (u.error) return emptyBox('加载失败: ' + u.error)
@@ -1878,22 +1923,15 @@ function renderUsage() {
   accounts.sort((a, b) => cmp(keyOf[sk](a), keyOf[sk](b), sd))
   return `
   <section class="section">
-    <div class="stat-hero">
-      ${statTile('账号', s.account_count ?? accounts.length, `${near} 近限额`)}
-      ${statTile('5h', peak5.toFixed(0) + '<small>%</small>', `7d ${peak7.toFixed(0)}%`)}
-      ${statTile('请求', fmtNum(s.requests || 0), '')}
-      ${statTile('In / Out', `${fmtNum(s.tokens_in || 0)}<small> / ${fmtNum(s.tokens_out || 0)}</small>`, '')}
-    </div>
-    <div class="head">
-      <div class="section-title">${accounts.length}</div>
-      <div class="actions">
-        ${sortSelect(state.usageSort, state.usageDir, 'setUsageSort', [['name','账号'],['u5','5h'],['u7','7d'],['req','请求'],['st','状态']])}
-        <button class="btn btn-outline btn-sm" onclick="probeAll()">CLI 探测</button>
-      </div>
+    <div class="kpi-row">
+      ${kpi(near ? `账号 · ${near} 近限额` : '账号', String(s.account_count ?? accounts.length), null)}
+      ${kpi('5h 峰值', `${peak5.toFixed(0)}<small>%</small>`, peak5)}
+      ${kpi('7d 峰值', `${peak7.toFixed(0)}<small>%</small>`, peak7)}
+      ${kpi(`Tokens ${fmtNum(s.tokens_in || 0)}/${fmtNum(s.tokens_out || 0)}`, fmtNum(s.requests || 0), null)}
     </div>
     <div class="card table-wrap" style="padding:8px 10px 4px">
       <table class="table">
-        <thead><tr>${thSort('账号','name',sk,sd,'setUsageSort')}${thSort('5h','u5',sk,sd,'setUsageSort')}${thSort('7d','u7',sk,sd,'setUsageSort')}${thSort('并发','conc',sk,sd,'setUsageSort')}${thSort('请求','req',sk,sd,'setUsageSort')}${thSort('状态','st',sk,sd,'setUsageSort')}</tr></thead>
+        <thead><tr>${thSort('账号','name',sk,sd,'setUsageSort')}${thSort('5h','u5',sk,sd,'setUsageSort')}${thSort('7d','u7',sk,sd,'setUsageSort')}<th>Fable</th>${thSort('并发','conc',sk,sd,'setUsageSort')}${thSort('请求','req',sk,sd,'setUsageSort')}${thSort('状态','st',sk,sd,'setUsageSort')}</tr></thead>
         <tbody>
           ${accounts.map(a => {
             const p5 = pct(a.utilization_5h), p7 = pct(a.utilization_7d)
@@ -1905,7 +1943,8 @@ function renderUsage() {
               </td>
               <td>${meter('', p5)}</td>
               <td>${meter('', p7)}</td>
-              <td class="num">${a.inflight || 0}/${a.max_concurrency || 2}</td>
+              <td>${fableBadge(a.fable)}</td>
+              <td class="num">${a.inflight || 0}/${a.max_concurrency || defaultConc()}</td>
               <td class="num">${fmtNum(a.requests || 0)}</td>
               <td class="right">${nearL ? '<span class="badge danger">近限额</span>' : '<span class="badge ok">正常</span>'}</td>
             </tr>`
@@ -1946,16 +1985,17 @@ function renderProtocol() {
         }).join('')}
       </div>
     </div>
-    <div class="head">
-      <div class="section-title">模型 ${models.length}${state.models?.cli_version ? ' · ' + esc(state.models.cli_version) : ''}</div>
-      <div class="actions">
-        ${sortSelect(state.modelSort, state.modelDir, 'setModelSort', [['name','名称'],['id','ID']])}
-        <button class="btn btn-outline btn-sm" onclick="refresh()">刷新</button>
-      </div>
-    </div>
     ${state.models?.error || (state.models?.note && !models.length) ? `<p class="text-xs danger" style="margin:0">${esc(state.models.error || state.models.note)}</p>` : ''}
-    <div class="model-grid">
-      ${models.slice().sort((a,b)=>cmp((state.modelSort==='id'?a.id:a.label||a.id||'').toLowerCase(), (state.modelSort==='id'?b.id:b.label||b.id||'').toLowerCase(), state.modelDir||'asc')).map(m => `<div class="model-card"><div class="font-medium text-sm">${esc(m.label || m.id)}</div><div class="id">${esc(m.id)}</div></div>`).join('') || emptyBox('暂无模型')}
+    <div class="workbench">
+      <div class="wb-head">
+        <div class="wb-id">
+          <div class="nm">模型</div>
+          <div class="hid">${models.length} 个${state.models?.cli_version ? ' · CLI ' + esc(state.models.cli_version) : ''}</div>
+        </div>
+      </div>
+      <div class="wb-body" style="padding-top:6px;padding-bottom:6px">
+        ${models.slice().sort((a, b) => cmp((a.label || a.id || '').toLowerCase(), (b.label || b.id || '').toLowerCase(), 'asc')).map(m => `<div class="model-row"><span class="nm">${esc(m.label || m.id)}</span><code>${esc(m.id)}</code><button class="btn btn-ghost btn-sm" onclick="copyText('${esc(m.id)}')">复制</button></div>`).join('') || emptyBox('暂无模型')}
+      </div>
     </div>
   </section>`
 }
@@ -1980,6 +2020,7 @@ function renderSettings() {
       </div>
       <div class="wb-body">
         <div class="set-list">
+          <div class="set-sub">路由</div>
           <div class="set-row"><span>粘性</span>
             <label class="chip-check"><input id="st_enabled" type="checkbox" ${sticky.enabled !== false ? 'checked' : ''}/> 启用</label>
           </div>
@@ -1995,6 +2036,7 @@ function renderSettings() {
               ${[[3600,'1 小时'],[21600,'6 小时'],[86400,'24 小时'],[604800,'7 天'],[2592000,'30 天']].map(([v,l]) => `<option value="${v}" ${(Number(sticky.ttl_seconds ?? 86400)===v)?'selected':''}>${l}</option>`).join('')}
             </select>
           </div>
+          <div class="set-sub">配额与并发</div>
           <div class="set-row"><span>安全线</span>
             <select id="q_safety" class="input">
               ${[[0.80,'80%'],[0.85,'85%'],[0.90,'90%'],[0.95,'95%'],[0.98,'98%']].map(([v,l]) => `<option value="${v}" ${(Number(q.safety_ratio ?? 0.95)===v)?'selected':''}>${l}</option>`).join('')}
@@ -2005,9 +2047,9 @@ function renderSettings() {
               ${[[0.70,'70%'],[0.80,'80%'],[0.85,'85%'],[0.90,'90%']].map(([v,l]) => `<option value="${v}" ${(Number(q.warn_ratio ?? 0.85)===v)?'selected':''}>${l}</option>`).join('')}
             </select>
           </div>
-          <div class="set-row"><span>并发</span>
+          <div class="set-row"><span>默认并发（热更新）</span>
             <select id="c_max" class="input">
-              ${[1,2,4,8,16].map(v => `<option value="${v}" ${(Number(c.default_max_per_account ?? 2)===v)?'selected':''}>${v}</option>`).join('')}
+              ${[1,2,4,8,16,20,32,64].map(v => `<option value="${v}" ${(Number(c.default_max_per_account ?? 20)===v)?'selected':''}>${v}</option>`).join('')}
             </select>
           </div>
           <div class="set-row"><span>拦截</span>
@@ -2016,6 +2058,20 @@ function renderSettings() {
               <label class="chip-check"><input id="q_block7" type="checkbox" ${q.block_on_7d !== false ? 'checked' : ''}/> 7d</label>
             </div>
           </div>
+          <div class="set-sub">请求日志</div>
+          <div class="set-row"><span>记录模式</span>
+            <div class="switch-row">
+              <label class="chip-check"><input type="radio" name="log_mode" id="log_off" value="off" ${(r.logging?.mode || state.logs?.config?.mode) === 'off' ? 'checked' : ''}/> 关闭</label>
+              <label class="chip-check"><input type="radio" name="log_mode" id="log_normal" value="normal" ${(r.logging?.mode || state.logs?.config?.mode || 'normal') === 'normal' ? 'checked' : ''}/> 普通</label>
+              <label class="chip-check"><input type="radio" name="log_mode" id="log_debug" value="debug" ${(r.logging?.mode || state.logs?.config?.mode) === 'debug' ? 'checked' : ''}/> Debug</label>
+            </div>
+          </div>
+          <div class="set-row"><span>保留天数</span>
+            <select id="log_retain" class="input">
+              ${[1,3,7,14,30].map(v => `<option value="${v}" ${(Number((r.logging||{}).retain_days ?? state.logs?.config?.retain_days ?? 7)===v)?'selected':''}>${v} 天</option>`).join('')}
+            </select>
+          </div>
+          <p class="text-xs faint" style="margin:4px 0 0">普通只记摘要（状态/耗时/模型/token）。Debug 额外保存清洗后的请求体（CRS 风格，密钥脱敏）。热更新，保存即生效。</p>
         </div>
       </div>
     </div>
@@ -2042,13 +2098,336 @@ async function saveRouting() {
         block_on_7d: !!document.getElementById('q_block7')?.checked,
       },
       concurrency: {
-        default_max_per_account: Number(document.getElementById('c_max')?.value || 2),
+        default_max_per_account: Number(document.getElementById('c_max')?.value || 20),
+        default_key_concurrency: Number(document.getElementById('c_max')?.value || 20),
+      },
+      logging: {
+        mode: document.querySelector('input[name="log_mode"]:checked')?.value || 'normal',
+        retain_days: Number(document.getElementById('log_retain')?.value || 7),
       },
     }
     await api('/api/panel/routing', { method: 'PUT', body: JSON.stringify(body) })
     toast('已保存')
     await refresh()
   } catch (e) { toast(e.message) }
+}
+
+/* ── api keys ────────────────────────────────────────────── */
+async function loadKeys() {
+  try {
+    const r = await api('/api/panel/api-keys')
+    const d = r.data || r
+    state.apiKeys = d.keys || []
+  } catch (e) {
+    if (state.apiKeys == null) state.apiKeys = []
+    toast(e.message, 'err')
+  }
+  if (state.view === 'keys') render()
+}
+function keyStatusPill(k) {
+  if (k.status === 'disabled') return '<span class="acc-pill off">停用</span>'
+  const t = Date.parse(k.expires_at || '')
+  if (Number.isFinite(t) && t <= Date.now()) return '<span class="acc-pill bad">已过期</span>'
+  return '<span class="acc-pill ok">启用</span>'
+}
+function keyQuotaCell(k) {
+  const q = Number(k.quota_requests || 0), u = Number(k.quota_used || 0)
+  if (!q) return `<span class="text-xs faint">不限 · 已用 ${fmtNum(u)}</span>`
+  return meter(`${fmtNum(u)} / ${fmtNum(q)}`, Math.min(100, q ? u / q * 100 : 0))
+}
+function keyExpiryText(k) {
+  if (!k.expires_at) return '<span class="faint">永久</span>'
+  const t = Date.parse(k.expires_at)
+  if (!Number.isFinite(t)) return esc(k.expires_at)
+  const d = t - Date.now()
+  return d > 0 ? relMs(d) + ' 后' : '<span class="danger">已过期</span>'
+}
+function keyRow(k) {
+  const active = k.status !== 'disabled'
+  const t = Date.parse(k.expires_at || '')
+  const expired = Number.isFinite(t) && t <= Date.now()
+  return `<tr class="${!active || expired ? 'dead-row' : ''}">
+    <td><div class="font-medium">${esc(k.name || 'default')}</div><div class="text-xs faint">${fmtNum(k.requests || 0)} 请求${k.inflight ? ' · ' + k.inflight + ' 进行中' : ''}</div></td>
+    <td><code title="${esc(k.id)}">${esc(k.key || k.key_prefix || '—')}</code></td>
+    <td>${keyStatusPill(k)}</td>
+    <td>${keyQuotaCell(k)}</td>
+    <td class="text-xs">${k.max_concurrency ? k.max_concurrency + ' 并发' : '并发不限'} · ${k.rpm ? 'RPM ' + k.rpm : 'RPM 不限'}</td>
+    <td class="text-xs">${keyExpiryText(k)}</td>
+    <td class="right">
+      <button class="btn btn-ghost btn-sm" onclick="openEditKey('${esc(k.id)}')">并发</button>
+      <button class="btn btn-ghost btn-sm" onclick="toggleKeyStatus('${esc(k.id)}', ${active ? 'false' : 'true'})">${active ? '停用' : '启用'}</button>
+      <button class="btn btn-ghost btn-sm" title="已用额度清零" onclick="resetKeyQuota('${esc(k.id)}')">清零</button>
+      <button class="btn btn-ghost btn-sm danger" onclick="openDeleteKey('${esc(k.id)}','${esc(k.name || '')}')">删除</button>
+    </td>
+  </tr>`
+}
+function renderKeys() {
+  const keys = state.apiKeys
+  if (keys == null) return skeleton('table')
+  return `
+  <section class="section">
+    <div class="head">
+      <div class="section-title">托管密钥 ${keys.length}</div>
+      <button class="btn btn-primary btn-sm" onclick="openCreateKey()">生成</button>
+    </div>
+    ${keys.length ? `<div class="card table-wrap" style="padding:8px 10px 4px">
+      <table class="table">
+        <thead><tr><th>名称</th><th>Key</th><th>状态</th><th>额度</th><th>限制</th><th>过期</th><th class="right"></th></tr></thead>
+        <tbody>${keys.map(keyRow).join('')}</tbody>
+      </table>
+    </div>` : emptyBox('尚无密钥 · sk-kin-… 仅可调用协议接口', `<button class="btn btn-primary btn-sm" onclick="openCreateKey()">生成</button>`)}
+  </section>`
+}
+
+function openEditVmConc(id, current) {
+  const cur = Number(current ?? defaultConc())
+  openModal(`
+    <h3>虚拟机并发 · ${esc(id)}</h3>
+    <p class="who">网关侧热更新，不重启容器</p>
+    <div class="set-list">
+      <div class="set-row"><span>并发</span><select id="vmConc" class="input">${concOptions(cur)}</select></div>
+    </div>
+    <div class="foot">
+      <button class="btn btn-outline btn-sm" onclick="closeModal()">取消</button>
+      <button class="btn btn-primary btn-sm" id="vmConcGo" onclick="doEditVmConc('${esc(id)}')">保存</button>
+    </div>`)
+  const dlg = document.querySelector('#modalRoot .modal')
+  if (dlg) dlg.classList.add('sheet')
+}
+async function doEditVmConc(id) {
+  const max_concurrency = Number(document.getElementById('vmConc')?.value || defaultConc())
+  const btn = document.getElementById('vmConcGo')
+  if (btn) { btn.disabled = true; btn.textContent = '保存中…' }
+  try {
+    await api('/api/panel/vms/' + encodeURIComponent(id), { method: 'PATCH', body: JSON.stringify({ max_concurrency }) })
+    closeModal()
+    toast('并发已热更新')
+    await refresh()
+    if (state.selectedVm === id) await openVm(id, state.vmTab)
+  } catch (e) {
+    toast(e.message, 'err')
+    if (btn) { btn.disabled = false; btn.textContent = '保存' }
+  }
+}
+function defaultConc() {
+  const c = state.routing?.concurrency || state.dashboard?.routing?.concurrency || {}
+  const n = Number(c.default_key_concurrency ?? c.default_max_per_account)
+  return Number.isFinite(n) && n >= 0 ? n : 20
+}
+function concOptions(selected) {
+  const opts = [[0,'不限'],[1,'1'],[2,'2'],[4,'4'],[8,'8'],[16,'16'],[20,'20'],[32,'32'],[64,'64']]
+  const cur = Number(selected ?? defaultConc())
+  return opts.map(([v,l]) => `<option value="${v}" ${Number(v)===cur?'selected':''}>${l}</option>`).join('')
+}
+function openCreateKey() {
+  openModal(`
+    <h3>生成密钥</h3>
+    <div class="set-list">
+      <div class="set-row"><span>名称</span><input id="akName" class="input" placeholder="client-a" /></div>
+      <div class="set-row"><span>并发</span><select id="akConc" class="input">${concOptions(defaultConc())}</select></div>
+      <div class="set-row"><span>请求额度</span><select id="akQuota" class="input">${[[0,'不限'],[1000,'1k'],[5000,'5k'],[10000,'10k'],[50000,'50k']].map(([v,l]) => `<option value="${v}">${l}</option>`).join('')}</select></div>
+      <div class="set-row"><span>RPM</span><select id="akRpm" class="input">${[[0,'不限'],[30,'30'],[60,'60'],[120,'120'],[600,'600']].map(([v,l]) => `<option value="${v}">${l}</option>`).join('')}</select></div>
+      <div class="set-row"><span>有效期</span><select id="akDays" class="input">${[[0,'永久'],[7,'7 天'],[30,'30 天'],[90,'90 天'],[365,'一年']].map(([v,l]) => `<option value="${v}" ${v===30?'selected':''}>${l}</option>`).join('')}</select></div>
+    </div>
+    <div class="foot">
+      <button class="btn btn-outline btn-sm" onclick="closeModal()">取消</button>
+      <button class="btn btn-primary btn-sm" id="akGo" onclick="doCreateKey()">生成</button>
+    </div>`)
+  const dlg = document.querySelector('#modalRoot .modal')
+  if (dlg) dlg.classList.add('sheet')
+  setTimeout(() => document.getElementById('akName')?.focus(), 0)
+}
+async function doCreateKey() {
+  const body = {
+    name: document.getElementById('akName')?.value?.trim() || 'default',
+    max_concurrency: Number(document.getElementById('akConc')?.value || 0),
+    quota_requests: Number(document.getElementById('akQuota')?.value || 0),
+    rpm: Number(document.getElementById('akRpm')?.value || 0),
+  }
+  const days = Number(document.getElementById('akDays')?.value || 0)
+  if (days > 0) body.expires_in_days = days
+  const btn = document.getElementById('akGo')
+  if (btn) { btn.disabled = true; btn.textContent = '生成中…' }
+  try {
+    const r = await api('/api/panel/api-keys', { method: 'POST', body: JSON.stringify(body) })
+    showNewKey((r.data || r).item || {})
+    loadKeys()
+  } catch (e) {
+    toast(e.message, 'err')
+    if (btn) { btn.disabled = false; btn.textContent = '生成' }
+  }
+}
+function showNewKey(item) {
+  openModal(`
+    <h3>已生成 · ${esc(item.name || '')}</h3>
+    <div class="keybox" title="点击复制" onclick="copyText('${esc(item.key || '')}')">${esc(item.key || '')}</div>
+    <div class="danger-box">明文仅此一次展示，请立即保存；列表中只保留脱敏片段。</div>
+    <div class="foot">
+      <button class="btn btn-outline btn-sm" onclick="closeModal()">完成</button>
+      <button class="btn btn-primary btn-sm" onclick="copyText('${esc(item.key || '')}')">复制</button>
+    </div>`)
+}
+function findKey(id) {
+  return (state.apiKeys || []).find(k => k.id === id) || null
+}
+function openEditKey(id) {
+  const k = findKey(id)
+  if (!k) { toast('密钥不存在', 'err'); return }
+  openModal(`
+    <h3>并发控制 · ${esc(k.name || id)}</h3>
+    <p class="who"><span class="mono">${esc(k.key_prefix || k.id)}</span> · 进行中 ${fmtNum(k.inflight || 0)}</p>
+    <div class="set-list">
+      <div class="set-row"><span>并发</span><select id="akConc" class="input">${concOptions(k.max_concurrency ?? defaultConc())}</select></div>
+      <div class="set-row"><span>RPM</span><select id="akRpm" class="input">${[[0,'不限'],[30,'30'],[60,'60'],[120,'120'],[300,'300'],[600,'600']].map(([v,l]) => `<option value="${v}" ${Number(v)===Number(k.rpm||0)?'selected':''}>${l}</option>`).join('')}</select></div>
+      <div class="set-row"><span>请求额度</span><select id="akQuota" class="input">${[[0,'不限'],[1000,'1k'],[5000,'5k'],[10000,'10k'],[50000,'50k'],[100000,'100k']].map(([v,l]) => `<option value="${v}" ${Number(v)===Number(k.quota_requests||0)?'selected':''}>${l}</option>`).join('')}</select></div>
+    </div>
+    <div class="foot">
+      <button class="btn btn-outline btn-sm" onclick="closeModal()">取消</button>
+      <button class="btn btn-primary btn-sm" id="akGo" onclick="doEditKey('${esc(k.id)}')">保存</button>
+    </div>`)
+  const dlg = document.querySelector('#modalRoot .modal')
+  if (dlg) dlg.classList.add('sheet')
+}
+async function doEditKey(id) {
+  const body = {
+    max_concurrency: Number(document.getElementById('akConc')?.value || 0),
+    rpm: Number(document.getElementById('akRpm')?.value || 0),
+    quota_requests: Number(document.getElementById('akQuota')?.value || 0),
+  }
+  const btn = document.getElementById('akGo')
+  if (btn) { btn.disabled = true; btn.textContent = '保存中…' }
+  try {
+    await api('/api/panel/api-keys/' + encodeURIComponent(id), { method: 'PATCH', body: JSON.stringify(body) })
+    closeModal()
+    toast('并发已更新')
+    loadKeys()
+  } catch (e) {
+    toast(e.message, 'err')
+    if (btn) { btn.disabled = false; btn.textContent = '保存' }
+  }
+}
+async function toggleKeyStatus(id, enable) {
+  try {
+    await api('/api/panel/api-keys/' + encodeURIComponent(id), { method: 'PATCH', body: JSON.stringify({ status: enable ? 'active' : 'disabled' }) })
+    toast(enable ? '已启用' : '已停用')
+    loadKeys()
+  } catch (e) { toast(e.message, 'err') }
+}
+async function resetKeyQuota(id) {
+  try {
+    await api('/api/panel/api-keys/' + encodeURIComponent(id) + '/reset-quota', { method: 'POST' })
+    toast('额度已清零')
+    loadKeys()
+  } catch (e) { toast(e.message, 'err') }
+}
+function openDeleteKey(id, name) {
+  openModal(`
+    <h3 class="danger">删除密钥</h3>
+    <p class="who">${esc(name || id)} · <span class="mono">${esc(id)}</span></p>
+    <div class="danger-box">删除后立即失效，客户端再用该 key 将收到 401。</div>
+    <div class="foot">
+      <button class="btn btn-outline btn-sm" onclick="closeModal()">取消</button>
+      <button class="btn btn-danger btn-sm" onclick="doDeleteKey('${esc(id)}')">删除</button>
+    </div>`)
+}
+async function doDeleteKey(id) {
+  try {
+    await api('/api/panel/api-keys/' + encodeURIComponent(id), { method: 'DELETE' })
+    closeModal()
+    toast('已删除')
+    loadKeys()
+  } catch (e) { toast(e.message, 'err') }
+}
+
+/* ── request logs ────────────────────────────────────────── */
+async function loadLogs(mode) {
+  if (mode) state.logMode = mode
+  try {
+    const r = await api('/api/panel/request-logs?mode=' + encodeURIComponent(state.logMode) + '&limit=50')
+    state.logs = r.data || r
+  } catch (e) {
+    if (state.logs == null) state.logs = { items: [] }
+    toast(e.message, 'err')
+  }
+  if (state.view === 'logs') render()
+}
+function setLogMode(m) {
+  if (m === state.logMode) return
+  state.logMode = m
+  state.logs = null
+  render()
+  loadLogs()
+}
+function logRow(l, debug) {
+  const err = Number(l.status) >= 400
+  const t = new Date(l.ts)
+  const hh = Number.isFinite(t.getTime()) ? t.toTimeString().slice(0, 8) : String(l.ts || '—')
+  const rid = String(l.request_id || '')
+  const modelShort = l.model ? String(l.model).replace(/-\d{8}$/, '') : '—'
+  const kind = l.api_key_kind === 'managed' ? (l.api_key_id || 'managed') : (l.api_key_kind || '—')
+  return `<tr class="${err ? 'near-limit' : ''}">
+    <td><div class="mono num" title="${esc(l.ts || '')}">${hh}</div><div class="text-xs faint mono" title="${esc(rid)} · 点击复制" style="cursor:copy" onclick="copyText('${esc(rid)}')">${esc(rid.slice(0, 8))}</div></td>
+    <td><div class="mono text-xs">${esc(l.method || '')} ${esc(l.path || '')}</div><div class="text-xs faint">${esc(l.protocol || '')}${l.stream ? ' · stream' : ''}</div></td>
+    <td class="text-xs" title="${esc(l.model || '')}">${esc(modelShort)}</td>
+    <td>${err ? `<span class="badge danger">${Number(l.status) || '—'}</span><div class="text-xs danger">${esc(l.error_code || '')}</div>` : `<span class="badge ok">${Number(l.status) || '—'}</span>`}</td>
+    <td class="num right">${l.duration_ms != null ? l.duration_ms + 'ms' : '—'}</td>
+    <td class="num text-xs">${fmtTok(l)}</td>
+    <td class="text-xs mono">${esc(l.via || (debug && l.hop_meta && l.hop_meta.via) || '—')}</td>
+    <td class="text-xs">${l.vm_id ? `<a href="#/vm/${esc(l.vm_id)}">${esc(vmNameById(l.vm_id))}</a>` : '—'}</td>
+    ${debug ? `<td class="right"><button class="btn btn-ghost btn-sm" onclick="openLogDetail('${esc(rid)}')">详情</button></td>` : ''}
+  </tr>`
+}
+function renderLogs() {
+  const L = state.logs
+  const mode = state.logMode || 'normal'
+  const debug = mode === 'debug'
+  const items = L?.items || []
+  const cfg = L?.config || {}
+  return `
+  <section class="section">
+    <div class="head">
+      <div class="section-title">请求日志 ${L ? items.length : ''}</div>
+      <div class="toolbar">
+        <div class="seg" role="group" aria-label="日志模式">
+          <button class="${!debug ? 'on' : ''}" onclick="setLogMode('normal')">普通</button>
+          <button class="${debug ? 'on' : ''}" onclick="setLogMode('debug')">Debug</button>
+        </div>
+        <button class="btn btn-outline btn-sm" onclick="loadLogs()">刷新</button>
+      </div>
+    </div>
+    ${L == null ? skeleton('table') : items.length ? `<div class="card table-wrap" style="padding:8px 10px 4px">
+      <table class="table">
+        <thead><tr><th>时间</th><th>请求</th><th>模型</th><th>状态</th><th class="right">耗时</th><th>Token</th><th>转发</th><th>节点</th>${debug ? '<th class="right"></th>' : ''}</tr></thead>
+        <tbody>${items.map(l => logRow(l, debug)).join('')}</tbody>
+      </table>
+    </div>
+    <p class="text-xs faint" style="margin:0">记录 ${esc(cfg.mode || 'normal')} · 保留 ${cfg.retain_days ?? 7} 天 · 上方为查看筛选，设置页可开关记录模式</p>` : emptyBox('暂无日志')}
+  </section>`
+}
+async function openLogDetail(rid) {
+  try {
+    const r = await api('/api/panel/request-logs/' + encodeURIComponent(rid))
+    const item = (r.data || r).item || r || {}
+    const snap = item.request_body_snapshot || item.inbound_summary || null
+    openModal(`
+      <h3>请求详情</h3>
+      <p class="who mono">${esc(rid)} · ${esc(item.via || '—')} · ${esc(item.protocol || '')}</p>
+      <dl class="kv">
+        <dt>状态</dt><dd>${esc(item.status)} / up ${esc(item.upstream_status || '—')}</dd>
+        <dt>模型</dt><dd class="mono">${esc(item.model || '—')}</dd>
+        <dt>Token</dt><dd class="num">${fmtTok(item)}</dd>
+        <dt>节点</dt><dd>${esc(item.vm_id || '—')}</dd>
+      </dl>
+      <div class="text-xs faint" style="margin:8px 0 4px">CRS 清洗快照</div>
+      <pre class="json" style="max-height:220px">${esc(JSON.stringify(snap, null, 2))}</pre>
+      <details class="import-box"><summary>完整 debug</summary><div class="body"><pre class="json" style="max-height:240px">${esc(JSON.stringify(item, null, 2))}</pre></div></details>
+      <div class="foot">
+        <button class="btn btn-outline btn-sm" onclick="copyText('${esc(rid)}')">复制 ID</button>
+        <button class="btn btn-primary btn-sm" onclick="closeModal()">关闭</button>
+      </div>`)
+    const dlg = document.querySelector('#modalRoot .modal')
+    if (dlg) dlg.style.maxWidth = '560px'
+  } catch (e) { toast(e.message, 'err') }
 }
 
 /* ── proxies ─────────────────────────────────────────────── */
@@ -2117,18 +2496,18 @@ function renderProxies() {
   const tot = px.totals || {}
   const list = px.proxies || []
   const interval = cfg.probe_interval_min || 10
+  const total = tot.total ?? list.length
   return `
   <section class="section">
-    <div class="stat-hero">
-      ${statTile('总数', tot.total ?? list.length, '')}
-      ${statTile('空闲', tot.free ?? 0, '')}
-      ${statTile('已绑', tot.bound ?? 0, '')}
-      ${statTile('健康', `${tot.ok ?? 0}<small> / ${tot.dead ?? 0}</small>`, '')}
+    <div class="kpi-row">
+      ${kpi('代理总数', String(total), null)}
+      ${kpi('健康', `${tot.ok ?? 0}<small> / ${total}</small>`, total ? (tot.ok ?? 0) / total * 100 : 0)}
+      ${kpi('已绑定', `${tot.bound ?? 0}<small> / ${total}</small>`, total ? (tot.bound ?? 0) / total * 100 : 0)}
+      ${kpi('空闲 · 失效 ' + (tot.dead ?? 0), String(tot.free ?? 0), null)}
     </div>
     <div class="head">
-      <div class="section-title">${tot.total ?? list.length}</div>
+      <div class="section-title">代理池</div>
       <div class="toolbar">
-        ${sortSelect(state.proxySort, state.proxyDir, 'setProxySort', [['host','代理'],['status','状态'],['lat','延迟'],['vm','节点'],['fail','失败']])}
         <select class="input" style="width:120px;height:32px" aria-label="探测间隔" onchange="setProbeInterval(this.value)">
           ${[5,10,30,60].map(m => `<option value="${m}" ${Number(interval)===m?'selected':''}>${m} 分</option>`).join('')}
         </select>
@@ -2188,11 +2567,11 @@ function renderProxies() {
 /* ── vm actions ──────────────────────────────────────────── */
 async function createVmFromPage() {
   const name = document.getElementById('vmCreateName')?.value?.trim() || vmNameOf(nextVmSeq(state.dashboard?.vms || []))
-  const kernel = document.getElementById('vmCreateKernel')?.value || state.kernel || 'unikernel-min'
+  const kernel = document.getElementById('vmCreateKernel')?.value || state.kernel || 'ubuntu-24.04'
   const timezone = document.getElementById('vmCreateTz')?.value || state.createTz || 'America/Los_Angeles'
   const locale = document.getElementById('vmCreateLocale')?.value || state.createLocale || 'en_US.UTF-8'
   const region = document.getElementById('vmCreateRegion')?.value?.trim() || state.createRegion || undefined
-  const max_concurrency = Number(document.getElementById('vmCreateConc')?.value || state.createConc || 2)
+  const max_concurrency = Number(document.getElementById('vmCreateConc')?.value || state.createConc || defaultConc())
   const weight = Number(document.getElementById('vmCreateWeight')?.value || state.createWeight || 1)
   const claude_code_version = document.getElementById('vmCreateCC')?.value?.trim() || undefined
   const after = document.getElementById('vmCreateAfter')?.value || state.createAfter || 'idle'
@@ -2206,7 +2585,7 @@ async function createVmFromPage() {
   if (btn) { btn.disabled = true; btn.textContent = '创建中' }
   try {
     const body = {
-      id: name, name, kernel, timezone, locale, region,
+      id: vmIdOf(name), name, kernel, timezone, locale, region,
       max_concurrency, weight, claude_code_version,
       start, auto_allocate_proxy, activate, proxy_cli_enabled, seed_policy,
     }
@@ -2443,7 +2822,7 @@ async function doDeleteVm() {
 
 /* ── router ──────────────────────────────────────────────── */
 function render() {
-  const views = { overview: renderOverview, cluster: renderCluster, vm: renderVm, import: renderImport, usage: renderUsage, protocol: renderProtocol, proxies: renderProxies, settings: renderSettings }
+  const views = { overview: renderOverview, cluster: renderCluster, vm: renderVm, import: renderImport, usage: renderUsage, protocol: renderProtocol, keys: renderKeys, logs: renderLogs, proxies: renderProxies, settings: renderSettings }
   const fn = views[state.view] || renderOverview
   const main = document.getElementById('main')
   if (!key()) {
@@ -2498,6 +2877,8 @@ function applyRoute() {
     openVm(id)
     return
   }
+  if (known === 'keys' && state.apiKeys == null) loadKeys()
+  if (known === 'logs' && state.logs == null) loadLogs()
   render()
 }
 
