@@ -589,7 +589,7 @@ pre.json{font-size:11px;overflow:auto;max-height:200px;background:oklch(0 0 0/25
         <div class="topbar-actions">
           <span id="sysChip" class="badge" title="网关状态 · 宿主负载">—</span>
           <button class="btn btn-outline" onclick="refresh()">刷新</button>
-          <button class="btn btn-outline" onclick="probeAll()" title="虚拟机额度探测（5h/7d/fable）">额度探测</button>
+          <button class="btn btn-outline" onclick="probeAll()" title="经槽内 Go worker + SOCKS5 探测 5h/7d/fable">额度探测</button>
         </div>
       </header>
 
@@ -606,25 +606,25 @@ const LS_USER = 'kin_console_user'
 const LS_BASE = 'kin_api_base'
 const COOKIE = 'kin_panel_token'
 const titles = {
-  overview: ['总览', '槽位 · 额度 · 出站'],
+  overview: ['总览', '槽位 · 额度 · Go worker'],
   cluster: ['集群', '有凭证：可用 / 限制 / 不可用'],
-  vm: ['虚拟机', '额度探测走槽 UID'],
-  import: ['导入', 'sessionKey 写入槽位'],
-  usage: ['用量', '5h / 7d / fable'],
-  protocol: ['协议', '默认 CRS 中继，CLI 为替补'],
-  keys: ['密钥', 'sk-kin 只能调 /v1'],
-  logs: ['日志', '普通摘要 · Debug 清洗快照'],
-  proxies: ['代理池', '外层 SOCKS5'],
-  settings: ['设置', '粘性 · 并发 · 日志模式'],
+  vm: ['虚拟机', '探测与刷新走槽内 Go worker'],
+  import: ['导入', 'sessionKey 必须经槽 SOCKS5'],
+  usage: ['用量', '5h / 7d / fable / 缓存 token'],
+  protocol: ['协议', 'Go worker · 强制 SOCKS5'],
+  keys: ['密钥', 'sk-kin 只能调 /v1 · HMAC 落库'],
+  logs: ['日志', 'usage · attempts · 缓存 token'],
+  proxies: ['代理池', '每槽必须绑 SOCKS5'],
+  settings: ['设置', '粘性 · 池 · failover · 日志'],
 }
 
 
 /* 官方内核档案 */
 const KERNELS = [
-  { id:'ubuntu-24.04', name:'Ubuntu 24.04', base:'kin-os/ubuntu:24.04', size:'标准机', feats:['LTS','apt','Claude 2.1.234','host-net'] },
-  { id:'debian-12',    name:'Debian 12',    base:'kin-os/debian:12',    size:'标准机', feats:['glibc','apt','Claude 2.1.234','host-net'] },
-  { id:'archlinux',    name:'Arch Linux',   base:'kin-os/arch:latest',  size:'标准机', feats:['rolling','pacman','Claude 2.1.234','host-net'] },
-  { id:'fedora-41',    name:'Fedora 41',    base:'kin-os/fedora:41',    size:'标准机', feats:['dnf','glibc','Claude 2.1.234','host-net'] },
+  { id:'ubuntu-24.04', name:'Ubuntu 24.04', base:'kin-os/ubuntu:24.04', size:'标准机', feats:['LTS','apt','Go worker','host-net'] },
+  { id:'debian-12',    name:'Debian 12',    base:'kin-os/debian:12',    size:'标准机', feats:['glibc','apt','Go worker','host-net'] },
+  { id:'archlinux',    name:'Arch Linux',   base:'kin-os/arch:latest',  size:'标准机', feats:['rolling','pacman','Go worker','host-net'] },
+  { id:'fedora-41',    name:'Fedora 41',    base:'kin-os/fedora:41',    size:'标准机', feats:['dnf','glibc','Go worker','host-net'] },
 ]
 function kernelProfile(id) {
   const k = String(id || '').trim()
@@ -721,17 +721,35 @@ function relMs(ms) {
   if (s < 86400) return Math.round(s/3600) + 'h'
   return Math.round(s/86400) + 'd'
 }
+function expiresAtToMs(v) {
+  if (v == null || v === '') return 0
+  if (typeof v === 'number' && Number.isFinite(v)) return v < 10_000_000_000 ? v * 1000 : v
+  const str = String(v).trim()
+  if (!str) return 0
+  if (/^\d+(\.\d+)?$/.test(str)) {
+    const n = Number(str)
+    if (!Number.isFinite(n) || n <= 0) return 0
+    return n < 10_000_000_000 ? n * 1000 : n
+  }
+  const parsed = Date.parse(str)
+  return Number.isFinite(parsed) ? parsed : 0
+}
+function fmtExpiresAt(v) {
+  const t = expiresAtToMs(v)
+  if (!t) return v == null || v === '' ? '—' : String(v)
+  try { return new Date(t).toISOString() } catch { return String(v) }
+}
 function fmtReset(v) {
   if (!v) return ''
-  const t = Date.parse(v)
-  if (!Number.isFinite(t)) return String(v)
+  const t = expiresAtToMs(v)
+  if (!t) return String(v)
   const d = t - Date.now()
   return d >= 0 ? relMs(d) + ' 后重置' : '已过重置'
 }
 function credExpiry(v) {
   if (!v || !v.has_token) return { cls:'none', text:'无凭证', ms:null }
-  const t = Date.parse(v.expires_at || '')
-  if (!Number.isFinite(t)) return { cls:'ok', text:'已绑定', ms:null }
+  const t = expiresAtToMs(v.expires_at)
+  if (!t) return { cls:'ok', text:'已绑定', ms:null }
   const ms = t - Date.now()
   if (ms <= 0) return { cls:'bad', text:'已过期', ms }
   if (ms < 3600e3) return { cls:'warn', text: relMs(ms) + ' 过期', ms }
@@ -764,6 +782,15 @@ function extraUsageText(ex) {
   const on = ex.is_enabled ? '开' : '关'
   const u = ex.utilization != null ? (pct(ex.utilization).toFixed(0) + '%') : '—'
   return on + ' · ' + u + (ex.status ? ' · ' + ex.status : '')
+}
+function runtimeWindowLine(w) {
+  if (!w) return '—'
+  const bits = []
+  if (w.session_window_status) bits.push(w.session_window_status)
+  if (w.session_window_end) bits.push('至 ' + fmtExpiresAt(w.session_window_end))
+  if (w.rate_limit_reset_at) bits.push('限流 ' + fmtReset(w.rate_limit_reset_at))
+  if (w.overload_until) bits.push('过载至 ' + fmtExpiresAt(w.overload_until))
+  return bits.join(' · ') || '—'
 }
 /* 大号健康环：分数 + 标签画进 SVG，一个图形承载一个数字 */
 function donut(score, label, size = 92) {
@@ -818,7 +845,7 @@ function setClusterSort(k) {
 }
 
 
-let state = { view: 'overview', selectedVm: null, dashboard: null, usage: null, models: null, routing: null, detail: null, proxies: null, apiKeys: null, logs: null, logMode: 'normal', clusterQ: '', clusterFilter: 'all', clusterView: 'list', clusterSort: 'name', clusterDir: 'asc', vmTab: 'overview', loading: false, kernel: 'ubuntu-24.04', createName: '', advOpen: false, usageSort: 'u5', usageDir: 'desc', proxySort: 'status', proxyDir: 'asc', seedPreset: 'strict', createPreset: 'strict', createAfter: 'start', createTemplate: 'std-ubuntu' }
+let state = { view: 'overview', selectedVm: null, dashboard: null, usage: null, models: null, routing: null, detail: null, proxies: null, apiKeys: null, logs: null, logMode: 'normal', clusterQ: '', clusterFilter: 'all', clusterView: 'list', clusterSort: 'name', clusterDir: 'asc', vmTab: 'overview', loading: false, kernel: 'ubuntu-24.04', createName: '', advOpen: false, usageSort: 'u5', usageDir: 'desc', proxySort: 'status', proxyDir: 'asc', seedPreset: 'strict', createPreset: 'strict', createAfter: 'proxy', createTemplate: 'std-ubuntu' }
 let bootstrapped = false
 
 function sameOriginPanel(host) {
@@ -971,8 +998,12 @@ function pct(u) { if (u == null) return 0; const n = Number(u); return n > 1 ? n
 function fmtTok(l) {
   const inn = l && (l.input_tokens != null ? l.input_tokens : (l.usage && l.usage.input_tokens))
   const out = l && (l.output_tokens != null ? l.output_tokens : (l.usage && l.usage.output_tokens))
-  if (inn == null && out == null) return '—'
-  return (inn || 0) + '/' + (out || 0)
+  const cr = l && (l.cache_read_tokens != null ? l.cache_read_tokens : (l.usage && l.usage.cache_read_input_tokens))
+  const cc = l && (l.cache_creation_tokens != null ? l.cache_creation_tokens : (l.usage && l.usage.cache_creation_input_tokens))
+  if (inn == null && out == null && cr == null && cc == null) return '—'
+  let s = (inn || 0) + '/' + (out || 0)
+  if (cr || cc) s += ' · c' + (cr || 0) + '/' + (cc || 0)
+  return s
 }
 function barColor(p) { if (p >= 95) return 'var(--bad)'; if (p >= 85) return 'var(--warn)'; return 'var(--ok)' }
 function fmtNum(n) {
@@ -1100,9 +1131,9 @@ async function refresh() {
     if (m && Array.isArray(m.data) && !m.items) {
       m = {
         items: m.data.map(x => ({ id: x.id, label: x.display_name || x.id })),
-        source: m.source || 'claude_cli_catalog',
+        source: m.source || 'go-slot-worker',
         total: m.data.length,
-        cli_version: m.cli_version || null,
+        worker: m.worker || m.source || null,
         note: m.note || null,
       }
     }
@@ -1144,7 +1175,7 @@ function fmtProbeToast(d) {
 }
 async function probeAll() {
   try {
-    toast('正在虚拟机探测额度…')
+    toast('正在经 Go worker 探测额度…')
     const d = await api('/api/panel/probe', { method: 'POST', body: JSON.stringify({}) })
     const items = d.items || []
     const ok = items.filter(x => x && x.ok).length
@@ -1154,7 +1185,7 @@ async function probeAll() {
 }
 async function probeOne(id) {
   try {
-    toast('正在虚拟机探测 ' + id + '…')
+    toast('正在经 worker 探测 ' + id + '…')
     const d = await api('/api/panel/vms/' + id + '/probe', { method: 'POST', body: JSON.stringify({}) })
     toast(fmtProbeToast(d))
     await refresh()
@@ -1570,13 +1601,6 @@ function createSheetHTML() {
             ${[['en_US.UTF-8','English'],['zh_CN.UTF-8','中文'],['ja_JP.UTF-8','日本語'],['C.UTF-8','C']].map(([v,l]) => `<option value="${v}" ${(state.createLocale||'en_US.UTF-8')===v?'selected':''}>${l}</option>`).join('')}
           </select>
         </label>
-        <label>CLI
-          <select id="vmCreateCC" class="input">
-            <option value="">最新</option>
-            <option value="2.1.233">2.1.233</option>
-            <option value="2.1.200">2.1.200</option>
-          </select>
-        </label>
         <label>并发
           <select id="vmCreateConc" class="input">
             ${[1,2,4,8,16,20,32].map(v => `<option value="${v}" ${Number(state.createConc||defaultConc())===v?'selected':''}>${v}</option>`).join('')}
@@ -1587,7 +1611,7 @@ function createSheetHTML() {
             ${[1,2,3,5].map(v => `<option value="${v}" ${Number(state.createWeight||1)===v?'selected':''}>${v}</option>`).join('')}
           </select>
         </label>
-        <label class="check"><input id="vmCreateProxyCli" type="checkbox" /> 容器内代理</label>
+        <label class="check"><input id="vmCreateProxyCli" type="checkbox" checked /> 槽内 SOCKS5（转发必绑）</label>
       </div>
     </details>
     <div class="foot">
@@ -1630,11 +1654,14 @@ function lifeSteps(vm) {
   const has = !!vm.has_token
   const seeded = !!(state.seedSettings?.kin_seed || state.seedSettings?.seed_policy)
   const run = vmRunning(vm)
+  const proxy = !!(vm.proxy_id || vm.proxy?.id || vm.proxy?.host || vm.proxy_cli_enabled)
+  const worker = vm.runtime?.worker === 'go' || !!(vm.runtime?.worker_socket)
   const steps = [
     [true, '建'],
     [seeded, '种'],
     [has, '证'],
-    [run && has, '跑'],
+    [proxy, '代'],
+    [run && worker, '转'],
   ]
   return `<div class="life">${steps.map(([on,l],i) => `${i?'<span class="ln"></span>':''}<span class="st ${on?'done':''}"><b>${i+1}</b>${l}</span>`).join('')}</div>`
 }
@@ -1749,12 +1776,12 @@ function renderVm() {
         <div class="fact-cell">
           <div class="k">用量</div>
           <div class="stack-sm">${meter('5h', u5)}${meter('7d', u7)}${fableLine(acc.fable || vm.fable)}</div>
-          <div class="m" style="margin-top:8px">${vm.inflight || 0}/${vm.max_concurrency || defaultConc()} 并发 <button class="btn btn-ghost btn-sm" onclick="event.stopPropagation();openEditVmConc('${esc(vm.id)}', ${vm.max_concurrency || defaultConc()})">改</button> · CLI ${esc(vm.claude_code_version || '—')}</div>
+          <div class="m" style="margin-top:8px">${vm.inflight || 0}/${vm.max_concurrency || defaultConc()} 并发 <button class="btn btn-ghost btn-sm" onclick="event.stopPropagation();openEditVmConc('${esc(vm.id)}', ${vm.max_concurrency || defaultConc()})">改</button> · ${esc(vm.runtime?.worker === 'go' ? 'Go worker' : (vm.runtime?.worker || '无 worker'))}</div>
         </div>
         <div class="fact-cell">
           <div class="k">绑定</div>
           <div class="v">${esc(vm.email || '未绑定')}</div>
-          <div class="m">${esc(proxy.host || proxy.id || vm.proxy_id || '无代理')} · ${esc(vmRegion(vm))}</div>
+          <div class="m">${esc(proxy.host || proxy.id || vm.proxy_id || '无 SOCKS5')} · ${esc(vmRegion(vm))}${vm.has_token && !(proxy.host || vm.proxy_id) ? ' · 无法转发' : ''}</div>
         </div>
       </div>` : ''}
 
@@ -1772,13 +1799,17 @@ function renderVm() {
         <dt>邮箱</dt><dd>${esc(vm.email || acc.email || '—')}</dd>
         <dt>UUID</dt><dd class="mono">${esc(vm.account_uuid || acc.account_id || '—')}</dd>
         <dt>Org</dt><dd class="mono">${esc(vm.org_uuid || '—')}</dd>
-        <dt>过期</dt><dd class="mono">${esc(vm.expires_at || '—')}</dd>
+        <dt>过期</dt><dd class="mono">${esc(fmtExpiresAt(vm.expires_at))}</dd>
+        <dt>5h 窗口</dt><dd class="mono">${runtimeWindowLine(acc.runtime_window)}</dd>
         <dt>并发</dt><dd class="num">${(acc.inflight ?? vm.inflight) || 0} / ${acc.max_concurrency || vm.max_concurrency || defaultConc()} <button class="btn btn-ghost btn-sm" onclick="openEditVmConc('${esc(vm.id)}', ${acc.max_concurrency || vm.max_concurrency || defaultConc()})">改</button></dd>
         <dt>请求</dt><dd class="num">${fmtNum(acc.requests ?? vm.requests ?? 0)}</dd>
         <dt>Tokens</dt><dd class="num">${fmtNum(acc.tokens_in ?? vm.tokens_in ?? 0)} / ${fmtNum(acc.tokens_out ?? vm.tokens_out ?? 0)}</dd>
+        <dt>缓存</dt><dd class="num">${fmtNum(acc.cache_read_tokens ?? 0)} 读 / ${fmtNum(acc.cache_creation_tokens ?? 0)} 写</dd>
       </dl>
       <div class="actions" style="margin-top:14px">
         <button class="btn btn-primary btn-sm" onclick="go('import')">导入</button>
+        <button class="btn btn-outline btn-sm" onclick="refreshOauth('${esc(vm.id)}')">刷新凭证</button>
+        <button class="btn btn-outline btn-sm" onclick="probeOne('${esc(vm.id)}')">额度探测</button>
       </div>` : ''}
 
       ${tab === 'proxy' ? `
@@ -1786,7 +1817,7 @@ function renderVm() {
         <dt>绑定</dt><dd class="mono">${esc(proxy.id || vm.proxy_id || '—')}</dd>
         <dt>Host</dt><dd class="mono">${esc(proxy.host || '—')}</dd>
         <dt>Port</dt><dd class="mono">${esc(proxy.port || '—')}</dd>
-        <dt>状态</dt><dd>${esc(proxy.status || '—')}</dd>
+        <dt>状态</dt><dd>${esc(proxy.status || '—')}${vm.has_token && !(proxy.host || vm.proxy_id) ? ' · 缺 SOCKS5，fail closed' : ''}</dd>
       </dl>
       <div class="actions" style="margin-top:14px"><button class="btn btn-outline btn-sm" onclick="allocateProxy('${esc(vm.id)}')">分配 SOCKS5</button></div>` : ''}
 
@@ -1794,13 +1825,14 @@ function renderVm() {
       <div class="zone">
         <div class="actions">
           <button class="btn btn-outline btn-sm" onclick="activateVm('${esc(vm.id)}')">设为活跃</button>
-          <button class="btn btn-outline btn-sm" onclick="updateClaudeCode('${esc(vm.id)}')">更新 Claude</button>
+          <button class="btn btn-outline btn-sm" onclick="refreshOauth('${esc(vm.id)}')">刷新凭证</button>
           <button class="btn btn-outline btn-sm" onclick="setVmTab('seed');loadSeedSettings()">种子</button>
         </div>
         <dl class="kv">
-          <dt>CLI</dt><dd>${esc(vm.claude_code_version || '—')}</dd>
-          <dt>device</dt><dd class="mono">${esc((vm.fingerprint && vm.fingerprint.device_id) || '—')}</dd>
-          <dt>session</dt><dd class="mono">${esc((vm.fingerprint && vm.fingerprint.session_id) || '—')}</dd>
+          <dt>Worker</dt><dd>${esc(vm.runtime?.worker || '—')} · ${esc(vm.runtime?.egress || '—')}</dd>
+          <dt>容器</dt><dd class="mono">${esc(vm.runtime?.container || vm.container || '—')}</dd>
+          <dt>device</dt><dd class="mono">${esc((vm.fingerprint && vm.fingerprint.device_id) || vm.id || '—')}</dd>
+          <dt>session</dt><dd class="mono">${esc((vm.fingerprint && vm.fingerprint.session_id) || 'CRS hash')}</dd>
         </dl>
       </div>
       <div class="zone danger" style="margin-top:12px">
@@ -1930,7 +1962,7 @@ function renderUsage() {
       ${kpi(near ? `账号 · ${near} 近限额` : '账号', String(s.account_count ?? accounts.length), null)}
       ${kpi('5h 峰值', `${peak5.toFixed(0)}<small>%</small>`, peak5)}
       ${kpi('7d 峰值', `${peak7.toFixed(0)}<small>%</small>`, peak7)}
-      ${kpi(`Tokens ${fmtNum(s.tokens_in || 0)}/${fmtNum(s.tokens_out || 0)}`, fmtNum(s.requests || 0), null)}
+      ${kpi(`Tokens ${fmtNum(s.tokens_in || 0)}/${fmtNum(s.tokens_out || 0)}${(s.cache_read_tokens||s.cache_creation_tokens) ? ' · c' + fmtNum(s.cache_read_tokens||0) : ''}`, fmtNum(s.requests || 0), null)}
     </div>
     <div class="card table-wrap" style="padding:8px 10px 4px">
       <table class="table">
@@ -1977,7 +2009,7 @@ function renderProtocol() {
       <div class="wb-head">
         <div class="wb-id">
           <div class="nm">接入</div>
-          <div class="hid">Bearer sk-kin / Master · 默认 CRS 中继</div>
+          <div class="hid">Bearer sk-kin / Master · Go worker · SOCKS5</div>
         </div>
         <button class="btn btn-ghost btn-sm" onclick="copyText('${esc(base)}')">复制 Base</button>
       </div>
@@ -1987,6 +2019,7 @@ function renderProtocol() {
           const url = root + path
           return `<div class="ep-row"><span class="nm">${esc(n)}</span><code>${esc(url)}</code><button class="btn btn-ghost btn-sm" onclick="copyText('${esc(url)}')">复制</button></div>`
         }).join('')}
+        <p class="text-xs faint" style="margin:10px 0 0">默认 realtime 流式；header <code>x-kin-delivery: verified</code> 缓冲到 message_stop。CLI 路径已失效。</p>
       </div>
     </div>
     ${state.models?.error || (state.models?.note && !models.length) ? `<p class="text-xs danger" style="margin:0">${esc(state.models.error || state.models.note)}</p>` : ''}
@@ -1994,7 +2027,7 @@ function renderProtocol() {
       <div class="wb-head">
         <div class="wb-id">
           <div class="nm">模型</div>
-          <div class="hid">${models.length} 个${state.models?.cli_version ? ' · 目录 ' + esc(state.models.cli_version) : ''}</div>
+          <div class="hid">${models.length} 个${state.models?.source ? ' · ' + esc(state.models.source) : ''}</div>
         </div>
       </div>
       <div class="wb-body" style="padding-top:6px;padding-bottom:6px">
@@ -2040,6 +2073,28 @@ function renderSettings() {
               ${[[3600,'1 小时'],[21600,'6 小时'],[86400,'24 小时'],[604800,'7 天'],[2592000,'30 天']].map(([v,l]) => `<option value="${v}" ${(Number(sticky.ttl_seconds ?? 86400)===v)?'selected':''}>${l}</option>`).join('')}
             </select>
           </div>
+          <div class="set-sub">账号池</div>
+          <div class="set-row"><span>策略</span>
+            <select id="pool_strategy" class="input">
+              ${[['weighted-round-robin','平滑 WRR'],['round-robin','轮询'],['lru','LRU']].map(([v,l]) => `<option value="${v}" ${((r.pool||{}).strategy||'weighted-round-robin')===v?'selected':''}>${l}</option>`).join('')}
+            </select>
+          </div>
+          <div class="set-row"><span>切号上限</span>
+            <select id="fo_switches" class="input">
+              ${[1,3,5,8,10,16].map(v => `<option value="${v}" ${Number((r.failover||{}).max_account_switches ?? 10)===v?'selected':''}>${v}</option>`).join('')}
+            </select>
+          </div>
+          <div class="set-row"><span>总尝试</span>
+            <select id="fo_attempts" class="input">
+              ${[4,8,12,16,24].map(v => `<option value="${v}" ${Number((r.failover||{}).max_total_attempts ?? 12)===v?'selected':''}>${v}</option>`).join('')}
+            </select>
+          </div>
+          <div class="set-row"><span>流式交付</span>
+            <select id="fo_delivery" class="input">
+              <option value="realtime" ${((r.failover||{}).delivery_mode||'realtime')==='realtime'?'selected':''}>realtime（默认可切号）</option>
+              <option value="verified" ${(r.failover||{}).delivery_mode==='verified'?'selected':''}>verified（缓冲到 stop）</option>
+            </select>
+          </div>
           <div class="set-sub">配额与并发</div>
           <div class="set-row"><span>安全线</span>
             <select id="q_safety" class="input">
@@ -2075,7 +2130,7 @@ function renderSettings() {
               ${[1,3,7,14,30].map(v => `<option value="${v}" ${(Number((r.logging||{}).retain_days ?? state.logs?.config?.retain_days ?? 7)===v)?'selected':''}>${v} 天</option>`).join('')}
             </select>
           </div>
-          <p class="text-xs faint" style="margin:4px 0 0">普通记摘要。Debug 另存清洗后的请求体。保存即生效。</p>
+          <p class="text-xs faint" style="margin:4px 0 0">普通记摘要（含缓存 token / 模型 mismatch / 首 token）。Debug 另存清洗后的请求体。保存即生效。</p>
         </div>
       </div>
     </div>
@@ -2109,6 +2164,16 @@ async function saveRouting() {
         mode: document.querySelector('input[name="log_mode"]:checked')?.value || 'normal',
         retain_days: Number(document.getElementById('log_retain')?.value || 7),
       },
+      pool: {
+        ...(state.routing?.pool || {}),
+        strategy: document.getElementById('pool_strategy')?.value || 'weighted-round-robin',
+      },
+      failover: {
+        ...(state.routing?.failover || {}),
+        max_account_switches: Number(document.getElementById('fo_switches')?.value || 10),
+        max_total_attempts: Number(document.getElementById('fo_attempts')?.value || 12),
+        delivery_mode: document.getElementById('fo_delivery')?.value || 'realtime',
+      },
     }
     await api('/api/panel/routing', { method: 'PUT', body: JSON.stringify(body) })
     toast('已保存')
@@ -2127,6 +2192,14 @@ async function loadKeys() {
     toast(e.message, 'err')
   }
   if (state.view === 'keys') render()
+}
+function keyMask(k) {
+  const raw = String(k.key || '')
+  if (raw && !raw.startsWith('hmac:')) return raw
+  const prefix = k.key_prefix || raw.slice(0, 10)
+  const suffix = k.key_suffix || ''
+  if (prefix && suffix) return prefix + '…' + suffix
+  return prefix || raw || '—'
 }
 function keyStatusPill(k) {
   if (k.status === 'disabled') return '<span class="acc-pill off">停用</span>'
@@ -2152,7 +2225,7 @@ function keyRow(k) {
   const expired = Number.isFinite(t) && t <= Date.now()
   return `<tr class="${!active || expired ? 'dead-row' : ''}">
     <td><div class="font-medium">${esc(k.name || 'default')}</div><div class="text-xs faint">${fmtNum(k.requests || 0)} 请求${k.inflight ? ' · ' + k.inflight + ' 进行中' : ''}</div></td>
-    <td><code title="${esc(k.id)}">${esc(k.key || k.key_prefix || '—')}</code></td>
+    <td><code title="${esc(k.id)}">${esc(keyMask(k))}</code></td>
     <td>${keyStatusPill(k)}</td>
     <td>${keyQuotaCell(k)}</td>
     <td class="text-xs">${k.max_concurrency ? k.max_concurrency + ' 并发' : '并发不限'} · ${k.rpm ? 'RPM ' + k.rpm : 'RPM 不限'}</td>
@@ -2372,13 +2445,13 @@ function logRow(l, debug) {
   return `<tr class="${err ? 'near-limit' : ''}">
     <td><div class="mono num" title="${esc(l.ts || '')}">${hh}</div><div class="text-xs faint mono" title="${esc(rid)} · 点击复制" style="cursor:copy" onclick="copyText('${esc(rid)}')">${esc(rid.slice(0, 8))}</div></td>
     <td><div class="mono text-xs">${esc(l.method || '')} ${esc(l.path || '')}</div><div class="text-xs faint">${esc(l.protocol || '')}${l.stream ? ' · stream' : ''}</div></td>
-    <td class="text-xs" title="${esc(l.model || '')}">${esc(modelShort)}</td>
+    <td class="text-xs" title="${esc((l.requested_model || l.model || '') + (l.upstream_model && l.upstream_model !== (l.requested_model||l.model) ? ' → ' + l.upstream_model : ''))}">${esc(modelShort)}${l.model_mismatch ? ' ≠' : ''}</td>
     <td>${err ? `<span class="badge danger">${Number(l.status) || '—'}</span><div class="text-xs danger">${esc(l.error_code || '')}</div>` : `<span class="badge ok">${Number(l.status) || '—'}</span>`}</td>
     <td class="num right">${l.duration_ms != null ? l.duration_ms + 'ms' : '—'}</td>
     <td class="num text-xs">${fmtTok(l)}</td>
-    <td class="text-xs mono">${esc(l.via || (debug && l.hop_meta && l.hop_meta.via) || '—')}</td>
+    <td class="text-xs mono" title="${esc((l.stop_reason||'') + (l.first_token_ms!=null ? ' ttft '+l.first_token_ms+'ms' : '') + (l.attempt_count!=null ? ' attempts '+l.attempt_count : ''))}">${esc(l.via || (debug && l.hop_meta && l.hop_meta.via) || 'go-worker')}</td>
     <td class="text-xs">${l.vm_id ? `<a href="#/vm/${esc(l.vm_id)}">${esc(vmNameById(l.vm_id))}</a>` : '—'}</td>
-    ${debug ? `<td class="right"><button class="btn btn-ghost btn-sm" onclick="openLogDetail('${esc(rid)}')">详情</button></td>` : ''}
+    <td class="right"><button class="btn btn-ghost btn-sm" onclick="openLogDetail('${esc(rid)}')">详情</button></td>
   </tr>`
 }
 function renderLogs() {
@@ -2401,7 +2474,7 @@ function renderLogs() {
     </div>
     ${L == null ? skeleton('table') : items.length ? `<div class="card table-wrap" style="padding:8px 10px 4px">
       <table class="table">
-        <thead><tr><th>时间</th><th>请求</th><th>模型</th><th>状态</th><th class="right">耗时</th><th>Token</th><th>转发</th><th>节点</th>${debug ? '<th class="right"></th>' : ''}</tr></thead>
+        <thead><tr><th>时间</th><th>请求</th><th>模型</th><th>状态</th><th class="right">耗时</th><th>Token</th><th>Worker</th><th>节点</th><th class="right"></th></tr></thead>
         <tbody>${items.map(l => logRow(l, debug)).join('')}</tbody>
       </table>
     </div>
@@ -2413,24 +2486,36 @@ async function openLogDetail(rid) {
     const r = await api('/api/panel/request-logs/' + encodeURIComponent(rid))
     const item = (r.data || r).item || r || {}
     const snap = item.request_body_snapshot || item.inbound_summary || null
+    let attempts = []
+    try {
+      const a = await api('/api/panel/request-logs/' + encodeURIComponent(rid) + '/attempts')
+      attempts = (a.data || a).attempts || a.items || []
+    } catch {}
+    const mm = item.requested_model && item.upstream_model && item.requested_model !== item.upstream_model
+      ? (item.requested_model + ' → ' + item.upstream_model)
+      : (item.upstream_model || item.requested_model || item.model || '—')
     openModal(`
       <h3>请求详情</h3>
-      <p class="who mono">${esc(rid)} · ${esc(item.via || '—')} · ${esc(item.protocol || '')}</p>
+      <p class="who mono">${esc(rid)} · ${esc(item.via || 'go-worker')} · ${esc(item.protocol || '')}${item.stream ? ' · stream' : ''}</p>
       <dl class="kv">
-        <dt>状态</dt><dd>${esc(item.status)} / up ${esc(item.upstream_status || '—')}</dd>
-        <dt>模型</dt><dd class="mono">${esc(item.model || '—')}</dd>
+        <dt>状态</dt><dd>${esc(item.status)} / up ${esc(item.upstream_status || '—')} · ${esc(item.stop_reason || '—')}</dd>
+        <dt>模型</dt><dd class="mono">${esc(mm)}${item.model_mismatch ? ' · mismatch' : ''}</dd>
         <dt>Token</dt><dd class="num">${fmtTok(item)}</dd>
-        <dt>节点</dt><dd>${esc(item.vm_id || '—')}</dd>
+        <dt>首 token</dt><dd class="num">${item.first_token_ms != null ? item.first_token_ms + 'ms' : '—'}</dd>
+        <dt>节点</dt><dd>${esc(item.vm_id || '—')} · attempts ${esc(item.attempt_count ?? attempts.length ?? '—')}</dd>
       </dl>
-      <div class="text-xs faint" style="margin:8px 0 4px">CRS 清洗快照</div>
-      <pre class="json" style="max-height:220px">${esc(JSON.stringify(snap, null, 2))}</pre>
+      ${attempts.length ? `<div class="text-xs faint" style="margin:8px 0 4px">Attempts</div>
+      <table class="table"><thead><tr><th>#</th><th>槽</th><th>账号</th><th>状态</th><th>动作</th></tr></thead>
+      <tbody>${attempts.map(x => `<tr><td class="num">${esc(x.attempt_no ?? '')}</td><td class="mono">${esc(x.vm_id || '—')}</td><td class="mono">${esc((x.account_id||'').slice(0,8) || '—')}</td><td>${esc(x.upstream_status || x.terminal_state || '—')}</td><td>${esc(x.action || x.error_scope || '—')}</td></tr>`).join('')}</tbody></table>` : ''}
+      ${snap ? `<div class="text-xs faint" style="margin:8px 0 4px">请求快照</div>
+      <pre class="json" style="max-height:220px">${esc(JSON.stringify(snap, null, 2))}</pre>` : ''}
       <details class="import-box"><summary>完整 debug</summary><div class="body"><pre class="json" style="max-height:240px">${esc(JSON.stringify(item, null, 2))}</pre></div></details>
       <div class="foot">
         <button class="btn btn-outline btn-sm" onclick="copyText('${esc(rid)}')">复制 ID</button>
         <button class="btn btn-primary btn-sm" onclick="closeModal()">关闭</button>
       </div>`)
     const dlg = document.querySelector('#modalRoot .modal')
-    if (dlg) dlg.style.maxWidth = '560px'
+    if (dlg) dlg.style.maxWidth = '640px'
   } catch (e) { toast(e.message, 'err') }
 }
 
@@ -2577,12 +2662,11 @@ async function createVmFromPage() {
   const region = document.getElementById('vmCreateRegion')?.value?.trim() || state.createRegion || undefined
   const max_concurrency = Number(document.getElementById('vmCreateConc')?.value || state.createConc || defaultConc())
   const weight = Number(document.getElementById('vmCreateWeight')?.value || state.createWeight || 1)
-  const claude_code_version = document.getElementById('vmCreateCC')?.value?.trim() || undefined
-  const after = document.getElementById('vmCreateAfter')?.value || state.createAfter || 'idle'
+  const after = document.getElementById('vmCreateAfter')?.value || state.createAfter || 'proxy'
   const start = after !== 'idle'
   const auto_allocate_proxy = after === 'proxy' || after === 'full'
   const activate = after === 'active' || after === 'full'
-  const proxy_cli_enabled = !!document.getElementById('vmCreateProxyCli')?.checked
+  const proxy_cli_enabled = document.getElementById('vmCreateProxyCli') ? !!document.getElementById('vmCreateProxyCli').checked : true
   state.createPreset = document.getElementById('vmCreateSeed')?.value || state.createPreset || 'strict'
   const seed_policy = seedPolicyOf(state.createPreset)
   const btn = document.getElementById('vmCreateGo')
@@ -2590,7 +2674,7 @@ async function createVmFromPage() {
   try {
     const body = {
       id: vmIdOf(name), name, kernel, timezone, locale, region,
-      max_concurrency, weight, claude_code_version,
+      max_concurrency, weight,
       start, auto_allocate_proxy, activate, proxy_cli_enabled, seed_policy,
     }
     const r = await api('/api/panel/vms/create', { method: 'POST', body: JSON.stringify(body) })
@@ -2618,13 +2702,13 @@ async function importOAuthWorkflow() {
   if (!id) { toast('请选择虚拟机', 'err'); return }
   if (!sessionKey) { toast('请填写 sessionKey', 'err'); return }
   try {
-    toast('经 SOCKS 转换…')
+    toast('经槽 SOCKS5 导入…')
     const body = { vm_id: id, start: false, activate: false }
     if (/^sk-ant-sid/i.test(sessionKey)) body.sessionKey = sessionKey
     else body.access_token = sessionKey
     const r = await api('/api/panel/vms/import', { method: 'POST', body: JSON.stringify(body) })
     const d = r.data || r
-    toast('已导入 ' + (d.oauth_email || id) + (d.proxy_used ? ' · SOCKS' : '') + ' · 已写入槽位')
+    toast('已导入 ' + (d.oauth_email || id) + ' · 写入 Go worker')
     const el = document.getElementById('importSessionKey')
     if (el) el.value = ''
     await refresh()
@@ -2654,12 +2738,12 @@ async function activateVm(id) {
     await refresh()
   } catch (e) { toast(e.message, 'err') }
 }
-async function updateClaudeCode(id) {
+async function refreshOauth(id) {
   try {
-    toast('更新 Claude Code…')
-    const r = await api('/api/panel/vms/' + id + '/update-claude-code', { method: 'POST', body: JSON.stringify({}) })
+    toast('Go worker 刷新凭证…')
+    const r = await api('/api/panel/vms/' + id + '/oauth/refresh', { method: 'POST', body: JSON.stringify({ force: true }) })
     const d = r.data || r
-    toast('Claude Code ' + (d.version || 'ok'))
+    toast(d.ok === false ? ('刷新失败') : ('已刷新' + (d.expires_at ? ' · ' + fmtExpiresAt(d.expires_at) : '')))
     await refresh()
     if (state.selectedVm === id) openVm(id)
   } catch (e) { toast(e.message, 'err') }
