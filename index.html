@@ -558,7 +558,7 @@ pre.json{font-size:11px;overflow:auto;max-height:200px;background:oklch(0 0 0/25
           <div class="mark">核</div>
           <div>
             <div class="t">种核 KIN</div>
-            <div class="s">控制台</div>
+            <div class="s">号池</div>
           </div>
         </div>
       </div>
@@ -606,16 +606,16 @@ const LS_USER = 'kin_console_user'
 const LS_BASE = 'kin_api_base'
 const COOKIE = 'kin_panel_token'
 const titles = {
-  overview: ['总览', ''],
-  cluster: ['集群', ''],
-  vm: ['虚拟机', ''],
-  import: ['导入', ''],
-  usage: ['用量', ''],
-  protocol: ['协议', ''],
-  keys: ['密钥', ''],
-  logs: ['日志', ''],
-  proxies: ['代理池', ''],
-  settings: ['设置', ''],
+  overview: ['总览', '槽位 · 额度 · 出站'],
+  cluster: ['集群', '有凭证：可用 / 限制 / 不可用'],
+  vm: ['虚拟机', '额度探测走槽 UID'],
+  import: ['导入', 'sessionKey 写入槽位'],
+  usage: ['用量', '5h / 7d / fable'],
+  protocol: ['协议', '默认 CRS 中继，CLI 为替补'],
+  keys: ['密钥', 'sk-kin 只能调 /v1'],
+  logs: ['日志', '普通摘要 · Debug 清洗快照'],
+  proxies: ['代理池', '外层 SOCKS5'],
+  settings: ['设置', '粘性 · 并发 · 日志模式'],
 }
 
 
@@ -821,12 +821,15 @@ function setClusterSort(k) {
 let state = { view: 'overview', selectedVm: null, dashboard: null, usage: null, models: null, routing: null, detail: null, proxies: null, apiKeys: null, logs: null, logMode: 'normal', clusterQ: '', clusterFilter: 'all', clusterView: 'list', clusterSort: 'name', clusterDir: 'asc', vmTab: 'overview', loading: false, kernel: 'ubuntu-24.04', createName: '', advOpen: false, usageSort: 'u5', usageDir: 'desc', proxySort: 'status', proxyDir: 'asc', seedPreset: 'strict', createPreset: 'strict', createAfter: 'start', createTemplate: 'std-ubuntu' }
 let bootstrapped = false
 
+function sameOriginPanel(host) {
+  return /^(ccmax20\.cc|www\.ccmax20\.cc|kin\.fkcodex\.com)$/i.test(host || '')
+}
 function apiBase() {
   const host = (location.hostname || '')
-  if (/kin\.fkcodex\.com$/i.test(host)) return ''
+  if (sameOriginPanel(host)) return ''
   const saved = (localStorage.getItem(LS_BASE) || '').replace(/\/$/, '')
   if (saved) return saved
-  if (/vercel\.app$|netlify\.app$|github\.io$|grok\.me$/i.test(host)) return 'https://kin.fkcodex.com'
+  if (/vercel\.app$|netlify\.app$|github\.io$|grok\.me$/i.test(host)) return 'https://ccmax20.cc'
   return ''
 }
 
@@ -900,7 +903,7 @@ async function doLogin() {
   err.classList.add('hidden')
   const host = location.hostname || ''
   let base = ''
-  if (/kin\.fkcodex\.com$/i.test(host)) {
+  if (sameOriginPanel(host)) {
     base = ''
     localStorage.removeItem(LS_BASE)
     const baseEl = document.getElementById('loginBaseInput')
@@ -1584,7 +1587,7 @@ function createSheetHTML() {
             ${[1,2,3,5].map(v => `<option value="${v}" ${Number(state.createWeight||1)===v?'selected':''}>${v}</option>`).join('')}
           </select>
         </label>
-        <label class="check"><input id="vmCreateProxyCli" type="checkbox" /> proxy CLI</label>
+        <label class="check"><input id="vmCreateProxyCli" type="checkbox" /> 容器内代理</label>
       </div>
     </details>
     <div class="foot">
@@ -1791,7 +1794,7 @@ function renderVm() {
       <div class="zone">
         <div class="actions">
           <button class="btn btn-outline btn-sm" onclick="activateVm('${esc(vm.id)}')">设为活跃</button>
-          <button class="btn btn-outline btn-sm" onclick="updateClaudeCode('${esc(vm.id)}')">更新 CLI</button>
+          <button class="btn btn-outline btn-sm" onclick="updateClaudeCode('${esc(vm.id)}')">更新 Claude</button>
           <button class="btn btn-outline btn-sm" onclick="setVmTab('seed');loadSeedSettings()">种子</button>
         </div>
         <dl class="kv">
@@ -1888,12 +1891,12 @@ function renderImport() {
       <div class="workbench">
         <div class="wb-body stack-md">
           ${selected ? `
-          <textarea id="importSessionKey" class="input" placeholder="sessionKey" aria-label="sessionKey"></textarea>
+          <textarea id="importSessionKey" class="input" placeholder="sessionKey（sk-ant-sid…）写入槽位，热路径不 refresh" aria-label="sessionKey"></textarea>
           <div class="actions">
             <button class="btn btn-primary" onclick="importOAuthWorkflow()">导入</button>
             <button class="btn btn-outline" onclick="startVm('${esc(selected)}')">开机</button>
             <button class="btn btn-outline" onclick="activateVm('${esc(selected)}')">活跃</button>
-          </div>` : `<div class="empty-box">选左侧节点后粘贴凭证</div>`}
+          </div>` : `<div class="empty-box">选节点后粘贴 sessionKey</div>`}
         </div>
       </div>
     </div>
@@ -1959,12 +1962,13 @@ function renderUsage() {
 /* ── protocol ────────────────────────────────────────────── */
 function renderProtocol() {
   const models = state.models?.items || []
-  const base = (state.dashboard?.health?.base_url) || (location.origin) || 'https://kin.fkcodex.com'
+  const base = (state.dashboard?.health?.base_url) || (location.origin) || 'https://ccmax20.cc'
   const root = base.replace(/\/$/, '')
   const endpoints = [
-    ['Chat', '/v1/chat/completions'],
-    ['Responses', '/v1/responses'],
     ['Messages', '/v1/messages'],
+    ['Chat', '/v1/chat/completions'],
+    ['Completions', '/v1/completions'],
+    ['Responses', '/v1/responses'],
     ['Models', '/v1/models'],
   ]
   return `
@@ -1973,7 +1977,7 @@ function renderProtocol() {
       <div class="wb-head">
         <div class="wb-id">
           <div class="nm">接入</div>
-          <div class="hid">Bearer / x-api-key · VM CLI</div>
+          <div class="hid">Bearer sk-kin / Master · 默认 CRS 中继</div>
         </div>
         <button class="btn btn-ghost btn-sm" onclick="copyText('${esc(base)}')">复制 Base</button>
       </div>
@@ -1990,7 +1994,7 @@ function renderProtocol() {
       <div class="wb-head">
         <div class="wb-id">
           <div class="nm">模型</div>
-          <div class="hid">${models.length} 个${state.models?.cli_version ? ' · CLI ' + esc(state.models.cli_version) : ''}</div>
+          <div class="hid">${models.length} 个${state.models?.cli_version ? ' · 目录 ' + esc(state.models.cli_version) : ''}</div>
         </div>
       </div>
       <div class="wb-body" style="padding-top:6px;padding-bottom:6px">
@@ -2071,7 +2075,7 @@ function renderSettings() {
               ${[1,3,7,14,30].map(v => `<option value="${v}" ${(Number((r.logging||{}).retain_days ?? state.logs?.config?.retain_days ?? 7)===v)?'selected':''}>${v} 天</option>`).join('')}
             </select>
           </div>
-          <p class="text-xs faint" style="margin:4px 0 0">普通只记摘要（状态/耗时/模型/token）。Debug 额外保存清洗后的请求体（CRS 风格，密钥脱敏）。热更新，保存即生效。</p>
+          <p class="text-xs faint" style="margin:4px 0 0">普通记摘要。Debug 另存清洗后的请求体。保存即生效。</p>
         </div>
       </div>
     </div>
@@ -2175,7 +2179,7 @@ function renderKeys() {
         <thead><tr><th>名称</th><th>Key</th><th>状态</th><th>额度</th><th>限制</th><th>过期</th><th class="right"></th></tr></thead>
         <tbody>${keys.map(keyRow).join('')}</tbody>
       </table>
-    </div>` : emptyBox('尚无密钥 · sk-kin-… 仅可调用协议接口', `<button class="btn btn-primary btn-sm" onclick="openCreateKey()">生成</button>`)}
+    </div>` : emptyBox('尚无密钥 · sk-kin 只能调 /v1', `<button class="btn btn-primary btn-sm" onclick="openCreateKey()">生成</button>`)}
   </section>`
 }
 
@@ -2183,7 +2187,7 @@ function openEditVmConc(id, current) {
   const cur = Number(current ?? defaultConc())
   openModal(`
     <h3>虚拟机并发 · ${esc(id)}</h3>
-    <p class="who">网关侧热更新，不重启容器</p>
+    <p class="who">热更新并发，不进容器</p>
     <div class="set-list">
       <div class="set-row"><span>并发</span><select id="vmConc" class="input">${concOptions(cur)}</select></div>
     </div>
@@ -2401,7 +2405,7 @@ function renderLogs() {
         <tbody>${items.map(l => logRow(l, debug)).join('')}</tbody>
       </table>
     </div>
-    <p class="text-xs faint" style="margin:0">记录 ${esc(cfg.mode || 'normal')} · 保留 ${cfg.retain_days ?? 7} 天 · 上方为查看筛选，设置页可开关记录模式</p>` : emptyBox('暂无日志')}
+    <p class="text-xs faint" style="margin:0">${esc(cfg.mode || 'normal')} · 保留 ${cfg.retain_days ?? 7} 天 · 设置里改记录模式</p>` : emptyBox('暂无记录')}
   </section>`
 }
 async function openLogDetail(rid) {
@@ -2620,7 +2624,7 @@ async function importOAuthWorkflow() {
     else body.access_token = sessionKey
     const r = await api('/api/panel/vms/import', { method: 'POST', body: JSON.stringify(body) })
     const d = r.data || r
-    toast('已导入 ' + (d.oauth_email || id) + (d.proxy_used ? ' · SOCKS' : '') + ' · CLI 将自行续期')
+    toast('已导入 ' + (d.oauth_email || id) + (d.proxy_used ? ' · SOCKS' : '') + ' · 已写入槽位')
     const el = document.getElementById('importSessionKey')
     if (el) el.value = ''
     await refresh()
