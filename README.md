@@ -1,21 +1,19 @@
 # kin-console
 
-种核 KIN 管理台（单页 HTML）。
+种核管理台（单页 `index.html`）。静态托管，协议和面板 API 都反代到 kin-gateway。
 
-## 定位
+线上：`https://ccmax20.cc`
 
-- 对话 / 模型 / 用量：**只经虚拟机官方 Claude Code**
-- sessionKey：仅用于导入与恢复；续期由 CLI 负责
-- 探测：`claude auth status` + 官方 hop 的 `rate_limit_event`
-- 模型列表：CLI 二进制目录，非 Anthropic HTTP
+## 现在做什么
 
-## 部署
+- 登录后管槽位、凭证、密钥、日志、代理、备份
+- 卡片上的凭证状态：有凭证 · **可用（绿）/ 限制（黄）/ 不可用（红）**
+- 「额度探测」走虚拟机 UID（5h / 7d / fable），不是宿主机
+- 设置里可开关请求日志：关闭 / 普通 / Debug（热更新网关）
 
-静态托管（Vercel 等）。`API Base` 指向 gateway（本站可留空；异域默认 `https://kin.fkcodex.com`）。
+## 鉴权
 
-登录：面板管理员账号 / 密码。
+- 面板：`POST /api/panel/login`
+- 发给用户的 `sk-kin-…` 只能打 `/v1/*`，不能进面板
 
-## 接口文档
-
-- **[API Key 与请求日志](./docs/API_KEYS_AND_LOGS.md)**  
-  面板如何生成 / 限制密钥、客户端如何带 `sk-kin-…` 调用协议、普通 / Debug 日志查询与 `X-Request-ID` 追踪。
+网关契约见 [kin-gateway PANEL_API](https://github.com/dofastted/kin-gateway/blob/main/gateway/PANEL_API.md)。
