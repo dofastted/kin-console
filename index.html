@@ -20,7 +20,8 @@
   --line:rgba(248,250,252,.08);
   --line-2:rgba(248,250,252,.14);
   --ok:#22C55E;
-  --warn:#F59E0B;
+  --caution:#EAB308;
+  --warn:#F97316;
   --bad:#EF4444;
   --primary:#E8ECF2;
   --primary-fg:#0A0E18;
@@ -146,13 +147,15 @@ input[type=checkbox]{width:15px;height:15px;accent-color:oklch(0.76 0.15 152);cu
   font-size:11px;color:var(--muted);background:transparent;white-space:nowrap;
 }
 .badge.ok{color:var(--ok);border-color:oklch(0.76 0.15 152/35%);background:oklch(0.76 0.15 152/10%)}
-.badge.warn{color:var(--warn);border-color:oklch(0.83 0.14 78/35%);background:oklch(0.83 0.14 78/10%)}
+.badge.caution{color:var(--caution);border-color:oklch(0.86 0.16 95/40%);background:oklch(0.86 0.16 95/12%)}
+.badge.warn{color:var(--warn);border-color:oklch(0.75 0.16 50/38%);background:oklch(0.75 0.16 50/12%)}
 .badge.err,.badge.danger{color:var(--bad);border-color:oklch(0.68 0.19 25/38%);background:oklch(0.68 0.19 25/12%)}
 
 .acc-pill{display:inline-flex;align-items:center;gap:5px;font-size:11px;padding:2px 8px;border-radius:999px;border:1px solid var(--line-2);color:var(--muted);white-space:nowrap}
 .acc-pill::before{content:'';width:5px;height:5px;border-radius:99px;background:currentColor}
 .acc-pill.ok{color:var(--ok);border-color:oklch(0.76 0.15 152/32%);background:oklch(0.76 0.15 152/9%)}
-.acc-pill.warn{color:var(--warn);border-color:oklch(0.83 0.14 78/32%);background:oklch(0.83 0.14 78/9%)}
+.acc-pill.caution{color:var(--caution);border-color:oklch(0.86 0.16 95/38%);background:oklch(0.86 0.16 95/12%)}
+.acc-pill.warn{color:var(--warn);border-color:oklch(0.75 0.16 50/38%);background:oklch(0.75 0.16 50/12%)}
 .acc-pill.bad{color:var(--bad);border-color:oklch(0.68 0.19 25/35%);background:oklch(0.68 0.19 25/10%)}
 .acc-pill.off{color:var(--faint);background:oklch(1 0 0/3%)}
 .acc-pill.none{color:var(--faint);border-style:dashed;background:transparent}
@@ -160,7 +163,8 @@ input[type=checkbox]{width:15px;height:15px;accent-color:oklch(0.76 0.15 152);cu
 
 .status-dot{display:inline-block;width:7px;height:7px;border-radius:99px;flex-shrink:0}
 .status-dot.on{background:var(--ok);box-shadow:0 0 0 3px oklch(0.76 0.15 152/18%)}
-.status-dot.warn{background:var(--warn);box-shadow:0 0 0 3px oklch(0.83 0.14 78/18%)}
+.status-dot.caution{background:var(--caution);box-shadow:0 0 0 3px oklch(0.86 0.16 95/20%)}
+.status-dot.warn{background:var(--warn);box-shadow:0 0 0 3px oklch(0.75 0.16 50/20%)}
 .status-dot.danger{background:var(--bad);box-shadow:0 0 0 3px oklch(0.68 0.19 25/18%)}
 .status-dot.off{background:oklch(0.5 0.01 265)}
 
@@ -232,14 +236,40 @@ tr.dead-row{opacity:.6}
 .donut .dn{font-size:19px;font-weight:650;letter-spacing:-0.04em}
 .donut .dl{font-size:8.5px;fill:var(--faint)}
 .kpi-row{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.ops-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.ops-card{border:1px solid var(--line);border-radius:var(--r-lg);padding:12px 14px;background:var(--panel);min-width:0}
+.ops-card .lab{font-size:11.5px;color:var(--faint)}
+.ops-card .val{font-size:22px;font-weight:600;letter-spacing:-0.03em;font-variant-numeric:tabular-nums;line-height:1.1;margin-top:2px}
+.ops-card .val small{font-size:13px;font-weight:500;color:var(--faint);letter-spacing:-0.01em}
+.ops-card .hint{font-size:11px;color:var(--faint);margin-top:5px}
+.ops-card.ok .val{color:var(--ok)}
+.ops-card.caution .val{color:var(--caution)}
+.ops-card.warn .val{color:var(--warn)}
+.ops-card.bad .val{color:var(--bad)}
+.err-chips{display:flex;flex-wrap:wrap;gap:8px}
+.err-chip{display:inline-flex;align-items:center;gap:8px;padding:7px 11px;border-radius:999px;border:1px solid var(--line);background:var(--panel);color:var(--fg);font:inherit;cursor:pointer}
+.err-chip b{font-weight:600;font-size:12.5px}
+.err-chip span{font-variant-numeric:tabular-nums;font-weight:600}
+.err-chip em{font-style:normal;font-size:11px;color:var(--faint)}
+.err-chip.on{border-color:rgba(248,113,113,.45);background:rgba(248,113,113,.12)}
 .kpi{display:flex;align-items:center;gap:13px;border:1px solid var(--line);border-radius:var(--r-lg);padding:14px 16px;background:var(--panel);min-width:0}
 .kpi svg{flex-shrink:0}
 .kpi .v{font-size:26px;font-weight:600;letter-spacing:-0.035em;font-variant-numeric:tabular-nums;line-height:1.05}
 .kpi .v small{font-size:13px;font-weight:500;color:var(--faint);letter-spacing:-0.01em}
 .kpi .k{font-size:11.5px;color:var(--faint);margin-top:4px}
+.bill-strip{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:12px}
+.bill-card{border:1px solid var(--line);border-radius:var(--r-lg);padding:14px 16px;background:var(--panel);min-width:0}
+.bill-card .lab{font-size:11.5px;color:var(--faint)}
+.bill-card .val{font-size:22px;font-weight:600;letter-spacing:-0.03em;font-variant-numeric:tabular-nums;line-height:1.1;margin-top:2px;color:var(--ok)}
+.bill-card .hint{font-size:11px;color:var(--faint);margin-top:5px}
+.bill-acc{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+.bill-chip{display:inline-flex;align-items:baseline;gap:8px;padding:6px 10px;border-radius:999px;border:1px solid var(--line);background:var(--panel-2);font-size:12px}
+.bill-chip b{font-weight:600;font-variant-numeric:tabular-nums}
+.bill-chip em{font-style:normal;color:var(--faint);font-size:11px}
 .hbar{display:flex;gap:2px;height:10px;border-radius:99px;overflow:hidden;background:oklch(1 0 0/6%)}
 .hbar i{display:block;min-width:2px;border-radius:2px;transition:flex-grow .35s ease}
 .hbar i.s-ok{background:var(--ok)}
+.hbar i.s-caution{background:var(--caution)}
 .hbar i.s-warn{background:var(--warn)}
 .hbar i.s-bad{background:var(--bad)}
 .hbar i.s-off{background:oklch(0.5 0.01 265)}
@@ -276,9 +306,22 @@ tr.dead-row{opacity:.6}
 .vm-use .big b{font-size:26px;font-weight:600;letter-spacing:-0.035em;font-variant-numeric:tabular-nums}
 .vm-use .big i{font-style:normal;font-size:12px;color:var(--faint)}
 .vm-use .big em{font-style:normal;font-size:11px;color:var(--faint);margin-left:5px}
-.vm-track{flex:1;min-width:0;display:flex;flex-direction:column;gap:5px;max-width:130px}
+.vm-track{flex:1;min-width:0;display:flex;flex-direction:column;gap:5px;max-width:148px}
 .vm-track .tk{display:flex;align-items:center;gap:6px}
-.vm-track .tk u{text-decoration:none;font-size:10px;color:var(--faint);width:15px;flex-shrink:0}
+.vm-track .tk u{text-decoration:none;font-size:10px;color:var(--faint);width:16px;flex-shrink:0}
+.vm-bill{display:flex;flex-wrap:wrap;gap:5px;margin-top:-2px}
+.vm-bill i{
+  font-style:normal;font-size:10px;font-variant-numeric:tabular-nums;letter-spacing:-0.01em;
+  padding:2px 6px;border-radius:5px;background:oklch(1 0 0/6%);color:var(--muted);white-space:nowrap
+}
+.vm-bill i.cash{color:var(--ok);background:oklch(0.76 0.15 152/14%)}
+.vm-row .cost{font-variant-numeric:tabular-nums;font-size:12px;line-height:1.25}
+.vm-row .cost b{color:var(--ok);font-weight:600}
+.vm-row .cost em{display:block;font-style:normal;font-size:10.5px;color:var(--faint)}
+.conc{display:inline-flex;align-items:baseline;gap:6px;font-size:11px;color:var(--faint);font-variant-numeric:tabular-nums;white-space:nowrap}
+.conc em{font-style:normal;color:var(--muted)}
+.conc.hot em{color:var(--warn)}
+.conc.cool em{color:var(--warn)}
 .k-tag{display:inline-flex;align-items:center;gap:5px;font-size:11px;color:var(--muted);background:oklch(1 0 0/5%);border-radius:6px;padding:2px 7px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
 .k-tag i{width:4px;height:4px;border-radius:99px;background:var(--faint);font-style:normal;flex-shrink:0}
 .spark{display:flex;align-items:flex-end;gap:2px;height:18px;flex-shrink:0}
@@ -388,6 +431,17 @@ pre.json{font-size:11px;overflow:auto;max-height:200px;background:oklch(0 0 0/25
 .toast-item.err{border-color:oklch(0.68 0.19 25/45%);color:oklch(0.86 0.09 25)}
 @keyframes toastIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
 .busy{opacity:.6}
+.ar{position:relative}
+.ar-btn{min-width:118px}
+.ar-btn svg{width:14px;height:14px;flex-shrink:0}
+.ar-btn.on{border-color:rgba(34,197,94,.4);color:var(--fg)}
+.ar-btn.on svg{animation:ar-spin 1.2s linear infinite}
+@keyframes ar-spin{to{transform:rotate(360deg)}}
+.ar-menu{position:absolute;right:0;top:calc(100% + 6px);z-index:40;width:176px;padding:6px;border:1px solid var(--line-2);border-radius:var(--r-md);background:var(--panel);box-shadow:0 12px 32px oklch(0 0 0/40%)}
+.ar-menu button{display:flex;align-items:center;justify-content:space-between;width:100%;border:0;background:transparent;color:var(--fg);font:inherit;font-size:12.5px;padding:7px 10px;border-radius:6px;cursor:pointer}
+.ar-menu button:hover{background:oklch(1 0 0/6%)}
+.ar-menu button .ck{color:var(--ok);font-size:12px}
+.ar-menu hr{border:0;border-top:1px solid var(--line);margin:4px 0}
 
 /* ── modal（重置 / 删除确认）─────────────────────────────── */
 #modalRoot{position:fixed;inset:0;z-index:90;display:flex;align-items:center;justify-content:center;padding:20px;background:oklch(0 0 0/58%);backdrop-filter:blur(3px)}
@@ -408,7 +462,7 @@ pre.json{font-size:11px;overflow:auto;max-height:200px;background:oklch(0 0 0/25
 .modal .foot{display:flex;justify-content:flex-end;gap:8px;margin-top:3px}
 
 @media(max-width:1180px){
-  .kpi-row{grid-template-columns:repeat(2,1fr)}
+  .kpi-row,.ops-grid,.bill-strip{grid-template-columns:repeat(2,1fr)}
   /* 右对齐弹层，窄屏不越出内容区 */
   .kernel-panel{left:auto;right:0;width:min(520px,calc(100vw - 300px))}
   .grid-3,.grid-4{grid-template-columns:repeat(2,minmax(0,1fr))}
@@ -424,7 +478,7 @@ pre.json{font-size:11px;overflow:auto;max-height:200px;background:oklch(0 0 0/25
   .sidebar-foot .btn{width:auto!important}
   .content{padding:16px}
   .topbar{padding:0 16px}
-  .kpi-row,.grid-3,.grid-4,.form-grid{grid-template-columns:1fr}
+  .kpi-row,.ops-grid,.bill-strip,.grid-3,.grid-4,.form-grid,.lt-params{grid-template-columns:1fr}
   .kpick,.create-box .base-row .name-in{max-width:none}
   .kv dd{text-align:left}
   .hero{flex-direction:column;align-items:stretch;gap:14px}
@@ -437,7 +491,7 @@ pre.json{font-size:11px;overflow:auto;max-height:200px;background:oklch(0 0 0/25
 .chip-check{display:inline-flex;align-items:center;gap:6px;height:32px;padding:0 10px;border:1px solid var(--line-2);border-radius:var(--r-sm);background:rgba(248,250,252,.03);font-size:12px;color:var(--muted);cursor:pointer;user-select:none}
 .chip-check:has(input:checked){border-color:rgba(34,197,94,.45);background:rgba(34,197,94,.1);color:var(--fg)}
 .chip-check input{margin:0}
-@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}.ar-btn.on svg{animation:none}}
 
 
 .table-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
@@ -450,7 +504,7 @@ pre.json{font-size:11px;overflow:auto;max-height:200px;background:oklch(0 0 0/25
 .view-tog button:last-child{border-right:0}
 .view-tog button.on{background:rgba(248,250,252,.08);color:var(--fg)}
 .vm-list{border:1px solid var(--line);border-radius:var(--r-lg);overflow:hidden;background:var(--panel)}
-.vm-row,.vm-lh{display:grid;grid-template-columns:minmax(130px,1.1fr) minmax(150px,1.2fr) minmax(120px,1fr) 88px 128px 96px;gap:10px;align-items:center;padding:9px 14px;border-bottom:1px solid var(--line)}
+.vm-row,.vm-lh{display:grid;grid-template-columns:minmax(120px,1.1fr) minmax(130px,1.1fr) minmax(110px,.9fr) 80px 88px 92px 88px;gap:10px;align-items:center;padding:9px 14px;border-bottom:1px solid var(--line)}
 .vm-row{cursor:pointer;min-height:44px}
 .vm-lh{padding-top:7px;padding-bottom:7px;background:oklch(1 0 0/2%)}
 .vm-lh button{border:0;background:transparent;padding:0;color:var(--faint);font-size:11.5px;text-align:left;cursor:pointer;display:inline-flex;align-items:center;gap:3px}
@@ -491,12 +545,58 @@ pre.json{font-size:11px;overflow:auto;max-height:200px;background:oklch(0 0 0/25
 .life .ln{width:16px;height:1px;background:var(--line-2)}
 
 
-.qgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
-.qcard{display:flex;align-items:center;gap:12px;border:1px solid var(--line);border-radius:var(--r-md);padding:12px 14px;background:var(--panel)}
-.qcard .v{font-size:22px;font-weight:600;letter-spacing:-.03em;font-variant-numeric:tabular-nums;line-height:1}
-.qcard .v small{font-size:12px;font-weight:500;color:var(--faint);margin-left:3px}
-.qcard .s{font-size:11px;color:var(--faint);margin-top:4px}
+.qgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.qcard{display:flex;align-items:center;gap:10px;border:1px solid var(--line);border-radius:var(--r-md);padding:8px 10px;background:transparent;min-width:0}
+.qcard .k{font-size:10.5px;color:var(--faint)}
+.qcard .v{font-size:16px;font-weight:600;letter-spacing:-.03em;font-variant-numeric:tabular-nums;line-height:1}
+.qcard .v small{font-size:11px;font-weight:500;color:var(--faint);margin-left:2px}
+.qcard .s{font-size:10.5px;color:var(--faint);margin-top:3px;line-height:1.35}
 @media(max-width:760px){.qgrid{grid-template-columns:1fr}}
+
+/* ── vm detail: flatten nested cards ─────────────────────── */
+.vd{display:flex;flex-direction:column;gap:0;max-width:1080px}
+.vd-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;flex-wrap:wrap;padding-bottom:12px;border-bottom:1px solid var(--line)}
+.vd-id{min-width:0}
+.vd-id .nm{display:flex;align-items:center;gap:8px;font-size:16px;font-weight:600;letter-spacing:-.025em}
+.vd-id .meta{display:flex;flex-wrap:wrap;align-items:center;gap:6px 8px;margin-top:5px;font-size:11.5px;color:var(--faint)}
+.vd-id .meta .hid{font-family:var(--mono);font-size:11px}
+.vd-id .life{margin:0}
+.life.mini{gap:4px}
+.life.mini .st{font-size:10.5px;gap:3px}
+.life.mini .st b{width:15px;height:15px;font-size:9px}
+.life.mini .ln{width:8px}
+.vd .tabs button{padding:7px 10px;font-size:12.5px}
+.vd-body{padding:14px 0 0}
+.vd-strip{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));border:1px solid var(--line);border-radius:var(--r-md);overflow:hidden;background:var(--panel)}
+.vd-strip.halves{grid-template-columns:repeat(2,minmax(0,1fr));margin-top:8px}
+.vd-stat{padding:10px 12px;border-right:1px solid var(--line);min-width:0}
+.vd-stat:last-child{border-right:0}
+.vd-stat .k{font-size:10.5px;color:var(--faint);letter-spacing:.02em}
+.vd-stat .v{font-size:18px;font-weight:600;letter-spacing:-.03em;font-variant-numeric:tabular-nums;line-height:1.15;margin-top:2px}
+.vd-stat .v small{font-size:11px;font-weight:500;color:var(--faint);margin-left:2px}
+.vd-stat .s{font-size:10.5px;color:var(--faint);margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.vd-stat .bar{margin-top:7px;height:3px}
+.vd-spec{display:grid;grid-template-columns:1fr 1fr;gap:4px 36px;margin-top:14px}
+.vd-spec .kv{gap:7px 14px}
+.vd-spec .kv dt{font-size:11px}
+.vd-spec .kv dd{text-align:left;font-size:12.5px}
+.vd .qgrid{grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
+.vd .kv-2{display:grid;grid-template-columns:1fr 1fr;gap:2px 36px;margin-top:12px}
+.vd .kv-2 .kv{gap:7px 14px}
+.vd .kv-2 .kv dd{text-align:left}
+.vd .zone{border:none;padding:0;gap:8px}
+.vd .zone.danger{padding:10px 12px;border:1px solid rgba(239,68,68,.28);border-radius:var(--r-md)}
+.vd-test{border:1px solid var(--line);border-radius:var(--r-md);padding:10px 12px;margin-top:10px;background:oklch(1 0 0/2%)}
+.vd-test .hd{display:flex;justify-content:space-between;gap:8px;font-size:12px;margin-bottom:8px}
+.vd-test .out{max-height:240px;overflow:auto}
+.vd-test .ans{margin-bottom:8px;padding:8px 10px;border:1px solid var(--line);border-radius:8px;white-space:pre-wrap;font-size:12.5px}
+@media(max-width:900px){
+  .vd-strip{grid-template-columns:repeat(2,1fr)}
+  .vd-stat{border-bottom:1px solid var(--line)}
+  .vd-stat:nth-child(2n){border-right:0}
+  .vd .qgrid{grid-template-columns:repeat(2,1fr)}
+  .vd-spec,.vd .kv-2{grid-template-columns:1fr}
+}
 
 /* ── page reconstruction ────────────────────────────────── */
 .workbench{border:1px solid var(--line);border-radius:var(--r-lg);background:var(--panel);overflow:hidden}
@@ -526,6 +626,55 @@ pre.json{font-size:11px;overflow:auto;max-height:200px;background:oklch(0 0 0/25
 .zone{border:1px solid var(--line);border-radius:var(--r-md);padding:12px;display:flex;flex-direction:column;gap:10px}
 .zone.danger{border-color:rgba(239,68,68,.3)}
 .empty-box .btn{margin-top:12px}
+.mp-toolbar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:12px}
+.mp-toolbar .input{max-width:220px;height:32px}
+.lt-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:8px;margin:12px 0}.lt-stat{border:1px solid var(--line);border-radius:10px;padding:10px 12px;background:rgba(248,250,252,.02)}.lt-stat b{display:block;font-size:18px;margin-top:4px}.lt-pre{max-height:360px;overflow:auto;white-space:pre-wrap;word-break:break-word;font-family:var(--mono);font-size:11.5px;line-height:1.45;border:1px solid var(--line);border-radius:10px;padding:12px;background:rgba(0,0,0,.18)}.lt-files{display:flex;flex-direction:column;gap:4px;margin-top:8px}.lt-file{display:flex;align-items:center;gap:10px;width:100%;text-align:left;border:1px solid var(--line);border-radius:8px;padding:8px 10px;background:transparent;color:inherit;cursor:pointer}.lt-file:hover{background:oklch(1 0 0/5%)}.lt-file b{font-size:12px;font-weight:550}.lt-file span{margin-left:auto;font-size:11px;color:var(--faint)}
+.lt-page{display:flex;flex-direction:column;gap:16px}
+.lt-card{border:1px solid var(--line);border-radius:var(--r-lg);background:var(--panel);padding:16px 18px}
+.lt-card-h{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:14px}
+.lt-card-h h2{margin:0;font-size:15px;font-weight:600;letter-spacing:-.02em}
+.lt-card-h p{margin:4px 0 0;font-size:12px;color:var(--faint);line-height:1.45}
+.lt-field{display:flex;flex-direction:column;gap:8px;margin-top:14px}
+.lt-field:first-of-type{margin-top:0}
+.lt-lab{font-size:11px;font-weight:600;color:var(--faint);letter-spacing:.04em}
+.lt-lab em{font-style:normal;font-weight:500;margin-left:8px;letter-spacing:0;color:oklch(1 0 0/38%)}
+.lt-params{display:grid;grid-template-columns:minmax(220px,1.4fr) 88px 120px;gap:12px;align-items:end}
+.lt-num{display:flex;flex-direction:column;gap:8px}
+.lt-num .input{width:100%;max-width:none}
+.lt-add{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.lt-add .input{height:30px;width:92px}
+.lt-add .input.wide{width:140px}
+.lt-chip{display:inline-flex;align-items:center;gap:6px;height:30px;padding:0 6px 0 10px;border:1px solid var(--line-2);border-radius:999px;background:rgba(34,197,94,.1);border-color:rgba(34,197,94,.4);color:var(--fg);font-size:12px}
+.lt-chip b{font-weight:600}
+.lt-chip i{font-style:normal;color:var(--faint);font-size:11px}
+.lt-chip button{border:0;background:transparent;color:var(--faint);width:18px;height:18px;border-radius:99px;cursor:pointer;line-height:1;padding:0}
+.lt-chip button:hover{background:oklch(1 0 0/10%);color:var(--fg)}
+.lt-quick{display:flex;flex-wrap:wrap;gap:6px}
+.lt-quick button{height:26px;padding:0 8px;border:1px dashed var(--line-2);border-radius:999px;background:transparent;color:var(--faint);font-size:11px;cursor:pointer}
+.lt-quick button:hover{color:var(--fg);border-color:var(--line-2)}
+.lt-status{display:inline-flex;align-items:center;gap:6px;padding:3px 8px;border-radius:999px;font-size:11.5px;font-weight:550}
+.lt-status.ok{color:var(--ok);background:rgba(34,197,94,.12)}
+.lt-status.bad{color:var(--bad);background:rgba(239,68,68,.12)}
+.lt-status.run{color:#93C5FD;background:rgba(59,130,246,.14)}
+.lt-status.wait{color:var(--faint);background:oklch(1 0 0/6%)}
+.lt-turn{height:26px;padding:0 8px;border:1px solid var(--line);border-radius:6px;background:transparent;color:var(--muted);font-size:11.5px;cursor:pointer}
+.lt-turn:hover{color:var(--fg)}
+.lt-details{margin-top:12px}
+.lt-details summary{cursor:pointer;color:var(--faint);font-size:12px}
+.mp-card{border:1px solid var(--line);border-radius:var(--r-md);background:rgba(248,250,252,.02);margin-bottom:8px;overflow:hidden}
+.mp-card.disabled{opacity:.62}
+.mp-card-head{display:flex;align-items:center;gap:10px;padding:12px 14px;cursor:pointer;user-select:none}
+.mp-card-head:hover{background:oklch(1 0 0/2.5%)}
+.mp-card-head .info{flex:1;min-width:0}
+.mp-card-head .title{font-size:13px;font-weight:600;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.mp-card-head .meta{font-family:var(--mono);font-size:11px;color:var(--faint);margin-top:3px;word-break:break-all}
+.mp-card-body{padding:0 14px 14px;border-top:1px solid var(--line)}
+.mp-hint{font-size:11.5px;color:var(--faint);margin:4px 0 0;line-height:1.5}
+.mp-badges{display:flex;flex-wrap:wrap;gap:4px}
+.mp-actions{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+.mp-stat{display:flex;gap:10px;flex-wrap:wrap;font-size:12px;color:var(--muted);margin-bottom:4px}
+.mp-stat b{color:var(--fg);font-weight:600}
+
 @media(max-width:760px){
   .dock,.fact-grid{grid-template-columns:1fr}
   .set-row{grid-template-columns:1fr}
@@ -569,6 +718,7 @@ pre.json{font-size:11px;overflow:auto;max-height:200px;background:oklch(0 0 0/25
         <div class="nav-item" data-view="import"><svg class="ni" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg>导入</div>
         <div class="nav-item" data-view="usage"><svg class="ni" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 19V9"/><path d="M10 19V5"/><path d="M16 19v-7"/><path d="M22 19V8"/></svg>用量</div>
         <div class="nav-item" data-view="proxies"><svg class="ni" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="6" cy="12" r="2.4"/><circle cx="18" cy="7" r="2.4"/><circle cx="18" cy="17" r="2.4"/><path d="M8.2 11.2 15.6 8.1M8.2 12.8l7.4 3.1"/></svg>代理池</div>
+        <div class="nav-item" data-view="models"><svg class="ni" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6h16M4 12h10M4 18h14"/></svg>模型</div><div class="nav-item" data-view="loadtest"><svg class="ni" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 19V5"/><path d="M10 19V9"/><path d="M16 19V3"/><path d="M22 19H2"/></svg>压测</div>
         <div class="nav-item" data-view="protocol"><svg class="ni" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 10H5a2 2 0 0 0-2 2v7h18v-7a2 2 0 0 0-2-2h-3"/><rect x="8" y="3" width="8" height="9" rx="1.5"/></svg>协议</div>
         <div class="nav-item" data-view="keys"><svg class="ni" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="8" cy="15.5" r="4"/><path d="m10.8 12.7 9.2-9.2M15.5 8l3 3"/></svg>密钥</div>
         <div class="nav-item" data-view="logs"><svg class="ni" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5h16M4 10h16M4 15h10M4 20h6"/></svg>日志</div>
@@ -588,6 +738,13 @@ pre.json{font-size:11px;overflow:auto;max-height:200px;background:oklch(0 0 0/25
         </div>
         <div class="topbar-actions">
           <span id="sysChip" class="badge" title="网关状态 · 宿主负载">—</span>
+          <div class="ar" id="autoRefresh">
+            <button type="button" class="btn btn-outline ar-btn" id="arBtn" onclick="arToggleMenu(event)" title="自动刷新">
+              <svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M15.312 11.424a5.5 5.5 0 01-9.201 2.466l-.312-.311h2.433a.75.75 0 000-1.5H4.598a.75.75 0 00-.75.75v3.634a.75.75 0 001.5 0v-2.033l.312.312a7 7 0 0011.712-3.138.75.75 0 00-1.449-.39zm-10.624-2.848a5.5 5.5 0 019.201-2.466l.312.311H11.768a.75.75 0 000 1.5h3.634a.75.75 0 00.75-.75V3.537a.75.75 0 00-1.5 0v2.034l-.312-.312A7 7 0 002.628 8.397a.75.75 0 001.449.39z" clip-rule="evenodd"/></svg>
+              <span id="arLabel">自动刷新</span>
+            </button>
+            <div class="ar-menu hidden" id="arMenu" role="menu"></div>
+          </div>
           <button class="btn btn-outline" onclick="refresh()">刷新</button>
           <button class="btn btn-outline" onclick="probeAll()" title="经槽内 Go worker + SOCKS5 探测 5h/7d/fable">额度探测</button>
         </div>
@@ -606,14 +763,16 @@ const LS_USER = 'kin_console_user'
 const LS_BASE = 'kin_api_base'
 const COOKIE = 'kin_panel_token'
 const titles = {
-  overview: ['总览', '槽位 · 额度 · Go worker'],
-  cluster: ['集群', '有凭证：可用 / 限制 / 不可用'],
-  vm: ['虚拟机', '探测与刷新走槽内 Go worker'],
+  overview: ['总览', '可用账号 · 额度 · 首字延迟'],
+  cluster: ['集群', '网格 · 可用 / 警告 / 限制 / 不可用'],
+  vm: ['虚拟机', '列表 · 点击进入详情'],
   import: ['导入', 'sessionKey 必须经槽 SOCKS5'],
   usage: ['用量', '5h / 7d / fable / 缓存 token'],
+  models: ['模型', '能力矩阵 · 可用性 · 参数'],
+  loadtest: ['压测', '选模型、标的、轮次后开跑 · 正文按日可查'],
   protocol: ['协议', 'Go worker · 强制 SOCKS5'],
   keys: ['密钥', 'sk-kin 只能调 /v1 · HMAC 落库'],
-  logs: ['日志', 'usage · attempts · 缓存 token'],
+  logs: ['日志', '错误归类 · 首字 · attempts'],
   proxies: ['代理池', '每槽必须绑 SOCKS5'],
   settings: ['设置', '粘性 · 池 · failover · 日志'],
 }
@@ -748,34 +907,124 @@ function fmtReset(v) {
 }
 function credExpiry(v) {
   if (!v || !v.has_token) return { cls:'none', text:'无凭证', ms:null }
-  const t = expiresAtToMs(v.expires_at)
+  const worker = v.worker_credential || {}
+  const workerLive = !!(worker.has_access && worker.needs_refresh === false)
+  const t = expiresAtToMs(worker.expires_at != null ? worker.expires_at : v.expires_at)
   if (!t) return { cls:'ok', text:'已绑定', ms:null }
   const ms = t - Date.now()
-  if (ms <= 0) return { cls:'bad', text:'已过期', ms }
-  if (ms < 3600e3) return { cls:'warn', text: relMs(ms) + ' 过期', ms }
+  if (ms <= 0 && !workerLive) return { cls:'bad', text:'已过期', ms }
+  if (ms <= 0) return { cls:'ok', text:'已绑定', ms }
+  if (ms < 3600e3) return { cls:'caution', text: relMs(ms) + ' 过期', ms }
   return { cls:'ok', text: '有效 ' + relMs(ms), ms }
+}
+function accountUsable(v) {
+  if (!v || !v.has_token) return false
+  return accountStatus(v).key !== 'bad'
 }
 function quotaCard(label, used, reset) {
   const u = pct(used)
   const remain = Math.max(0, 100 - u)
-  return `<div class="qcard">${quotaRing(u, 52)}<div><div class="k">${esc(label)}</div><div class="v" style="color:${barColor(u)}">${remain.toFixed(0)}<small>% 剩余</small></div><div class="s">已用 ${u.toFixed(1)}%${reset ? ' · ' + esc(fmtReset(reset)) : ''}</div></div></div>`
+  return `<div class="qcard">${quotaRing(u, 36)}<div><div class="k">${esc(label)}</div><div class="v" style="color:${barColor(u)}">${remain.toFixed(0)}<small>%</small></div><div class="s">用 ${u.toFixed(1)}%${reset ? ' · ' + esc(fmtReset(reset)) : ''}</div></div></div>`
 }
-function fableBadge(fb) {
+function vdRemainStat(label, used, reset) {
+  const u = pct(used)
+  const remain = Math.max(0, 100 - u)
+  return `<div class="vd-stat"><div class="k">${esc(label)}</div><div class="v" style="color:${barColor(u)}">${remain.toFixed(0)}<small>%</small></div><div class="s">已用 ${u.toFixed(1)}%${reset ? ' · ' + esc(fmtReset(reset)) : ''}</div><div class="bar"><i style="width:${Math.min(100, u)}%;background:${barColor(u)}"></i></div></div>`
+}
+function vdMoneyStat(label, amount, hint) {
+  return `<div class="vd-stat"><div class="k">${esc(label)}</div><div class="v" style="color:var(--ok)">${fmtUsd(amount, 2)}</div><div class="s">${esc(hint || '官方价')}</div></div>`
+}
+function vdSplitStat(label, usedWeekly, remainWeekly, share) {
+  const used = Math.max(0, Number(usedWeekly) || 0)
+  const remain = Math.max(0, Number(remainWeekly) || 0)
+  const half = Number(share) > 0 ? Number(share) : 0.5
+  const fill = Math.min(100, (used / half) * 100)
+  return `<div class="vd-stat"><div class="k">${esc(label)}</div><div class="v" style="color:${barColor(fill)}">${(remain * 100).toFixed(0)}<small>%</small></div><div class="s">已用 ${(used * 100).toFixed(1)}% 周限</div><div class="bar"><i style="width:${fill}%;background:${barColor(fill)}"></i></div></div>`
+}
+function splitTracks(v) {
+  const s = v?.weekly_split
+  if (!s || !s.enabled) return ''
+  const share = Number(s.fable_share) > 0 ? Number(s.fable_share) : 0.5
+  const rFill = Math.min(100, ((Number(s.regular_used_weekly) || 0) / share) * 100)
+  const fFill = Math.min(100, ((Number(s.fable_used_weekly) || 0) / share) * 100)
+  return `<div class="vm-track">${track('普', rFill, `普通半仓 · 剩 ${((s.regular_remain_weekly || 0) * 100).toFixed(0)}% 周限`)}${track('Fb', fFill, `Fable 半仓 · 剩 ${((s.fable_remain_weekly || 0) * 100).toFixed(0)}% 周限`)}</div>`
+}
+function vdFableStat(fb, v) {
+  const used = fableUsedOf(fb, v)
+  const reset = v?.reset_7d_oi || fb?.reset
+  if (used != null) return vdRemainStat('Fable', used, reset)
+  const txt = !fb ? '未探测' : fb.banned ? '账号拒' : fableWeeklyFull(fb, v) ? '周额度满' : fb.ok ? '可用' : (fb.error || '—')
+  return `<div class="vd-stat"><div class="k">Fable</div><div class="v" style="font-size:15px">${esc(txt)}</div><div class="s">${esc(reset ? fmtReset(reset) : '7d_oi')}</div></div>`
+}
+function fableUsedOf(fb, v) {
+  if (v?.utilization_7d_oi != null) return v.utilization_7d_oi
+  if (fb?.utilization != null) return fb.utilization
+  return null
+}
+function fableWeeklyFull(fb, v) {
+  const used = fableUsedOf(fb, v)
+  if (windowLimited(v?.status_7d_oi, pct(used))) return true
+  if (used != null) return pct(used) >= 100
+  return !!fb?.limited
+}
+function fableBadge(fb, v) {
+  if (fb?.banned) return '<span class="badge danger">拒</span>'
+  const used = fableUsedOf(fb, v)
+  if (used != null) return meter('', pct(used))
   if (!fb) return '<span class="badge">未探测</span>'
-  if (fb.banned) return '<span class="badge danger">拒</span>'
-  if (fb.limited) return '<span class="badge warn">满</span>'
+  if (fableWeeklyFull(fb, v)) return '<span class="badge warn">满</span>'
   if (fb.ok) return '<span class="badge ok">可用</span>'
   return '<span class="badge">—</span>'
 }
-function fableLine(fb) {
+function fableLine(fb, v) {
+  const used = fableUsedOf(fb, v)
+  if (used != null) return meter('Fable', pct(used))
   if (!fb) return '<div class="m">fable 未探测</div>'
-  const txt = fb.banned ? '账号拒' : fb.limited ? '周额度满' : fb.ok ? '可用' : (fb.error || '—')
+  const txt = fb.banned ? '账号拒' : fableWeeklyFull(fb, v) ? '周额度满' : fb.ok ? '可用' : (fb.error || '—')
   return `<div class="m">fable ${esc(txt)}${fb.reset ? ' · ' + esc(fmtReset(fb.reset)) : ''}</div>`
 }
-function fableCard(fb) {
-  const txt = !fb ? '未探测' : fb.banned ? '账号拒' : fb.limited ? '周额度满' : fb.ok ? '可用' : (fb.error || '—')
+function fableCap() {
+  const c = state.routing?.concurrency || state.dashboard?.routing || state.dashboard?.summary || {}
+  const n = Number(c.fable_max_per_account)
+  return Number.isFinite(n) && n > 0 ? n : 4
+}
+function fableUtil(v) {
+  if (v?.fable_cooldown_until && Number(v.fable_cooldown_until) > Date.now()) return 100
+  if (v?.fable?.banned) return 100
+  if (fableWeeklyFull(v?.fable, v) && fableUsedOf(v?.fable, v) == null) return 100
+  return pct(fableUsedOf(v?.fable, v))
+}
+function concChip(v) {
+  const max = v.max_concurrency || defaultConc()
+  const inf = v.inflight || 0
+  const fmax = v.fable_max || fableCap()
+  const fin = v.fable_inflight || 0
+  const cool = v.fable_cooldown_until && Number(v.fable_cooldown_until) > Date.now()
+  const hot = !cool && fmax > 0 && fin >= fmax
+  const title = cool
+    ? `Fable 冷却${v.fable_cooldown_reason ? ' · ' + v.fable_cooldown_reason : ''}`
+    : `账号 ${inf}/${max} · Fable ${fin}/${fmax}`
+  return `<span class="conc ${hot ? 'hot' : ''} ${cool ? 'cool' : ''}" title="${esc(title)}">${inf}/${max}<em>F ${fin}/${fmax}</em></span>`
+}
+function fableCard(fb, v) {
+  const used = fableUsedOf(fb, v)
+  const reset = v?.reset_7d_oi || fb?.reset
+  const bits = []
+  if (v) bits.push(`并发 ${(v.fable_inflight || 0)}/${v.fable_max || fableCap()}`)
+  if (v && v.fable_cooldown_until && Number(v.fable_cooldown_until) > Date.now()) bits.push('冷却中')
+  if (fb?.banned) bits.unshift('账号拒')
+  else if (fableWeeklyFull(fb, v)) bits.unshift('周额度满')
+  if (used != null) {
+    const u = pct(used)
+    const remain = Math.max(0, 100 - u)
+    const extra = bits.length ? ' · ' + bits.join(' · ') : ''
+    return `<div class="qcard">${quotaRing(u, 36)}<div><div class="k">Fable</div><div class="v" style="color:${barColor(u)}">${remain.toFixed(0)}<small>%</small></div><div class="s">用 ${u.toFixed(1)}%${reset ? ' · ' + esc(fmtReset(reset)) : ''}${esc(extra)}</div></div></div>`
+  }
+  const txt = !fb ? '未探测' : fb.banned ? '账号拒' : fableWeeklyFull(fb, v) ? '周额度满' : fb.ok ? '可用' : (fb.error || '—')
   const cls = !fb ? '' : fb.banned ? 'danger' : fb.limited ? 'warn' : 'ok'
-  return `<div class="qcard"><div><div class="k">Fable</div><div class="v"><span class="badge ${cls}">${esc(txt)}</span></div><div class="s">${esc(fb && fb.model || 'claude-fable-5')}${fb && fb.reset ? ' · ' + esc(fmtReset(fb.reset)) : ''}</div></div></div>`
+  bits.unshift(fb && fb.model || 'claude-fable-5')
+  if (reset) bits.push(fmtReset(reset))
+  return `<div class="qcard"><div><div class="k">Fable</div><div class="v"><span class="badge ${cls}">${esc(txt)}</span></div><div class="s">${esc(bits.join(' · '))}</div></div></div>`
 }
 function extraUsageText(ex) {
   if (!ex) return '—'
@@ -796,7 +1045,7 @@ function runtimeWindowLine(w) {
 function donut(score, label, size = 92) {
   const p = Math.max(0, Math.min(100, Number(score) || 0))
   const r = 30, c = 2 * Math.PI * r
-  const col = p >= 80 ? 'var(--ok)' : p >= 50 ? 'var(--warn)' : 'var(--bad)'
+  const col = p >= 80 ? 'var(--ok)' : p >= 50 ? 'var(--caution)' : 'var(--bad)'
   return `<svg class="donut" viewBox="0 0 72 72" width="${size}" height="${size}" role="img" aria-label="${esc(label)} ${p}%">
     <circle cx="36" cy="36" r="${r}" fill="none" stroke="oklch(1 0 0/8%)" stroke-width="5"/>
     <circle cx="36" cy="36" r="${r}" fill="none" stroke="${col}" stroke-width="5" stroke-linecap="round" stroke-dasharray="${c.toFixed(1)}" stroke-dashoffset="${(c * (1 - p / 100)).toFixed(1)}" transform="rotate(-90 36 36)"/>
@@ -804,8 +1053,29 @@ function donut(score, label, size = 92) {
     <text x="36" y="49" text-anchor="middle" class="dl">${esc(label)}</text>
   </svg>`
 }
-function kpi(label, valueHTML, ringPct) {
-  return `<div class="kpi">${ringPct != null ? quotaRing(ringPct, 46) : ''}<div style="min-width:0"><div class="v">${valueHTML}</div><div class="k">${esc(label)}</div></div></div>`
+function kpi(label, valueHTML, ringPct, tone = 'usage') {
+  const ring = ringPct == null ? '' : tone === 'good' ? goodRing(ringPct, 46) : quotaRing(ringPct, 46)
+  return `<div class="kpi">${ring}<div style="min-width:0"><div class="v">${valueHTML}</div><div class="k">${esc(label)}</div></div></div>`
+}
+function billingOf(src) {
+  return (src && src.billing) || state.dashboard?.billing || state.usage?.billing || null
+}
+function renderBillingStrip(src, { accounts = null, compact = false } = {}) {
+  const b = billingOf(src)
+  const today = b?.today?.total_cost ?? src?.summary?.today_cost ?? src?.totals?.today_cost ?? 0
+  const total = b?.total?.total_cost ?? src?.summary?.total_cost ?? src?.totals?.total_cost ?? 0
+  const rows = accounts || b?.accounts || []
+  const chips = rows.filter(a => Number(a.total_cost) > 0).slice(0, 8).map(a => {
+    const name = a.email || a.vm_id || a.account_id || '—'
+    return `<button class="bill-chip" onclick="openVm('${esc(a.vm_id || '')}')"><em>${esc(name)}</em><b>${fmtUsd(a.today_cost || 0)}</b><em>/ ${fmtUsd(a.total_cost || 0)}</em></button>`
+  }).join('')
+  return `
+    <div class="bill-strip">
+      <div class="bill-card"><div class="lab">今日费用</div><div class="val">${fmtUsd(today)}</div><div class="hint">上海日切 · 官方 API 价</div></div>
+      <div class="bill-card"><div class="lab">累计费用</div><div class="val">${fmtUsd(total)}</div><div class="hint">日志窗口内全部请求</div></div>
+      <div class="bill-card"><div class="lab">计价标准</div><div class="val" style="font-size:15px;color:var(--fg)">Anthropic 官方</div><div class="hint">input / output / cache 5m·1h·read</div></div>
+    </div>
+    ${!compact && chips ? `<div class="bill-acc">${chips}</div>` : ''}`
 }
 function hostRow(label, p, valText) {
   return `<div class="hrow"><u>${esc(label)}</u><div class="bar"><i style="width:${Math.min(100, p)}%;background:${barColor(p)}"></i></div><b>${valText}</b></div>`
@@ -821,7 +1091,9 @@ function sortVms(list) {
     status: v => accountStatus(v).key,
     email: v => (v.email || '').toLowerCase(),
     kernel: v => (v.kernel || ''),
+    fable: v => (Number(v.fable_inflight) || 0) + fableUtil(v),
     expire: v => Date.parse(v.expires_at) || 0,
+    cost: v => Number(v.window_5h_cost || v.today_cost || 0),
   }
   const g = val[key] || val.name
   return (list || []).slice().sort((a,b) => cmp(g(a), g(b), dir))
@@ -845,7 +1117,7 @@ function setClusterSort(k) {
 }
 
 
-let state = { view: 'overview', selectedVm: null, dashboard: null, usage: null, models: null, routing: null, detail: null, proxies: null, apiKeys: null, logs: null, logMode: 'normal', clusterQ: '', clusterFilter: 'all', clusterView: 'list', clusterSort: 'name', clusterDir: 'asc', vmTab: 'overview', loading: false, kernel: 'ubuntu-24.04', createName: '', advOpen: false, usageSort: 'u5', usageDir: 'desc', proxySort: 'status', proxyDir: 'asc', seedPreset: 'strict', createPreset: 'strict', createAfter: 'proxy', createTemplate: 'std-ubuntu' }
+let state = { view: 'overview', selectedVm: null, dashboard: null, usage: null, models: null, routing: null, detail: null, proxies: null, apiKeys: null, logs: null, logStats: null, opsWindow: '1h', logKind: 'all', logErrorClass: '', logMode: 'normal', clusterQ: '', clusterFilter: 'all', clusterView: 'grid', clusterSort: 'name', clusterDir: 'asc', vmTab: 'overview', testModels: null, testModel: '', testPrompt: 'hello', testRunning: false, testResult: null, loadtest: undefined, loadtestRunning: false, loadtestPoll: null, loadtestConcurrency: 10, loadtestTurns: 2, loadtestModels: ['claude-opus-5','claude-sonnet-5','claude-fable-5'], loadtestStocks: ['TSLA','AAPL','GOOGL','AMZN','SNDK'], loadtestStockList: null, loadtestMaxTokens: 32000, loadtestReports: null, loadtestReportDay: '', testMaxTokens: 8192, loading: false, kernel: 'ubuntu-24.04', createName: '', advOpen: false, usageSort: 'u5', usageDir: 'desc', proxySort: 'status', proxyDir: 'asc', seedPreset: 'strict', createPreset: 'strict', createAfter: 'proxy', createTemplate: 'std-ubuntu' }
 let bootstrapped = false
 
 function sameOriginPanel(host) {
@@ -909,6 +1181,9 @@ function showApp(user) {
 }
 
 function logout() {
+  arStop()
+  autoRefresh.menuOpen = false
+  arPaint()
   const tok = key()
   const base = apiBase()
   // best-effort server revoke
@@ -1005,13 +1280,239 @@ function fmtTok(l) {
   if (cr || cc) s += ' · c' + (cr || 0) + '/' + (cc || 0)
   return s
 }
-function barColor(p) { if (p >= 95) return 'var(--bad)'; if (p >= 85) return 'var(--warn)'; return 'var(--ok)' }
+function barColor(p) {
+  if (p >= 100) return 'var(--bad)'
+  if (p >= 95) return 'var(--warn)'
+  if (p >= 85) return 'var(--caution)'
+  return 'var(--ok)'
+}
 function fmtNum(n) {
   const v = Number(n) || 0
   if (v >= 1e9) return (v / 1e9).toFixed(1) + 'B'
   if (v >= 1e6) return (v / 1e6).toFixed(1) + 'M'
   if (v >= 1e3) return (v / 1e3).toFixed(1) + 'k'
   return String(v)
+}
+function fmtUsd(n, digits) {
+  const v = Number(n)
+  if (!Number.isFinite(v) || v === 0) return '$0'
+  const d = digits != null ? digits : (Math.abs(v) >= 100 ? 2 : Math.abs(v) >= 1 ? 3 : 4)
+  return '$' + v.toFixed(d)
+}
+function fmtMs(ms) {
+  if (ms == null || !Number.isFinite(Number(ms))) return '—'
+  const n = Number(ms)
+  if (n >= 10000) return (n / 1000).toFixed(1) + 's'
+  return Math.round(n) + 'ms'
+}
+function fmtRate(n, digits) {
+  if (n == null || !Number.isFinite(Number(n))) return '—'
+  const v = Number(n)
+  if (v >= 100) return v.toFixed(0)
+  if (v >= 10) return v.toFixed(1)
+  if (v >= 1) return v.toFixed(2)
+  return v.toFixed(digits ?? 3)
+}
+function opsWindowMs(w) {
+  return ({ '1h': 3600e3, '6h': 6 * 3600e3, '24h': 86400e3 }[w] || 3600e3)
+}
+function currentOps() {
+  const s = state.logStats
+  if (s && s.error) return s
+  if (s && s.window) return s.window
+  if (s && (s.ttft || s.requests != null)) return s
+  return state.dashboard?.ops || null
+}
+function opsTone(kind, ops) {
+  if (!ops) return ''
+  if (kind === 'sla') {
+    const p = (ops.sla || 0) * 100
+    if (p < 90) return 'bad'
+    if (p < 99) return 'warn'
+    return 'ok'
+  }
+  if (kind === 'err') {
+    const p = (ops.error_rate || 0) * 100
+    if (p >= 10) return 'bad'
+    if (p >= 5) return 'warn'
+    return 'ok'
+  }
+  if (kind === 'ttft') {
+    const p95 = ops.ttft && ops.ttft.p95_ms
+    if (p95 == null) return ''
+    if (p95 >= 8000) return 'bad'
+    if (p95 >= 4000) return 'warn'
+    return ''
+  }
+  return ''
+}
+function opsCard(label, valueHTML, hint, tone) {
+  return `<div class="ops-card ${tone || ''}"><div class="lab">${esc(label)}</div><div class="val">${valueHTML}</div>${hint ? `<div class="hint">${hint}</div>` : ''}</div>`
+}
+function modelFamilyOf(id) {
+  const s = String(id || '').toLowerCase()
+  if (s.includes('haiku')) return 'haiku'
+  if (s.includes('opus')) return 'opus'
+  if (s.includes('fable') || s.includes('mythos')) return 'fable'
+  if (s.includes('sonnet')) return 'sonnet'
+  return 'other'
+}
+function opsModelFamilyRows(byModel) {
+  const families = [
+    { id: 'opus', label: 'Opus' },
+    { id: 'sonnet', label: 'Sonnet' },
+    { id: 'haiku', label: 'Haiku' },
+    { id: 'fable', label: 'Fable' },
+  ]
+  const bag = Object.fromEntries(families.map(f => [f.id, { requests: 0, errors: 0, ttftSum: 0, ttftN: 0, durSum: 0, durN: 0 }]))
+  for (const row of byModel || []) {
+    const key = modelFamilyOf(row.model)
+    if (!bag[key]) continue
+    const n = Number(row.requests || 0)
+    const err = Number(row.errors || 0)
+    bag[key].requests += n
+    bag[key].errors += err
+    if (row.avg_first_token_ms != null && Number(row.ttft_samples || n)) {
+      const samples = Number(row.ttft_samples || n) || 0
+      bag[key].ttftSum += Number(row.avg_first_token_ms) * samples
+      bag[key].ttftN += samples
+    }
+    if (row.avg_duration_ms != null) {
+      const samples = Number(row.ttft_samples || n) || n
+      bag[key].durSum += Number(row.avg_duration_ms) * samples
+      bag[key].durN += samples
+    }
+  }
+  return families.map(f => {
+    const b = bag[f.id]
+    return {
+      model: f.label,
+      requests: b.requests,
+      errors: b.errors,
+      avg_first_token_ms: b.ttftN ? Math.round(b.ttftSum / b.ttftN) : null,
+      avg_duration_ms: b.durN ? Math.round(b.durSum / b.durN) : null,
+    }
+  })
+}
+function renderTrafficOps(ops, { showModels = false } = {}) {
+  const o = ops && !ops.error ? ops : {}
+  const w = state.opsWindow || '1h'
+  const ranges = [['1h', '近1小时'], ['6h', '近6小时'], ['24h', '近24小时']]
+  const sla = o.sla != null ? o.sla * 100 : null
+  const err = o.error_rate != null ? o.error_rate * 100 : null
+  const ttft = o.ttft || {}
+  const dur = o.duration || {}
+  const models = showModels ? opsModelFamilyRows(o.by_model || []) : []
+  const streamPct = o.requests ? ((o.stream_requests || 0) / o.requests * 100).toFixed(0) : null
+  return `
+    <div class="head">
+      <div class="section-title">流量 · 首字延迟</div>
+      <div class="toolbar">
+        <div class="seg" role="group" aria-label="统计窗口">${ranges.map(([k, l]) => `<button class="${w === k ? 'on' : ''}" onclick="setOpsWindow('${k}')">${l}</button>`).join('')}</div>
+      </div>
+    </div>
+    ${ops && ops.error ? emptyBox('统计加载失败: ' + ops.error) : `
+    <div class="ops-grid">
+      ${opsCard('成功率', sla == null ? '—' : sla.toFixed(1) + '<small>%</small>', `${fmtNum(o.success || 0)} / ${fmtNum(o.requests || 0)} · 错 ${fmtNum(o.errors || 0)}`, opsTone('sla', o))}
+      ${opsCard('错误率', err == null ? '—' : err.toFixed(1) + '<small>%</small>', `429 ${fmtNum(o.status_429 || 0)} · 503 ${fmtNum(o.status_503 || 0)}`, opsTone('err', o))}
+      ${opsCard('首字 p50', fmtMs(ttft.p50_ms), `p95 ${fmtMs(ttft.p95_ms)} · avg ${fmtMs(ttft.avg_ms)} · ${fmtNum(ttft.samples || 0)} 样本`, opsTone('ttft', o))}
+      ${opsCard('耗时 p50', fmtMs(dur.p50_ms), `p95 ${fmtMs(dur.p95_ms)} · avg ${fmtMs(dur.avg_ms)}`)}
+    </div>
+    <div class="ops-grid" style="margin-top:12px">
+      ${opsCard('QPS', fmtRate(o.qps && o.qps.avg), `当前 ${fmtRate(o.qps && o.qps.current)} · 峰值 ${fmtRate(o.qps && o.qps.peak)}`)}
+      ${opsCard('TPS', fmtRate(o.tps && o.tps.avg, 1), `入 ${fmtNum(o.input_tokens || 0)} / 出 ${fmtNum(o.output_tokens || 0)}`)}
+      ${opsCard('首字 p95', fmtMs(ttft.p95_ms), `p99 ${fmtMs(ttft.p99_ms)} · 最大 ${fmtMs(ttft.max_ms)}`, opsTone('ttft', o))}
+      ${opsCard('流式占比', streamPct == null ? '—' : streamPct + '<small>%</small>', `流式 ${fmtNum(o.stream_requests || 0)}`)}
+    </div>
+    ${models.length ? `<div class="card table-wrap" style="padding:8px 10px 4px;margin-top:12px">
+      <table class="table">
+        <thead><tr><th>模型家族</th><th class="right">请求</th><th class="right">错误</th><th class="right">首字 avg</th><th class="right">耗时 avg</th></tr></thead>
+        <tbody>${models.map(m => `<tr>
+          <td class="mono text-xs">${esc(String(m.model || '—').replace(/-\d{8}$/, ''))}</td>
+          <td class="num right">${fmtNum(m.requests)}</td>
+          <td class="num right">${fmtNum(m.errors)}</td>
+          <td class="num right">${fmtMs(m.avg_first_token_ms)}</td>
+          <td class="num right">${fmtMs(m.avg_duration_ms)}</td>
+        </tr>`).join('')}</tbody>
+      </table>
+    </div>` : ''}`}
+`
+}
+async function loadLogStats() {
+  const since = new Date(Date.now() - opsWindowMs(state.opsWindow)).toISOString()
+  try {
+    const r = await api('/api/panel/request-logs/stats?bucket=hour&since=' + encodeURIComponent(since))
+    state.logStats = r && r.window ? r : (r && r.data ? r.data : r)
+  } catch (e) {
+    if (!state.logStats) state.logStats = { error: e.message || String(e) }
+  }
+}
+async function setOpsWindow(w) {
+  if (w === state.opsWindow && state.logStats && state.logStats.window) {
+    render()
+    return
+  }
+  state.opsWindow = w || '1h'
+  await loadLogStats()
+  if (state.view === 'logs' && (state.logKind === 'error' || state.logErrorClass)) {
+    await loadLogs()
+    return
+  }
+  render()
+}
+function renderErrorCollection(ops, { inLogs = false } = {}) {
+  const bag = (ops && ops.error_collection) || { total: 0, by_class: [], by_code: [] }
+  const classes = bag.by_class || []
+  const codes = bag.by_code || []
+  const active = state.logErrorClass || ''
+  const kind = state.logKind || 'all'
+  return `
+    <div class="head">
+      <div class="section-title">错误集合 ${bag.total ? fmtNum(bag.total) : ''}</div>
+      ${inLogs ? `<div class="toolbar">
+        <div class="seg" role="group" aria-label="日志范围">
+          <button class="${kind !== 'error' ? 'on' : ''}" onclick="setLogKind('all')">全部</button>
+          <button class="${kind === 'error' ? 'on' : ''}" onclick="setLogKind('error')">仅错误</button>
+        </div>
+      </div>` : `<div class="toolbar"><button class="btn btn-outline btn-sm" onclick="openLogErrors('')">查看错误日志</button></div>`}
+    </div>
+    ${!classes.length ? `<p class="text-xs faint" style="margin:0 0 8px">该窗口无错误</p>` : `
+    <div class="err-chips">
+      ${classes.map(c => `<button class="err-chip ${active === c.id ? 'on' : ''}" onclick="openLogErrors('${esc(c.id)}')"><b>${esc(c.label)}</b><span>${fmtNum(c.count)}</span><em>${esc(c.owner === 'provider' ? '上游' : c.owner === 'client' ? '客户端' : '平台')}</em></button>`).join('')}
+    </div>
+    ${codes.length ? `<div class="card table-wrap" style="padding:8px 10px 4px;margin-top:10px">
+      <table class="table">
+        <thead><tr><th>归类</th><th>错误码</th><th class="right">次数</th><th>最近</th></tr></thead>
+        <tbody>${codes.map(x => `<tr class="near-limit" onclick="openLogErrors('${esc(x.error_class)}')" style="cursor:pointer">
+          <td><span class="badge danger">${esc(x.error_label)}</span></td>
+          <td class="mono text-xs">${esc(x.error_code)}</td>
+          <td class="num right">${fmtNum(x.count)}</td>
+          <td class="text-xs faint">${esc(x.last_message || '—')}${x.last_model ? ' · ' + esc(String(x.last_model).replace(/-\d{8}$/, '')) : ''}</td>
+        </tr>`).join('')}</tbody>
+      </table>
+    </div>` : ''}`}
+  `
+}
+function setLogKind(kind) {
+  state.logKind = kind === 'error' ? 'error' : 'all'
+  if (state.logKind !== 'error') state.logErrorClass = ''
+  state.logs = null
+  render()
+  loadLogs()
+}
+function openLogErrors(cls) {
+  const next = String(cls || '')
+  if (state.view === 'logs' && state.logKind === 'error' && state.logErrorClass === next && next) {
+    state.logErrorClass = ''
+    state.logs = null
+    loadLogs()
+    return
+  }
+  state.logKind = 'error'
+  state.logErrorClass = next
+  state.logs = null
+  if (state.view !== 'logs') go('logs')
+  else { render(); loadLogs() }
 }
 function esc(s) { return String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c])) }
 function copyText(text) {
@@ -1079,12 +1580,14 @@ function setProxySort(key) {
 function vmListRow(v) {
   const acc = accountStatus(v)
   const u5 = pct(v.utilization_5h)
+  const c = vmCost(v)
   return `<div class="vm-row" onclick="openVm('${esc(v.id)}')">
     <div class="nm"><span class="status-dot ${statusDot(v)}"></span><span class="txt">${esc(v.name || v.id)}</span></div>
     <div class="em">${esc(v.email || '—')}</div>
     <div>${meter('', u5)}</div>
     <span class="acc-pill ${acc.cls}" title="凭证状态">${v.has_token && acc.key !== 'none' ? '有凭证 · ' : ''}${acc.text}</span>
-    ${kernelTag(v.kernel)}
+    ${concChip(v)}
+    <div class="cost" title="5h 窗口 / 今日 · 官方价"><b>${fmtUsd(c.w, 2)}</b><em>${fmtUsd(c.today, 2)}</em></div>
     <div class="ops">
       <button class="btn btn-ghost btn-xs faint" onclick="event.stopPropagation();openResetVm('${esc(v.id)}')">重置</button>
       <button class="btn btn-ghost btn-xs danger" onclick="event.stopPropagation();openDeleteVm('${esc(v.id)}')">删除</button>
@@ -1094,7 +1597,7 @@ function vmListRow(v) {
 /* 列表排序表头：与 vm-row 同网格，点击列名即排序（取代排序下拉） */
 function vmListHead() {
   const cur = state.clusterSort, dir = state.clusterDir
-  const cols = [['name', '名称'], ['email', '账号'], ['u5', '5h 用量'], ['status', '状态'], ['kernel', '内核']]
+  const cols = [['name', '名称'], ['email', '账号'], ['u5', '5h 用量'], ['status', '状态'], ['fable', 'Fable'], ['cost', '费用']]
   return `<div class="vm-lh">${cols.map(([k, l]) => {
     const on = cur === k
     return `<button class="${on ? 'on' : ''}" onclick="setClusterSort('${k}')" aria-pressed="${on}">${l}${on ? `<span class="dir">${dir === 'asc' ? '↑' : '↓'}</span>` : ''}</button>`
@@ -1109,40 +1612,48 @@ function renderVmCollection(vms, emptyMsg) {
 
 document.getElementById('loginPassInput') && document.getElementById('loginPassInput').addEventListener('keydown', function (e) { if (e.key === 'Enter') doLogin() })
 
-async function refresh() {
+async function refresh(opts = {}) {
   if (!key()) return
+  const silent = !!opts.silent
+  const light = !!opts.light
   const first = !state.dashboard
-  state.loading = true
+  if (!silent || first) state.loading = true
   if (first) render()
   const btn = document.querySelector('.topbar-actions button[onclick="refresh()"]')
-  if (btn) { btn.disabled = true; btn.classList.add('busy') }
+  if (btn && !silent) { btn.disabled = true; btn.classList.add('busy') }
   try {
     const safe = (p) => api(p).catch((e) => ({ __error: e.message || String(e) }))
-    const [dash, usage, models, routing, proxies] = await Promise.all([
+    const since = new Date(Date.now() - opsWindowMs(state.opsWindow)).toISOString()
+    const jobs = [
       safe('/api/panel/dashboard'),
       safe('/api/panel/usage'),
-      safe('/api/panel/models?refresh=1'),
-      safe('/api/panel/routing'),
-      safe('/api/panel/proxies'),
-    ])
+      safe('/api/panel/request-logs/stats?bucket=hour&since=' + encodeURIComponent(since)),
+    ]
+    if (!light) {
+      jobs.push(safe('/api/panel/models?refresh=1'), safe('/api/panel/routing'), safe('/api/panel/proxies'))
+    }
+    const [dash, usage, logStats, models, routing, proxies] = await Promise.all(jobs)
     state.dashboard = dash?.__error ? { error: dash.__error } : (dash.data || dash)
     state.usage = usage?.__error ? { error: usage.__error } : (usage.data || usage)
-    let m = models?.__error ? null : (models.data || models)
-    if (m && Array.isArray(m.data) && !m.items) {
-      m = {
-        items: m.data.map(x => ({ id: x.id, label: x.display_name || x.id })),
-        source: m.source || 'go-slot-worker',
-        total: m.data.length,
-        worker: m.worker || m.source || null,
-        note: m.note || null,
+    state.logStats = logStats?.__error ? { error: logStats.__error } : (logStats.data || logStats)
+    if (!light) {
+      let m = models?.__error ? null : (models.data || models)
+      if (m && Array.isArray(m.data) && !m.items) {
+        m = {
+          items: m.data.map(x => ({ id: x.id, label: x.display_name || x.id })),
+          source: m.source || 'go-slot-worker',
+          total: m.data.length,
+          worker: m.worker || m.source || null,
+          note: m.note || null,
+        }
       }
+      if (m && !m.items && Array.isArray(m)) {
+        m = { items: m.map(x => ({ id: x.id || x, label: x.label || x.display_name || x.id || x })), source: 'list' }
+      }
+      state.models = m || { items: [], source: 'error', note: models?.__error || 'empty' }
+      state.routing = routing?.__error ? { error: routing.__error } : (routing.data || routing)
+      state.proxies = proxies?.__error ? { error: proxies.__error } : (proxies.data || proxies)
     }
-    if (m && !m.items && Array.isArray(m)) {
-      m = { items: m.map(x => ({ id: x.id || x, label: x.label || x.display_name || x.id || x })), source: 'list' }
-    }
-    state.models = m || { items: [], source: 'error', note: models?.__error || 'empty' }
-    state.routing = routing?.__error ? { error: routing.__error } : (routing.data || routing)
-    state.proxies = proxies?.__error ? { error: proxies.__error } : (proxies.data || proxies)
     if (!state.selectedVm && state.dashboard.vms?.[0]) state.selectedVm = state.dashboard.vms[0].id
     const h = state.dashboard.health
     const host = state.dashboard.host || {}
@@ -1156,21 +1667,138 @@ async function refresh() {
       chip.title = (h?.base_url || '') + ' · load ' + (host.load1 != null ? Number(host.load1).toFixed(2) : '—') + ' · rss ' + fmtBytes(host.rss)
     }
   } catch (e) {
-    toast('刷新失败: ' + e.message, 'err')
+    if (!silent) toast('刷新失败: ' + e.message, 'err')
   } finally {
     state.loading = false
-    const btn = document.querySelector('.topbar-actions button[onclick="refresh()"]')
-    if (btn) { btn.disabled = false; btn.classList.remove('busy') }
+    if (btn && !silent) { btn.disabled = false; btn.classList.remove('busy') }
     render()
+    arPaint()
   }
 }
+
+const AR_KEY = 'kin-overview-auto-refresh'
+const AR_INTERVALS = [5, 10, 15, 30]
+const autoRefresh = {
+  enabled: true,
+  interval: 15,
+  countdown: 15,
+  fetching: false,
+  timer: null,
+  menuOpen: false,
+}
+function arLoad() {
+  try {
+    const raw = JSON.parse(localStorage.getItem(AR_KEY) || 'null')
+    if (!raw || typeof raw !== 'object') return
+    autoRefresh.enabled = raw.enabled === true || raw.enabled === undefined
+    const n = Number(raw.interval_seconds)
+    if (AR_INTERVALS.includes(n)) autoRefresh.interval = n
+  } catch {}
+  autoRefresh.countdown = autoRefresh.interval
+}
+function arSave() {
+  try {
+    localStorage.setItem(AR_KEY, JSON.stringify({
+      enabled: autoRefresh.enabled,
+      interval_seconds: autoRefresh.interval,
+    }))
+  } catch {}
+}
+function arShouldPause() {
+  if (!key()) return true
+  if (state.view !== 'overview') return true
+  if (document.hidden) return true
+  if (state.loading) return true
+  if (autoRefresh.fetching) return true
+  const modal = document.getElementById('modalRoot')
+  if (modal && !modal.classList.contains('hidden')) return true
+  return false
+}
+function arPaint() {
+  const btn = document.getElementById('arBtn')
+  const lab = document.getElementById('arLabel')
+  const menu = document.getElementById('arMenu')
+  if (btn) btn.classList.toggle('on', !!autoRefresh.enabled)
+  if (lab) lab.textContent = autoRefresh.enabled ? ('自动刷新: ' + autoRefresh.countdown + 's') : '自动刷新'
+  if (!menu) return
+  menu.classList.toggle('hidden', !autoRefresh.menuOpen)
+  if (!autoRefresh.menuOpen) return
+  menu.innerHTML = `
+    <button type="button" onclick="arSetEnabled(!autoRefresh.enabled)">启用自动刷新<span class="ck">${autoRefresh.enabled ? '✓' : ''}</span></button>
+    <hr/>
+    ${AR_INTERVALS.map(n => `<button type="button" onclick="arSetInterval(${n})">${n} 秒<span class="ck">${autoRefresh.interval === n ? '✓' : ''}</span></button>`).join('')}
+  `
+}
+function arToggleMenu(ev) {
+  ev.stopPropagation()
+  autoRefresh.menuOpen = !autoRefresh.menuOpen
+  arPaint()
+}
+function arSetEnabled(on) {
+  autoRefresh.enabled = !!on
+  autoRefresh.countdown = autoRefresh.interval
+  arSave()
+  if (autoRefresh.enabled) arStart()
+  else arStop()
+  autoRefresh.menuOpen = false
+  arPaint()
+}
+function arSetInterval(sec) {
+  if (!AR_INTERVALS.includes(sec)) return
+  autoRefresh.interval = sec
+  autoRefresh.countdown = sec
+  arSave()
+  arPaint()
+}
+async function arTick() {
+  if (!autoRefresh.enabled) return
+  if (arShouldPause()) return
+  if (autoRefresh.countdown <= 0) {
+    autoRefresh.countdown = autoRefresh.interval
+    autoRefresh.fetching = true
+    arPaint()
+    try { await refresh({ silent: true, light: true }) }
+    finally { autoRefresh.fetching = false; arPaint() }
+    return
+  }
+  autoRefresh.countdown -= 1
+  arPaint()
+}
+function arStart() {
+  if (autoRefresh.timer != null) return
+  autoRefresh.timer = setInterval(arTick, 1000)
+}
+function arStop() {
+  if (autoRefresh.timer != null) {
+    clearInterval(autoRefresh.timer)
+    autoRefresh.timer = null
+  }
+}
+function arSync() {
+  if (autoRefresh.enabled && key() && state.view === 'overview') arStart()
+  else arStop()
+  arPaint()
+}
+document.addEventListener('click', (e) => {
+  const box = document.getElementById('autoRefresh')
+  if (autoRefresh.menuOpen && box && !box.contains(e.target)) {
+    autoRefresh.menuOpen = false
+    arPaint()
+  }
+})
+document.addEventListener('visibilitychange', () => {
+  if (!document.hidden && autoRefresh.enabled) autoRefresh.countdown = autoRefresh.interval
+  arPaint()
+})
+arLoad()
 
 function fmtProbeToast(d) {
   if (!d || (d.ok === false && d.error)) return String((d && (d.error && d.error.message || d.error)) || '探测失败')
   const p5 = pct(d.five_hour && d.five_hour.utilization != null ? d.five_hour.utilization : d.utilization_5h)
   const p7 = pct(d.seven_day && d.seven_day.utilization != null ? d.seven_day.utilization : d.utilization_7d)
   const fb = d.fable
-  const ftxt = !fb ? 'fable —' : fb.banned ? 'fable 拒' : fb.limited ? 'fable 满' : 'fable 可用'
+  const pf = pct(d.seven_day_oi?.utilization ?? fb?.utilization ?? d.utilization_7d_oi)
+  const ftxt = fb?.banned ? 'fable 拒' : fableWeeklyFull(fb, { utilization_7d_oi: d.seven_day_oi?.utilization ?? d.utilization_7d_oi, status_7d_oi: d.seven_day_oi?.status }) ? 'fable 满' : ((d.seven_day_oi || fb?.utilization != null || d.utilization_7d_oi != null) ? 'fable ' + pf.toFixed(0) + '%' : (!fb ? 'fable —' : 'fable 可用'))
   return '5h ' + p5.toFixed(0) + '% · 7d ' + p7.toFixed(0) + '% · ' + ftxt
 }
 async function probeAll() {
@@ -1220,9 +1848,10 @@ function vmRunning(v) {
 }
 function statusDot(v) {
   const acc = accountStatus(v)
-  if (acc.key === 'none') return 'warn'
+  if (acc.key === 'none') return 'off'
   if (acc.key === 'bad') return 'danger'
   if (acc.key === 'warn') return 'warn'
+  if (acc.key === 'caution') return 'caution'
   if (!vmRunning(v)) return 'off'
   return 'on'
 }
@@ -1236,33 +1865,49 @@ function windowWarn(status, utilPct) {
   return s === 'allowed_warning' || s === 'warning' || Number(utilPct || 0) >= 85
 }
 function accountStatus(v) {
-  if (v && v.cred_status && v.cred_status.text) {
-    const k = v.cred_status.key || v.cred_status.tone || 'ok'
-    return { cls: k, key: k, text: v.cred_status.text }
-  }
   if (!v || !v.has_token) return { cls: 'none', key: 'none', text: '无凭证' }
   const fb = v.fable || {}
-  if (fb.banned) return { cls: 'bad', key: 'bad', text: '不可用' }
+  if (fb.banned) return { cls: 'bad', key: 'bad', text: '被吊销' }
   const exp = credExpiry(v)
   if (exp.cls === 'bad') return { cls: 'bad', key: 'bad', text: '不可用' }
   const u5 = pct(v.utilization_5h)
   const u7 = pct(v.utilization_7d)
   if (windowLimited(v.status_5h, u5)) return { cls: 'warn', key: 'warn', text: '5h 限制' }
   if (windowLimited(v.status_7d, u7)) return { cls: 'warn', key: 'warn', text: '7d 限制' }
-  if (fb.limited) return { cls: 'warn', key: 'warn', text: 'Fable 限制' }
-  if (windowWarn(v.status_5h, u5) || v.near_limit) return { cls: 'warn', key: 'warn', text: '5h 限制' }
-  if (windowWarn(v.status_7d, u7)) return { cls: 'warn', key: 'warn', text: '7d 限制' }
-  return { cls: 'ok', key: 'ok', text: '可用' }
+  if (windowLimited(v.status_7d_oi, pct(v.utilization_7d_oi))) return { cls: 'warn', key: 'warn', text: 'Fable 限制' }
+  if (v.fable_cooldown_until && Number(v.fable_cooldown_until) > Date.now()) return { cls: 'warn', key: 'warn', text: 'Fable 冷却' }
+  if (fb.limited && v.utilization_7d_oi == null) return { cls: 'warn', key: 'warn', text: 'Fable 限制' }
+  const split = v.weekly_split
+  if (split?.enabled && split.mode === 'fable_only') return { cls: 'warn', key: 'warn', text: '普通限制' }
+  if (split?.enabled && split.mode === 'regular_only') return { cls: 'warn', key: 'warn', text: 'Fable 限制' }
+  const cred = v.cred_status || {}
+  const credText = String(cred.text || '')
+  if (cred.key === 'bad' || cred.tone === 'bad') return { cls: 'bad', key: 'bad', text: credText || '不可用' }
+  if (/不可用/.test(credText)) return { cls: 'bad', key: 'bad', text: credText }
+  if (/冷却|限制/.test(credText) && (windowLimited(v.status_5h, u5) || windowLimited(v.status_7d, u7) || windowLimited(v.status_7d_oi, pct(v.utilization_7d_oi)))) {
+    return { cls: 'warn', key: 'warn', text: credText }
+  }
+  if (windowWarn(v.status_5h, u5) || v.near_limit) return { cls: 'caution', key: 'caution', text: '5h 警告' }
+  if (windowWarn(v.status_7d, u7)) return { cls: 'caution', key: 'caution', text: '7d 警告' }
+  if (/警告|探测失败/.test(credText) || (cred.key === 'warn' && !/限制|冷却/.test(credText))) {
+    return { cls: 'caution', key: 'caution', text: credText || '警告' }
+  }
+  if (/限制|冷却/.test(credText) || cred.key === 'warn') {
+    const soft = (u5 < 100 && !windowLimited(v.status_5h, u5)) && (u7 < 100 && !windowLimited(v.status_7d, u7))
+    if (soft && /5h|7d/.test(credText)) return { cls: 'caution', key: 'caution', text: credText.replace('限制', '警告') }
+    return { cls: 'warn', key: 'warn', text: credText }
+  }
+  return { cls: 'ok', key: 'ok', text: credText || '可用' }
 }
 const HEALTH_SEG = [
-  { key: 'ok',   label: '可用',   color: 'var(--ok)' },
-  { key: 'warn', label: '限制',   color: 'var(--warn)' },
-  { key: 'bad',  label: '不可用', color: 'var(--bad)' },
-  { key: 'off',  label: '已停止', color: 'oklch(0.5 0.01 265)' },
-  { key: 'none', label: '无凭证', color: 'oklch(1 0 0/20%)' },
+  { key: 'ok',      label: '可用',   color: 'var(--ok)' },
+  { key: 'caution', label: '警告',   color: 'var(--caution)' },
+  { key: 'warn',    label: '限制',   color: 'var(--warn)' },
+  { key: 'bad',     label: '不可用', color: 'var(--bad)' },
+  { key: 'none',    label: '无凭证', color: 'oklch(1 0 0/20%)' },
 ]
 function vmBuckets(vms) {
-  const b = { ok: 0, warn: 0, bad: 0, off: 0, none: 0 }
+  const b = { ok: 0, caution: 0, warn: 0, bad: 0, off: 0, none: 0 }
   vms.forEach(v => { b[accountStatus(v).key]++ })
   return b
 }
@@ -1270,7 +1915,7 @@ function vmBuckets(vms) {
 function healthScore(vms) {
   if (!vms.length) return 0
   const b = vmBuckets(vms)
-  return Math.round((b.ok * 100 + b.warn * 72 + b.bad * 28 + b.off * 12) / vms.length)
+  return Math.round((b.ok * 100 + b.caution * 84 + b.warn * 68 + b.bad * 28 + b.off * 12) / vms.length)
 }
 function healthBar(b, total) {
   const t = total || 1
@@ -1304,13 +1949,32 @@ function sparkBars(v) {
 function meter(label, p) {
   return `<div class="meter"><div class="lg"><span>${esc(label)}</span><b>${p.toFixed(1)}%</b></div><div class="bar"><i style="width:${Math.min(100, p)}%;background:${barColor(p)}"></i></div></div>`
 }
-function track(label, p) {
-  return `<div class="tk"><u>${esc(label)}</u><div class="bar" style="flex:1"><i style="width:${Math.min(100, p)}%;background:${barColor(p)}"></i></div></div>`
+function track(label, p, title) {
+  return `<div class="tk"${title ? ` title="${esc(title)}"` : ''}><u>${esc(label)}</u><div class="bar" style="flex:1"><i style="width:${Math.min(100, p)}%;background:${barColor(p)}"></i></div></div>`
+}
+function vmCost(v) {
+  const w = Number(v.window_5h_cost || 0)
+  const today = Number(v.today_cost || 0)
+  const total = Number(v.total_cost || 0)
+  const req = Number(v.window_5h_requests || v.today_requests || 0)
+  const tok = Number(v.window_5h_tokens || v.today_tokens || 0)
+  return { w, today, total, req, tok }
+}
+function vmBillChips(v) {
+  const c = vmCost(v)
+  if (!v.has_token && c.total <= 0 && c.today <= 0) return ''
+  return `<div class="vm-bill" title="官方标准价 · 5h 窗口 / 今日">
+    <i class="cash">5h ${fmtUsd(c.w, 2)}</i>
+    <i class="cash">今日 ${fmtUsd(c.today, 2)}</i>
+    <i>${fmtNum(c.req)} req</i>
+    <i>${fmtNum(c.tok)} tok</i>
+  </div>`
 }
 function vmCard(v) {
   const acc = accountStatus(v)
   const u5 = pct(v.utilization_5h)
   const u7 = pct(v.utilization_7d)
+  const c = vmCost(v)
   return `
   <div class="vm-viz" onclick="openVm('${esc(v.id)}')" title="${esc(v.name || v.id)} · 查看详情">
     <div class="top">
@@ -1318,12 +1982,14 @@ function vmCard(v) {
       <span class="acc-pill ${acc.cls}" title="凭证状态">${v.has_token && acc.key !== 'none' ? '有凭证 · ' : ''}${acc.text}</span>
     </div>
     <div class="sub"><span class="e">${esc(v.email || '未绑定账号')}</span></div>
+    ${vmBillChips(v)}
     <div class="vm-use">
       <div class="big"><b style="color:${barColor(u5)}">${(100-u5).toFixed(0)}</b><i>%</i><em>剩余</em></div>
-      <div class="vm-track">${track('5h', u5)}${track('7d', u7)}</div>
+      <div class="vm-track">${track('5h', u5, `5h 用量 · ${fmtUsd(c.w, 2)}`)}${track('7d', u7)}${track('F', fableUtil(v), v.fable_cooldown_until && Number(v.fable_cooldown_until) > Date.now() ? `Fable 冷却${v.fable_cooldown_reason ? ' · ' + v.fable_cooldown_reason : ''}` : (v.utilization_7d_oi != null ? `Fable 7d_oi ${fableUtil(v).toFixed(0)}%` : 'Fable 未探测'))}</div>
+      ${splitTracks(v)}
     </div>
     <div class="foot">
-      ${kernelTag(v.kernel)}
+      ${concChip(v)}
       <div class="right">
         ${sparkBars(v)}
         <span class="vm-ops">
@@ -1338,7 +2004,14 @@ function quotaRing(pctVal, size = 42) {
   const p = Math.max(0, Math.min(100, Number(pctVal) || 0))
   const r = 18, c = 2 * Math.PI * r
   const off = c * (1 - p / 100)
-  const col = p >= 95 ? 'var(--bad)' : p >= 85 ? 'var(--warn)' : 'var(--ok)'
+  const col = p >= 100 ? 'var(--bad)' : p >= 95 ? 'var(--warn)' : p >= 85 ? 'var(--caution)' : 'var(--ok)'
+  return `<svg class="ring" viewBox="0 0 48 48" width="${size}" height="${size}"><circle cx="24" cy="24" r="${r}" fill="none" stroke="oklch(1 0 0/8%)" stroke-width="4"/><circle cx="24" cy="24" r="${r}" fill="none" stroke="${col}" stroke-width="4" stroke-linecap="round" stroke-dasharray="${c.toFixed(1)}" stroke-dashoffset="${off.toFixed(1)}" transform="rotate(-90 24 24)"/></svg>`
+}
+function goodRing(pctVal, size = 42) {
+  const p = Math.max(0, Math.min(100, Number(pctVal) || 0))
+  const r = 18, c = 2 * Math.PI * r
+  const off = c * (1 - p / 100)
+  const col = p <= 0 ? 'oklch(1 0 0/20%)' : 'var(--ok)'
   return `<svg class="ring" viewBox="0 0 48 48" width="${size}" height="${size}"><circle cx="24" cy="24" r="${r}" fill="none" stroke="oklch(1 0 0/8%)" stroke-width="4"/><circle cx="24" cy="24" r="${r}" fill="none" stroke="${col}" stroke-width="4" stroke-linecap="round" stroke-dasharray="${c.toFixed(1)}" stroke-dashoffset="${off.toFixed(1)}" transform="rotate(-90 24 24)"/></svg>`
 }
 
@@ -1352,8 +2025,9 @@ function renderOverview() {
   const gstat = d.gateway_stats || {}
   const running = vms.filter(vmRunning).length
   const withToken = vms.filter(v => v.has_token).length
-  const available = vms.filter(v => vmRunning(v) && v.has_token && pct(v.utilization_5h) < 95).length
-  const nearLimit = vms.filter(v => v.has_token && (v.near_limit || pct(v.utilization_5h) >= 95)).length
+  const available = vms.filter(v => v.has_token && accountUsable(v)).length
+  const warned = vms.filter(v => accountStatus(v).key === 'caution').length
+  const limited = vms.filter(v => accountStatus(v).key === 'warn').length
   const noToken = vms.filter(v => !v.has_token).length
   const tokensIn = tot.tokens_in ?? s.tokens_in ?? 0
   const tokensOut = tot.tokens_out ?? s.tokens_out ?? 0
@@ -1363,11 +2037,13 @@ function renderOverview() {
   const buckets = vmBuckets(vms)
   const score = healthScore(vms)
   const alerts = []
-  if (available === 0 && vms.length) alerts.push({ t: '无可用节点', go: 'import' })
-  if (nearLimit > 0) alerts.push({ t: `${nearLimit} 近限额`, go: 'usage' })
+  if (available === 0 && withToken) alerts.push({ t: '无可用账号', go: 'import' })
+  if (warned > 0) alerts.push({ t: `${warned} 警告`, go: 'usage' })
+  if (limited > 0) alerts.push({ t: `${limited} 限制`, go: 'usage' })
   if (noToken > 0 && withToken === 0) alerts.push({ t: '无凭证', go: 'import' })
+  const fableCool = vms.filter(v => v.fable_cooldown_until && Number(v.fable_cooldown_until) > Date.now()).length
+  if (fableCool > 0) alerts.push({ t: `Fable 冷却 ${fableCool}`, go: 'cluster' })
   if (errs > 0) alerts.push({ t: `错误 ${errs}`, go: 'overview' })
-  const hot = vms.slice().sort((a, b) => pct(b.utilization_5h) - pct(a.utilization_5h)).slice(0, 6)
   return `
   <section class="section">
     <div class="hero">
@@ -1384,20 +2060,15 @@ function renderOverview() {
     </div>
 
     <div class="kpi-row">
-      ${kpi('可用节点', `${available}<small> / ${withToken}</small>`, withToken ? (available / Math.max(withToken, 1)) * 100 : 0)}
-      ${kpi('在线', `${running}<small> / ${vms.length}</small>`, vms.length ? running / vms.length * 100 : 0)}
+      ${kpi('可用账号', `${available}<small> / ${withToken}</small>`, withToken ? (available / Math.max(withToken, 1)) * 100 : 0, 'good')}
+      ${kpi('在线', `${running}<small> / ${vms.length}</small>`, vms.length ? running / vms.length * 100 : 0, 'good')}
       ${kpi('5h 峰值', `${peak5.toFixed(0)}<small>%</small>`, peak5)}
       ${kpi(`请求 · Tokens ${fmtNum(tokensIn)}/${fmtNum(tokensOut)}`, fmtNum(reqs), null)}
     </div>
+    ${renderBillingStrip(d)}
 
-    <div class="head">
-      <div class="section-title">高水位节点</div>
-      <div class="actions">
-        <button class="btn btn-outline btn-sm" onclick="go('import')">导入</button>
-        <button class="btn btn-outline btn-sm" onclick="go('cluster')">全部 ${vms.length}</button>
-      </div>
-    </div>
-    <div class="vm-grid">${hot.map(vmCard).join('') || emptyBox('暂无节点', `<button class="btn btn-primary btn-sm" onclick="openCreateVm()">创建</button>`)}</div>
+    ${renderTrafficOps(currentOps(), { showModels: true })}
+    ${renderErrorCollection(currentOps())}
   </section>`
 }
 
@@ -1411,7 +2082,7 @@ function filteredVms() {
     if (f === 'running' && !vmRunning(v)) return false
     if (f === 'stopped' && vmRunning(v)) return false
     if (f === 'notoken' && v.has_token) return false
-    if (f === 'near' && pct(v.utilization_5h) < 85) return false
+    if (f === 'near' && !['caution', 'warn', 'bad'].includes(accountStatus(v).key)) return false
     if (!q) return true
     const hay = [v.name, v.id, v.email, v.region, v.zone, v.kernel].map(x => String(x || '').toLowerCase()).join(' ')
     return hay.includes(q)
@@ -1424,7 +2095,8 @@ function onClusterSearch(el) {
   const box = document.getElementById('clusterBox')
   if (!box) { render(); return }
   const vms = filteredVms()
-  box.innerHTML = vms.length ? (state.clusterView === 'grid' ? `<div class="vm-grid">${vms.map(vmCard).join('')}</div>` : vmListHTML(vms)) : emptyBox('无匹配')
+  const grid = state.view === 'cluster' && state.clusterView === 'grid'
+  box.innerHTML = vms.length ? (grid ? `<div class="vm-grid">${vms.map(vmCard).join('')}</div>` : vmListHTML(vms)) : emptyBox('无匹配')
 }
 function renderCluster() {
   const d = state.dashboard || {}
@@ -1439,13 +2111,13 @@ function renderCluster() {
     running: running,
     stopped: all.length - running,
     notoken: b.none,
-    near: b.bad + b.warn,
+    near: b.caution + b.warn + b.bad,
   }
-  const segs = [['all', '全部'], ['running', '在线'], ['stopped', '停止'], ['notoken', '无凭证'], ['near', '高水位']]
+  const segs = [['all', '全部'], ['running', '在线'], ['stopped', '停止'], ['notoken', '无凭证'], ['near', '限制']]
   return `
   <section class="section">
     <div class="head">
-      <div class="section-title">可用 ${b.ok} / 共 ${all.length}</div>
+      <div class="section-title">可用 ${b.ok + b.caution + b.warn} / 共 ${all.length}<span class="faint" style="font-weight:500;margin-left:10px">Fable 帽 ${fableCap()} · 在飞 ${all.reduce((n, v) => n + (Number(v.fable_inflight) || 0), 0)}</span></div>
       <div class="toolbar">
         <input class="input" placeholder="搜索" aria-label="搜索" value="${esc(state.clusterQ || '')}" oninput="onClusterSearch(this)" />
         <div class="seg">${segs.map(([k, lab]) => `<button class="${f === k ? 'on' : ''}" onclick="setClusterFilter('${k}')">${lab} ${counts[k]}</button>`).join('')}</div>
@@ -1650,7 +2322,7 @@ function openCreateVm() {
   if (dlg) dlg.classList.add('sheet')
 }
 
-function lifeSteps(vm) {
+function lifeSteps(vm, mini) {
   const has = !!vm.has_token
   const seeded = !!(state.seedSettings?.kin_seed || state.seedSettings?.seed_policy)
   const run = vmRunning(vm)
@@ -1663,7 +2335,7 @@ function lifeSteps(vm) {
     [proxy, '代'],
     [run && worker, '转'],
   ]
-  return `<div class="life">${steps.map(([on,l],i) => `${i?'<span class="ln"></span>':''}<span class="st ${on?'done':''}"><b>${i+1}</b>${l}</span>`).join('')}</div>`
+  return `<div class="life${mini ? ' mini' : ''}">${steps.map(([on,l],i) => `${i?'<span class="ln"></span>':''}<span class="st ${on?'done':''}"><b>${i+1}</b>${l}</span>`).join('')}</div>`
 }
 
 async function loadSeedSettings() {
@@ -1720,14 +2392,119 @@ async function saveSeedSettings(id) {
   }
 }
 
-function setVmTab(tab) { state.vmTab = tab; render() }
+
+/* ── VM model test (sub2api-style) ───────────────────────── */
+async function loadTestModels() {
+  try {
+    const r = await api('/api/panel/test-models')
+    const items = r.items || r.models || []
+    state.testModels = items
+    if (!state.testModel && items.length) state.testModel = items[0].id
+  } catch (e) {
+    state.testModels = []
+    toast('加载测试模型失败: ' + (e.message || e), 'err')
+  }
+  render()
+}
+
+function setTestModel(v) { state.testModel = v; }
+function setTestPrompt(v) { state.testPrompt = v; }
+function setTestMaxTokens(v) {
+  const n = Number(v)
+  state.testMaxTokens = (!Number.isFinite(n) || n <= 0) ? 8192 : Math.min(128000, Math.max(1, Math.floor(n)))
+}
+
+async function runVmTestChat() {
+  const id = state.selectedVm
+  if (!id) return toast('未选择虚拟机', 'err')
+  if (state.testRunning) return
+  state.testRunning = true
+  state.testResult = null
+  render()
+  try {
+    const body = {
+      model: state.testModel || '',
+      prompt: state.testPrompt || 'hello',
+      max_tokens: Number(state.testMaxTokens) || 8192,
+    }
+    const r = await api('/api/panel/vms/' + encodeURIComponent(id) + '/test-chat', {
+      method: 'POST',
+      body: JSON.stringify(body),
+    })
+    state.testResult = r
+    if (r.ok) toast('测试成功 · ' + (r.duration_ms || 0) + 'ms')
+    else toast('测试失败: ' + ((r.error && r.error.message) || 'unknown'), 'err')
+  } catch (e) {
+    state.testResult = { ok: false, error: { message: String(e.message || e) }, log: [] }
+    toast('测试异常: ' + (e.message || e), 'err')
+  }
+  state.testRunning = false
+  render()
+}
+
+function renderVmTestPanel(vm) {
+  const models = state.testModels || []
+  if (state.testModels == null) {
+    loadTestModels()
+  }
+  const res = state.testResult
+  const logLines = (res && res.log || []).map(l => {
+    const cls = l.level === 'error' ? 'danger' : (l.level === 'ok' ? 'ok' : (l.level === 'content' ? '' : 'faint'))
+    return `<div class="text-xs ${cls}" style="font-family:var(--mono);padding:2px 0;white-space:pre-wrap;word-break:break-all">[${esc(l.level)}] ${esc(l.message)}</div>`
+  }).join('') || '<div class="text-xs faint">尚未运行</div>'
+
+  return `
+    <div class="set-list">
+      <div class="set-row"><span>模型</span>
+        <select class="input" onchange="setTestModel(this.value)">
+          ${models.map(m => `<option value="${esc(m.id)}" ${state.testModel === m.id ? 'selected' : ''}>${esc(m.label || m.id)}</option>`).join('') || '<option value="">加载中…</option>'}
+        </select>
+      </div>
+      <div class="set-row"><span>Prompt</span>
+        <input class="input" style="max-width:100%" value="${esc(state.testPrompt || '')}" onchange="setTestPrompt(this.value)" oninput="setTestPrompt(this.value)" placeholder="hello"/>
+      </div>
+      <div class="set-row"><span>思考预算</span>
+        <input class="input" type="number" min="1" max="128000" value="${esc(state.testMaxTokens || 8192)}" onchange="setTestMaxTokens(this.value)" style="width:120px"/>
+      </div>
+      <div class="actions" style="margin:10px 0 0">
+        <button class="btn btn-primary btn-sm" ${state.testRunning ? 'disabled' : ''} onclick="runVmTestChat()">${state.testRunning ? '测试中…' : '开始测试'}</button>
+        <button class="btn btn-ghost btn-sm" onclick="loadTestModels()">刷新列表</button>
+      </div>
+    </div>
+    <div class="vd-test">
+      <div class="hd">
+        <b>结果</b>
+        <span class="faint">${res ? ((res.ok ? '成功' : '失败') + ' · ' + (res.duration_ms || 0) + 'ms · ' + esc(res.model || '')) : '尚未运行'}</span>
+      </div>
+      ${res && res.text ? `<div class="ans">${esc(res.text)}</div>` : ''}
+      ${res && res.usage ? `<div class="text-xs faint" style="margin-bottom:6px">usage in=${esc(String(res.usage.input_tokens ?? '—'))} out=${esc(String(res.usage.output_tokens ?? '—'))}</div>` : ''}
+      ${res && res.error && !res.ok ? `<div class="text-xs danger" style="margin-bottom:6px">${esc(res.error.message || JSON.stringify(res.error))}</div>` : ''}
+      <div class="out">${logLines}</div>
+    </div>
+  `
+}
+
+
+function setVmTab(tab) {
+  state.vmTab = tab
+  if (tab === 'test' && state.testModels == null) loadTestModels()
+  if (tab === 'seed') loadSeedSettings().catch(()=>{})
+  render()
+}
 function renderVm() {
   const vms = state.dashboard?.vms || []
   const det = state.detail
   if (!state.selectedVm && !det) {
+    const list = filteredVms()
     return `<section class="section">
-      <div class="head"><div class="section-title">${vms.length}</div><button class="btn btn-primary btn-sm" onclick="openCreateVm()">创建</button></div>
-      ${renderVmCollection(vms, '空')}
+      <div class="head">
+        <div class="section-title">账号 ${vms.filter(v => v.has_token).length} / 槽 ${vms.length}</div>
+        <div class="toolbar">
+          <input class="input" placeholder="搜索" aria-label="搜索" value="${esc(state.clusterQ || '')}" oninput="onClusterSearch(this)" />
+          <button class="btn btn-primary btn-sm" onclick="openCreateVm()">创建</button>
+        </div>
+      </div>
+      <div id="clusterBox">${list.length ? vmListHTML(list) : emptyBox(vms.length ? '无匹配' : '空', vms.length ? '' : `<button class="btn btn-primary btn-sm" onclick="openCreateVm()">创建</button>`)}</div>
     </section>`
   }
   const vm = det?.vm || vms.find(x => x.id === state.selectedVm) || {}
@@ -1739,50 +2516,67 @@ function renderVm() {
   const st = accountStatus(vm)
   const running = vmRunning(vm)
   const kp = kernelProfile(vm.kernel)
-  const tabs = [['overview','概览'],['account','账号'],['proxy','代理'],['ops','运维'],['seed','种子']]
+  const tabs = [['overview','概览'],['account','账号'],['proxy','代理'],['test','测试'],['ops','运维'],['seed','种子']]
   const pol = state.seedSettings?.seed_policy || {}
   const preset = matchSeedPreset(pol)
+  const bill = vmCost(vm)
+  const todayCost = acc.today_cost ?? vm.today_cost ?? det?.billing?.today_cost ?? bill.today
+  const totalCost = acc.total_cost ?? vm.total_cost ?? det?.billing?.total_cost ?? bill.total
   return `
-  <section class="section">
-    <div class="workbench">
-      <div class="wb-head">
-        <div class="wb-id">
-          <div class="nm"><span class="status-dot ${statusDot(vm)}"></span>${esc(vm.name || vm.id || '—')}<span class="acc-pill ${st.cls}">${st.text}</span></div>
-          <div class="hid">${esc(vm.id || '')} · ${running ? '运行' : '停止'}</div>
-        </div>
-        <div class="actions">
-          <select class="input" style="width:168px;height:32px" aria-label="切换节点" onchange="if(this.value)openVm(this.value)">
-            ${vms.map(v => `<option value="${esc(v.id)}" ${v.id === vm.id ? 'selected' : ''}>${esc(v.name || v.id)}</option>`).join('')}
-          </select>
-          ${running
-            ? `<button class="btn btn-outline btn-sm" onclick="stopVm('${esc(vm.id)}')">关机</button>`
-            : `<button class="btn btn-primary btn-sm" onclick="startVm('${esc(vm.id)}')">开机</button>`}
-          <button class="btn btn-outline btn-sm" onclick="probeOne('${esc(vm.id)}')">额度探测</button>
+  <section class="section vd">
+    <div class="vd-head">
+      <div class="vd-id">
+        <div class="nm"><span class="status-dot ${statusDot(vm)}"></span>${esc(vm.name || vm.id || '—')}<span class="acc-pill ${st.cls}">${st.text}</span></div>
+        <div class="meta">
+          <span class="hid">${esc(vm.id || '')}</span>
+          <span>${running ? '运行' : '停止'}</span>
+          ${lifeSteps(vm, true)}
         </div>
       </div>
-      <div class="tabs">
-        ${tabs.map(([k,l]) => `<button class="${tab===k?'on':''}" onclick="setVmTab('${k}')${k==='seed'?';loadSeedSettings()':''}">${l}</button>`).join('')}
+      <div class="actions">
+        <button class="btn btn-ghost btn-sm" onclick="go('vm')">列表</button>
+        <select class="input" style="width:148px;height:28px" aria-label="切换节点" onchange="if(this.value)openVm(this.value)">
+          ${vms.map(v => `<option value="${esc(v.id)}" ${v.id === vm.id ? 'selected' : ''}>${esc(v.name || v.id)}</option>`).join('')}
+        </select>
+        ${running
+          ? `<button class="btn btn-outline btn-sm" onclick="stopVm('${esc(vm.id)}')">关机</button>`
+          : `<button class="btn btn-primary btn-sm" onclick="startVm('${esc(vm.id)}')">开机</button>`}
+        <button class="btn btn-outline btn-sm" onclick="probeOne('${esc(vm.id)}')">探测</button>
       </div>
-      <div class="wb-body">
-      ${lifeSteps(vm)}
+    </div>
+    <div class="tabs">
+      ${tabs.map(([k,l]) => `<button class="${tab===k?'on':''}" onclick="setVmTab('${k}')${k==='seed'?';loadSeedSettings()':''}">${l}</button>`).join('')}
+    </div>
+    <div class="vd-body">
       ${tab === 'overview' ? `
-      <div class="fact-grid">
-        <div class="fact-cell">
-          <div class="k">内核</div>
-          <div class="v">${esc(kp ? kp.name : '—')}</div>
-          <div class="m">${esc(kp ? kp.id : '')}${kp?.size ? ' · '+esc(kp.size) : ''}</div>
-          <div class="kc-feats" style="margin-top:8px">${kernelFeats(kp).map(f => `<span>${esc(f)}</span>`).join('')}</div>
-        </div>
-        <div class="fact-cell">
-          <div class="k">用量</div>
-          <div class="stack-sm">${meter('5h', u5)}${meter('7d', u7)}${fableLine(acc.fable || vm.fable)}</div>
-          <div class="m" style="margin-top:8px">${vm.inflight || 0}/${vm.max_concurrency || defaultConc()} 并发 <button class="btn btn-ghost btn-sm" onclick="event.stopPropagation();openEditVmConc('${esc(vm.id)}', ${vm.max_concurrency || defaultConc()})">改</button> · ${esc(vm.runtime?.worker === 'go' ? 'Go worker' : (vm.runtime?.worker || '无 worker'))}</div>
-        </div>
-        <div class="fact-cell">
-          <div class="k">绑定</div>
-          <div class="v">${esc(vm.email || '未绑定')}</div>
-          <div class="m">${esc(proxy.host || proxy.id || vm.proxy_id || '无 SOCKS5')} · ${esc(vmRegion(vm))}${vm.has_token && !(proxy.host || vm.proxy_id) ? ' · 无法转发' : ''}</div>
-        </div>
+      <div class="vd-strip">
+        ${vdRemainStat('5 小时', acc.utilization_5h ?? vm.utilization_5h, acc.reset_5h || vm.reset_5h)}
+        ${vdRemainStat('7 天', acc.utilization_7d ?? vm.utilization_7d, acc.reset_7d || vm.reset_7d)}
+        ${vdFableStat(acc.fable || vm.fable, vm)}
+        ${vdMoneyStat('今日', todayCost, fmtNum(bill.req) + ' req')}
+        ${vdMoneyStat('5h 窗口', bill.w, fmtNum(bill.tok) + ' tok')}
+      </div>
+      ${(() => {
+        const split = acc.weekly_split || vm.weekly_split
+        if (!split?.enabled) return ''
+        return `<div class="vd-strip halves">
+        ${vdSplitStat('普通半仓', split.regular_used_weekly, split.regular_remain_weekly, split.fable_share)}
+        ${vdSplitStat('Fable 半仓', split.fable_used_weekly, split.fable_remain_weekly, split.fable_share)}
+      </div>`
+      })()}
+      <div class="vd-spec">
+        <dl class="kv">
+          <dt>邮箱</dt><dd>${esc(vm.email || acc.email || '未绑定')}</dd>
+          <dt>代理</dt><dd class="mono">${esc(proxy.host || proxy.id || vm.proxy_id || '无 SOCKS5')}${vm.has_token && !(proxy.host || vm.proxy_id) ? ' · 无法转发' : ''}</dd>
+          <dt>区域</dt><dd>${esc(vmRegion(vm))}</dd>
+          <dt>并发</dt><dd class="num">${concChip(vm)} <button class="btn btn-ghost btn-xs" onclick="event.stopPropagation();openEditVmConc('${esc(vm.id)}', ${vm.max_concurrency || defaultConc()})">改</button></dd>
+        </dl>
+        <dl class="kv">
+          <dt>内核</dt><dd>${esc(kp ? kp.name : '—')}<span class="faint">${kp?.size ? ' · ' + esc(kp.size) : ''}</span></dd>
+          <dt>Worker</dt><dd>${esc(vm.runtime?.worker === 'go' ? 'Go worker' : (vm.runtime?.worker || '无'))}</dd>
+          <dt>累计</dt><dd class="num">${fmtUsd(totalCost)} <span class="faint">官方价</span></dd>
+          <dt>特性</dt><dd class="faint">${kernelFeats(kp).length ? kernelFeats(kp).map(f => esc(f)).join(' · ') : '—'}</dd>
+        </dl>
       </div>` : ''}
 
       ${tab === 'account' ? `
@@ -1790,36 +2584,48 @@ function renderVm() {
         ${quotaCard('5 小时', acc.utilization_5h ?? vm.utilization_5h, acc.reset_5h || vm.reset_5h)}
         ${quotaCard('7 天', acc.utilization_7d ?? vm.utilization_7d, acc.reset_7d || vm.reset_7d)}
         ${quotaCard('7 天 Sonnet', acc.utilization_7d_sonnet ?? vm.utilization_7d_sonnet, acc.reset_7d_sonnet || vm.reset_7d_sonnet)}
-        ${fableCard(acc.fable || vm.fable)}
+        ${fableCard(acc.fable || vm.fable, vm)}
       </div>
-      <dl class="kv" style="margin-top:12px">
-        <dt>探测</dt><dd class="mono">${esc((acc.last_probe || vm.last_probe || {}).at || '未探测')} · ${esc(acc.probe_source || vm.probe_source || '—')}</dd>
-        <dt>超额</dt><dd>${extraUsageText(acc.extra_usage || vm.extra_usage)}</dd>
-        <dt>凭证</dt><dd><span class="acc-pill ${credExpiry(vm).cls}">${credExpiry(vm).text}</span></dd>
-        <dt>邮箱</dt><dd>${esc(vm.email || acc.email || '—')}</dd>
-        <dt>UUID</dt><dd class="mono">${esc(vm.account_uuid || acc.account_id || '—')}</dd>
-        <dt>Org</dt><dd class="mono">${esc(vm.org_uuid || '—')}</dd>
-        <dt>过期</dt><dd class="mono">${esc(fmtExpiresAt(vm.expires_at))}</dd>
-        <dt>5h 窗口</dt><dd class="mono">${runtimeWindowLine(acc.runtime_window)}</dd>
-        <dt>并发</dt><dd class="num">${(acc.inflight ?? vm.inflight) || 0} / ${acc.max_concurrency || vm.max_concurrency || defaultConc()} <button class="btn btn-ghost btn-sm" onclick="openEditVmConc('${esc(vm.id)}', ${acc.max_concurrency || vm.max_concurrency || defaultConc()})">改</button></dd>
-        <dt>请求</dt><dd class="num">${fmtNum(acc.requests ?? vm.requests ?? 0)}</dd>
-        <dt>Tokens</dt><dd class="num">${fmtNum(acc.tokens_in ?? vm.tokens_in ?? 0)} / ${fmtNum(acc.tokens_out ?? vm.tokens_out ?? 0)}</dd>
-        <dt>缓存</dt><dd class="num">${fmtNum(acc.cache_read_tokens ?? 0)} 读 / ${fmtNum(acc.cache_creation_tokens ?? 0)} 写</dd>
-      </dl>
-      <div class="actions" style="margin-top:14px">
+      <div class="kv-2">
+        <dl class="kv">
+          <dt>探测</dt><dd class="mono">${esc((acc.last_probe || vm.last_probe || {}).at || '未探测')} · ${esc(acc.probe_source || vm.probe_source || '—')}</dd>
+          <dt>超额</dt><dd>${extraUsageText(acc.extra_usage || vm.extra_usage)}</dd>
+          <dt>凭证</dt><dd><span class="acc-pill ${credExpiry(vm).cls}">${credExpiry(vm).text}</span></dd>
+          <dt>邮箱</dt><dd>${esc(vm.email || acc.email || '—')}</dd>
+          <dt>UUID</dt><dd class="mono">${esc(vm.account_uuid || acc.account_id || '—')}</dd>
+          <dt>Org</dt><dd class="mono">${esc(vm.org_uuid || '—')}</dd>
+          <dt>过期</dt><dd class="mono">${esc(fmtExpiresAt(vm.expires_at))}</dd>
+        </dl>
+        <dl class="kv">
+          <dt>5h 窗口</dt><dd class="mono">${runtimeWindowLine(acc.runtime_window)}</dd>
+          <dt>并发</dt><dd class="num">${concChip(vm)} <button class="btn btn-ghost btn-xs" onclick="openEditVmConc('${esc(vm.id)}', ${acc.max_concurrency || vm.max_concurrency || defaultConc()})">改</button></dd>
+          <dt>请求</dt><dd class="num">${fmtNum(acc.requests ?? vm.requests ?? 0)}</dd>
+          <dt>Tokens</dt><dd class="num">${fmtNum(acc.tokens_in ?? vm.tokens_in ?? 0)} / ${fmtNum(acc.tokens_out ?? vm.tokens_out ?? 0)}</dd>
+          <dt>缓存</dt><dd class="num">${fmtNum(acc.cache_read_tokens ?? 0)} 读 / ${fmtNum(acc.cache_creation_tokens ?? 0)} 写</dd>
+          <dt>今日</dt><dd class="num">${fmtUsd(todayCost)} <span class="faint">官方价</span></dd>
+          <dt>累计</dt><dd class="num">${fmtUsd(totalCost)}</dd>
+        </dl>
+      </div>
+      <div class="actions" style="margin-top:12px">
         <button class="btn btn-primary btn-sm" onclick="go('import')">导入</button>
         <button class="btn btn-outline btn-sm" onclick="refreshOauth('${esc(vm.id)}')">刷新凭证</button>
         <button class="btn btn-outline btn-sm" onclick="probeOne('${esc(vm.id)}')">额度探测</button>
       </div>` : ''}
 
       ${tab === 'proxy' ? `
-      <dl class="kv">
+      <dl class="kv" style="max-width:520px">
         <dt>绑定</dt><dd class="mono">${esc(proxy.id || vm.proxy_id || '—')}</dd>
         <dt>Host</dt><dd class="mono">${esc(proxy.host || '—')}</dd>
         <dt>Port</dt><dd class="mono">${esc(proxy.port || '—')}</dd>
         <dt>状态</dt><dd>${esc(proxy.status || '—')}${vm.has_token && !(proxy.host || vm.proxy_id) ? ' · 缺 SOCKS5，fail closed' : ''}</dd>
       </dl>
-      <div class="actions" style="margin-top:14px"><button class="btn btn-outline btn-sm" onclick="allocateProxy('${esc(vm.id)}')">分配 SOCKS5</button></div>` : ''}
+      <div class="actions" style="margin-top:12px"><button class="btn btn-outline btn-sm" onclick="allocateProxy('${esc(vm.id)}')">分配空闲 SOCKS5</button></div>
+      <details class="import-box" style="margin-top:12px">
+        <summary>导入并绑定到此槽</summary>
+        <div class="body">${renderProxyImportFields(vm.id)}</div>
+      </details>` : ''}
+
+      ${tab === 'test' ? renderVmTestPanel(vm) : ''}
 
       ${tab === 'ops' ? `
       <div class="zone">
@@ -1828,14 +2634,14 @@ function renderVm() {
           <button class="btn btn-outline btn-sm" onclick="refreshOauth('${esc(vm.id)}')">刷新凭证</button>
           <button class="btn btn-outline btn-sm" onclick="setVmTab('seed');loadSeedSettings()">种子</button>
         </div>
-        <dl class="kv">
+        <dl class="kv" style="max-width:560px;margin-top:8px">
           <dt>Worker</dt><dd>${esc(vm.runtime?.worker || '—')} · ${esc(vm.runtime?.egress || '—')}</dd>
           <dt>容器</dt><dd class="mono">${esc(vm.runtime?.container || vm.container || '—')}</dd>
           <dt>device</dt><dd class="mono">${esc((vm.fingerprint && vm.fingerprint.device_id) || vm.id || '—')}</dd>
           <dt>session</dt><dd class="mono">${esc((vm.fingerprint && vm.fingerprint.session_id) || 'CRS hash')}</dd>
         </dl>
       </div>
-      <div class="zone danger" style="margin-top:12px">
+      <div class="zone danger" style="margin-top:14px">
         <div class="actions">
           <button class="btn btn-outline btn-sm" onclick="openResetVm('${esc(vm.id)}')">重置</button>
           <button class="btn btn-danger btn-sm" onclick="openDeleteVm('${esc(vm.id)}')">删除</button>
@@ -1852,10 +2658,10 @@ function renderVm() {
           ${preset==='custom'?'<option value="custom" selected>自定义</option>':''}
         </select>
       </div>
-      <div class="switch-row" style="margin-top:12px">
+      <div class="switch-row" style="margin-top:10px">
         ${SEED_FLAGS.map(([k,l]) => `<label class="chip-check"><input id="seed_${k}" type="checkbox" ${pol[k]!==false && (k in pol ? !!pol[k] : SEED_PRESETS.strict[k]) ? 'checked':''} onchange="onSeedChip()"/> ${l}</label>`).join('')}
       </div>
-      <div class="set-row" style="margin-top:10px">
+      <div class="set-row" style="margin-top:8px">
         <span>主题</span>
         <select id="seedTheme" class="input">
           <option value="dark" ${(pol.theme||'dark')==='dark'?'selected':''}>深色</option>
@@ -1863,21 +2669,20 @@ function renderVm() {
         </select>
       </div>
       <div class="m" style="margin-top:8px;color:var(--faint);font-size:11px">${esc(state.seedSettings?.kin_seed?.seeded_at || '未写入 kin-seed')}</div>
-      <details class="import-box" style="margin-top:12px">
+      <details class="import-box" style="margin-top:10px">
         <summary>JSON</summary>
         <div class="body">
           <textarea id="seedOverride" class="input" placeholder='{"env":{}}'>${esc(pol.settings_json_override ? JSON.stringify(pol.settings_json_override, null, 2) : '')}</textarea>
         </div>
       </details>
-      <div class="actions" style="margin-top:12px">
-        <button class="btn btn-primary" id="seedSave" onclick="saveSeedSettings('${esc(vm.id)}')">播种</button>
-        <button class="btn btn-outline" onclick="loadSeedSettings()">刷新</button>
+      <div class="actions" style="margin-top:10px">
+        <button class="btn btn-primary btn-sm" id="seedSave" onclick="saveSeedSettings('${esc(vm.id)}')">播种</button>
+        <button class="btn btn-outline btn-sm" onclick="loadSeedSettings()">刷新</button>
       </div>
-      <details class="import-box" style="margin-top:12px">
+      <details class="import-box" style="margin-top:10px">
         <summary>settings.json</summary>
         <div class="body"><pre class="json">${esc(JSON.stringify(state.seedSettings?.settings_json || {}, null, 2))}</pre></div>
       </details>` : ''}
-      </div>
     </div>
   </section>`
 }
@@ -1953,6 +2758,7 @@ function renderUsage() {
     u7: a => pct(a.utilization_7d),
     conc: a => Number(a.inflight || 0),
     req: a => Number(a.requests || 0),
+    cost: a => Number(a.total_cost || 0),
     st: a => (a.near_limit || pct(a.utilization_5h) >= 95) ? 1 : 0,
   }
   accounts.sort((a, b) => cmp(keyOf[sk](a), keyOf[sk](b), sd))
@@ -1964,9 +2770,10 @@ function renderUsage() {
       ${kpi('7d 峰值', `${peak7.toFixed(0)}<small>%</small>`, peak7)}
       ${kpi(`Tokens ${fmtNum(s.tokens_in || 0)}/${fmtNum(s.tokens_out || 0)}${(s.cache_read_tokens||s.cache_creation_tokens) ? ' · c' + fmtNum(s.cache_read_tokens||0) : ''}`, fmtNum(s.requests || 0), null)}
     </div>
+    ${renderBillingStrip(u, { accounts })}
     <div class="card table-wrap" style="padding:8px 10px 4px">
       <table class="table">
-        <thead><tr>${thSort('账号','name',sk,sd,'setUsageSort')}${thSort('5h','u5',sk,sd,'setUsageSort')}${thSort('7d','u7',sk,sd,'setUsageSort')}<th>Fable</th>${thSort('并发','conc',sk,sd,'setUsageSort')}${thSort('请求','req',sk,sd,'setUsageSort')}${thSort('状态','st',sk,sd,'setUsageSort')}</tr></thead>
+        <thead><tr>${thSort('账号','name',sk,sd,'setUsageSort')}${thSort('5h','u5',sk,sd,'setUsageSort')}${thSort('7d','u7',sk,sd,'setUsageSort')}<th>Fable</th>${thSort('并发','conc',sk,sd,'setUsageSort')}${thSort('请求','req',sk,sd,'setUsageSort')}${thSort('费用','cost',sk,sd,'setUsageSort')}${thSort('状态','st',sk,sd,'setUsageSort')}</tr></thead>
         <tbody>
           ${accounts.map(a => {
             const p5 = pct(a.utilization_5h), p7 = pct(a.utilization_7d)
@@ -1978,12 +2785,13 @@ function renderUsage() {
               </td>
               <td>${meter('', p5)}</td>
               <td>${meter('', p7)}</td>
-              <td>${fableBadge(a.fable)}</td>
+              <td>${fableBadge(a.fable, a)}</td>
               <td class="num">${a.inflight || 0}/${a.max_concurrency || defaultConc()}</td>
               <td class="num">${fmtNum(a.requests || 0)}</td>
+              <td class="num" title="5h ${fmtUsd(a.window_5h_cost || 0)} · 今日 ${fmtUsd(a.today_cost || 0)} · 累计官方价">${fmtUsd(a.window_5h_cost || 0)}<div class="text-xs faint">${fmtUsd(a.today_cost || 0)} / ${fmtUsd(a.total_cost || 0)}</div></td>
               <td class="right">${nearL ? '<span class="badge danger">近限额</span>' : '<span class="badge ok">正常</span>'}</td>
             </tr>`
-          }).join('') || `<tr><td colspan="6" class="faint" style="text-align:center;padding:26px">暂无数据</td></tr>`}
+          }).join('') || `<tr><td colspan="8" class="faint" style="text-align:center;padding:26px">暂无数据</td></tr>`}
         </tbody>
       </table>
     </div>
@@ -1992,6 +2800,346 @@ function renderUsage() {
 
 
 /* ── protocol ────────────────────────────────────────────── */
+
+/* ── models policy (sub2api-style config) ───────────────── */
+let _modelPolicyDraft = null
+let _modelFilterQ = ''
+let _modelFamily = 'all'
+let _modelExpanded = null
+
+async function loadModelPolicyView() {
+  try {
+    const r = await api('/api/panel/model-policy')
+    const data = (r && r.policy) ? r : { policy: r || {}, models: [], effective: [] }
+    if (!data.policy) data.policy = {}
+    if (!data.policy.models) data.policy.models = {}
+    if (!data.policy.defaults) data.policy.defaults = {}
+    if (!data.policy.catalog_mode) data.policy.catalog_mode = 'worker_intersect_policy'
+    state.modelPolicy = data
+    _modelPolicyDraft = JSON.parse(JSON.stringify(data.policy))
+  } catch (e) {
+    state.modelPolicy = { error: String(e.message || e) }
+    _modelPolicyDraft = null
+  }
+  render()
+}
+
+async function saveModelPolicyView() {
+  if (!_modelPolicyDraft) return
+  try {
+    const r = await api('/api/panel/model-policy', { method: 'PUT', body: JSON.stringify({ policy: _modelPolicyDraft }) })
+    state.modelPolicy = r
+    _modelPolicyDraft = JSON.parse(JSON.stringify(r.policy || {}))
+    toast('模型策略已保存')
+  } catch (e) {
+    toast('保存失败: ' + (e.message || e), 'err')
+  }
+  render()
+}
+
+async function resetModelPolicyView() {
+  if (!confirm('恢复官方默认模型矩阵？自定义开关与参数将丢失。')) return
+  try {
+    const r = await api('/api/panel/model-policy/reset', { method: 'POST', body: '{}' })
+    state.modelPolicy = r
+    _modelPolicyDraft = JSON.parse(JSON.stringify(r.policy || {}))
+    toast('已恢复默认')
+  } catch (e) {
+    toast('重置失败: ' + (e.message || e), 'err')
+  }
+  render()
+}
+
+async function syncWorkerModelPolicy() {
+  try {
+    const r = await api('/api/panel/model-policy/sync-worker', { method: 'POST', body: '{}' })
+    state.modelPolicy = r
+    _modelPolicyDraft = JSON.parse(JSON.stringify(r.policy || {}))
+    toast('已同步 Worker 目录 (' + (r.synced || 0) + ')')
+  } catch (e) {
+    toast('同步失败: ' + (e.message || e), 'err')
+  }
+  render()
+}
+
+function toggleModelEnabled(id, checked) {
+  if (!_modelPolicyDraft?.models?.[id]) return
+  _modelPolicyDraft.models[id].enabled = !!checked
+  render()
+}
+
+function setModelParam(id, key, value) {
+  if (!_modelPolicyDraft?.models?.[id]) return
+  _modelPolicyDraft.models[id].params = _modelPolicyDraft.models[id].params || {}
+  _modelPolicyDraft.models[id].params[key] = value
+}
+
+function setModelCap(id, key, value) {
+  if (!_modelPolicyDraft?.models?.[id]) return
+  _modelPolicyDraft.models[id].capabilities = _modelPolicyDraft.models[id].capabilities || {}
+  if (key === 'context_window' || key === 'thinking_fallback_budget') {
+    _modelPolicyDraft.models[id].capabilities[key] = Number(value) || 0
+  } else if (key === 'supports_1m' || key === 'supports_adaptive') {
+    _modelPolicyDraft.models[id].capabilities[key] = !!value
+  } else {
+    _modelPolicyDraft.models[id].capabilities[key] = value
+  }
+}
+
+function setPolicyDefault(key, value) {
+  if (!_modelPolicyDraft) return
+  _modelPolicyDraft.defaults = _modelPolicyDraft.defaults || {}
+  if (key === 'strip_context_1m' || key === 'normalize_thinking') {
+    _modelPolicyDraft.defaults[key] = !!value
+  } else if (key === 'thinking_fallback_budget' || key === 'max_tokens') {
+    _modelPolicyDraft.defaults[key] = Number(value) || 0
+  } else {
+    _modelPolicyDraft.defaults[key] = value
+  }
+}
+
+function setCatalogMode(value) {
+  if (!_modelPolicyDraft) return
+  _modelPolicyDraft.catalog_mode = value
+}
+
+function setModelFilterQ(v) {
+  _modelFilterQ = String(v || '')
+  render()
+}
+
+function setModelFamily(v) {
+  _modelFamily = v || 'all'
+  render()
+}
+
+function toggleModelExpand(id) {
+  _modelExpanded = (_modelExpanded === id) ? null : id
+  render()
+}
+
+function batchModels(action) {
+  if (!_modelPolicyDraft?.models) return
+  const list = Object.keys(_modelPolicyDraft.models)
+  list.forEach(id => {
+    const m = _modelPolicyDraft.models[id]
+    if (action === 'enable') m.enabled = true
+    else if (action === 'disable') m.enabled = false
+    else if (action === 'invert') m.enabled = !m.enabled
+  })
+  render()
+}
+
+function thinkingLabel(mode) {
+  const map = {
+    enabled_only: '仅 enabled',
+    adaptive_only: '仅 adaptive',
+    both: 'enabled + adaptive',
+    none: '不支持',
+  }
+  return map[mode] || mode || '—'
+}
+
+function onAdaptiveLabel(v) {
+  const map = {
+    passthrough: '透传',
+    convert_to_enabled: '转 enabled',
+    strip: '剥离',
+  }
+  return map[v] || v
+}
+
+function onEnabledLabel(v) {
+  const map = {
+    passthrough: '透传',
+    convert_to_adaptive: '转 adaptive',
+    strip: '剥离',
+  }
+  return map[v] || v
+}
+
+function renderModels() {
+  if (!state.modelPolicy) {
+    loadModelPolicyView()
+    return '<section class="section">' + emptyBox('加载模型策略…') + '</section>'
+  }
+  if (state.modelPolicy.error) {
+    return '<section class="section">' + emptyBox('加载失败: ' + esc(state.modelPolicy.error),
+      '<button class="btn btn-sm" onclick="loadModelPolicyView()">重试</button>') + '</section>'
+  }
+
+  const pol = _modelPolicyDraft || state.modelPolicy.policy || {}
+  const defs = pol.defaults || {}
+  const effective = (state.modelPolicy.effective || []).map(m => m.id)
+  const allModels = Object.entries(pol.models || {}).map(([id, m]) => Object.assign({ id }, m))
+    .sort((a, b) => ((a.sort != null ? a.sort : 100) - (b.sort != null ? b.sort : 100)) || String(a.id).localeCompare(String(b.id)))
+
+  const q = _modelFilterQ.trim().toLowerCase()
+  const models = allModels.filter(m => {
+    if (_modelFamily !== 'all' && String(m.family || '').toLowerCase() !== _modelFamily) return false
+    if (!q) return true
+    const hay = [m.id, m.display_name, m.family, ...(m.aliases || [])].join(' ').toLowerCase()
+    return hay.includes(q)
+  })
+
+  const enabledCount = allModels.filter(m => m.enabled !== false).length
+  const liveCount = effective.length
+  const families = ['all', ...Array.from(new Set(allModels.map(m => String(m.family || 'other').toLowerCase()))).sort()]
+
+  function opt(val, cur, label) {
+    return '<option value="' + val + '"' + (cur === val ? ' selected' : '') + '>' + (label || val) + '</option>'
+  }
+
+  const cards = models.map(m => {
+    const caps = m.capabilities || {}
+    const params = m.params || {}
+    const live = effective.indexOf(m.id) >= 0
+    const on = m.enabled !== false
+    const ctx = caps.context_window >= 1000000 ? '1M' : (Math.floor((caps.context_window || 0) / 1000) + 'K')
+    const open = _modelExpanded === m.id
+    const drop = ((m.betas && m.betas.drop) || []).join(', ') || '—'
+    return `
+    <div class="mp-card ${on ? '' : 'disabled'}">
+      <div class="mp-card-head" onclick="toggleModelExpand('${esc(m.id)}')">
+        <label class="chip-check" onclick="event.stopPropagation()">
+          <input type="checkbox" ${on ? 'checked' : ''} onchange="toggleModelEnabled('${esc(m.id)}', this.checked)"/>
+          ${on ? '启用' : '停用'}
+        </label>
+        <div class="info">
+          <div class="title">
+            ${esc(m.display_name || m.id)}
+            <span class="badge ${live ? 'ok' : ''}">${live ? '对外' : '未暴露'}</span>
+            <span class="badge">${esc(m.family || '')}</span>
+            <span class="badge">${ctx}</span>
+            <span class="badge">${esc(thinkingLabel(caps.thinking_mode))}</span>
+          </div>
+          <div class="meta">${esc(m.id)}</div>
+        </div>
+        <span class="text-xs faint">${open ? '收起 ▴' : '展开 ▾'}</span>
+      </div>
+      ${open ? `
+      <div class="mp-card-body">
+        <div class="set-list">
+          <div class="set-sub">Thinking 策略</div>
+          <div class="set-row"><span>adaptive 请求</span>
+            <select class="input" onchange="setModelParam('${esc(m.id)}','on_adaptive',this.value)">
+              ${opt('passthrough', params.on_adaptive, '透传')}
+              ${opt('convert_to_enabled', params.on_adaptive, '转为 enabled + budget')}
+              ${opt('strip', params.on_adaptive, '剥离 thinking')}
+            </select>
+          </div>
+          <p class="mp-hint">Haiku 等不支持 adaptive 时，建议「转为 enabled」。Opus 5 等仅 adaptive 时保持透传。</p>
+          <div class="set-row"><span>enabled 请求</span>
+            <select class="input" onchange="setModelParam('${esc(m.id)}','on_enabled',this.value)">
+              ${opt('passthrough', params.on_enabled, '透传')}
+              ${opt('convert_to_adaptive', params.on_enabled, '转为 adaptive')}
+              ${opt('strip', params.on_enabled, '剥离 thinking')}
+            </select>
+          </div>
+          <div class="set-row"><span>fallback budget</span>
+            <input class="input" type="number" value="${esc(String(params.thinking_fallback_budget != null ? params.thinking_fallback_budget : (defs.thinking_fallback_budget || 4096)))}"
+              onchange="setModelParam('${esc(m.id)}','thinking_fallback_budget', Number(this.value)||0)"/>
+          </div>
+          <div class="set-sub">参数上限</div>
+          <div class="set-row"><span>默认 max_tokens</span>
+            <input class="input" type="number" value="${esc(String(params.max_tokens_default != null ? params.max_tokens_default : 8192))}"
+              onchange="setModelParam('${esc(m.id)}','max_tokens_default', Number(this.value)||0)"/>
+          </div>
+          <div class="set-row"><span>max_tokens 上限</span>
+            <input class="input" type="number" value="${esc(String(params.max_tokens_cap != null ? params.max_tokens_cap : 64000))}"
+              onchange="setModelParam('${esc(m.id)}','max_tokens_cap', Number(this.value)||0)"/>
+          </div>
+          <div class="set-sub">能力只读</div>
+          <div class="set-row"><span>Context</span><div class="text-sm">${ctx} · supports_1m=${caps.supports_1m ? '是' : '否'}</div></div>
+          <div class="set-row"><span>Thinking 模式</span><div class="text-sm">${esc(thinkingLabel(caps.thinking_mode))}</div></div>
+          <div class="set-row"><span>Beta drop</span><div class="text-sm mono" style="word-break:break-all">${esc(drop)}</div></div>
+          ${(m.aliases && m.aliases.length) ? `<div class="set-row"><span>别名</span><div class="text-sm mono">${esc(m.aliases.join(', '))}</div></div>` : ''}
+        </div>
+      </div>` : ''}
+    </div>`
+  }).join('') || emptyBox(q || _modelFamily !== 'all' ? '无匹配模型' : '暂无模型配置')
+
+  return `
+  <section class="section">
+    <div class="workbench">
+      <div class="wb-head">
+        <div class="wb-id">
+          <div class="nm">模型策略</div>
+          <div class="hid">参考 sub2api · 热更新 · 能力矩阵</div>
+        </div>
+        <div class="mp-actions">
+          <button class="btn btn-ghost btn-sm" onclick="loadModelPolicyView()">刷新</button>
+          <button class="btn btn-ghost btn-sm" onclick="syncWorkerModelPolicy()">同步 Worker</button>
+          <button class="btn btn-ghost btn-sm" onclick="resetModelPolicyView()">恢复默认</button>
+          <button class="btn btn-sm" onclick="saveModelPolicyView()">保存配置</button>
+        </div>
+      </div>
+      <div class="wb-body">
+        <div class="mp-stat">
+          <span>配置 <b>${allModels.length}</b></span>
+          <span>已启用 <b>${enabledCount}</b></span>
+          <span>对外暴露 <b>${liveCount}</b></span>
+          <span>模式 <b>${esc(pol.catalog_mode || 'worker_intersect_policy')}</b></span>
+        </div>
+
+        <div class="set-list">
+          <div class="set-sub">全局默认</div>
+          <div class="set-row"><span>目录模式</span>
+            <select class="input" onchange="setCatalogMode(this.value)">
+              ${opt('worker_intersect_policy', pol.catalog_mode, 'Worker ∩ 策略（推荐）')}
+              ${opt('worker_only', pol.catalog_mode, '仅 Worker 目录')}
+              ${opt('policy_only', pol.catalog_mode, '仅策略矩阵')}
+            </select>
+          </div>
+          <p class="mp-hint">推荐 Worker ∩ 策略：既保证上游真实可用，又可用策略关闭不需要的模型。</p>
+
+          <div class="set-row"><span>剥离 context-1m</span>
+            <label class="chip-check"><input type="checkbox" ${defs.strip_context_1m !== false ? 'checked' : ''} onchange="setPolicyDefault('strip_context_1m', this.checked)"/> ${defs.strip_context_1m !== false ? '已开启' : '已关闭'}</label>
+          </div>
+          <p class="mp-hint">对不支持 1M 的模型（如 Haiku）自动去掉 context-1m-2025-08-07 beta，避免 400。</p>
+
+          <div class="set-row"><span>规范化 thinking</span>
+            <label class="chip-check"><input type="checkbox" ${defs.normalize_thinking !== false ? 'checked' : ''} onchange="setPolicyDefault('normalize_thinking', this.checked)"/> ${defs.normalize_thinking !== false ? '已开启' : '已关闭'}</label>
+          </div>
+          <p class="mp-hint">按模型能力把 adaptive / enabled 互相转换，避免 "adaptive thinking is not supported"。</p>
+
+          <div class="set-row"><span>fallback budget</span>
+            <input class="input" type="number" value="${esc(String(defs.thinking_fallback_budget != null ? defs.thinking_fallback_budget : 4096))}" onchange="setPolicyDefault('thinking_fallback_budget', this.value)"/>
+          </div>
+          <div class="set-row"><span>默认 max_tokens</span>
+            <input class="input" type="number" value="${esc(String(defs.max_tokens != null ? defs.max_tokens : 16384))}" onchange="setPolicyDefault('max_tokens', this.value)"/>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="workbench">
+      <div class="wb-head">
+        <div class="wb-id">
+          <div class="nm">模型矩阵</div>
+          <div class="hid">启用控制 · Thinking 策略 · 参数上限</div>
+        </div>
+      </div>
+      <div class="wb-body">
+        <div class="mp-toolbar">
+          <input class="input" type="search" placeholder="搜索模型 / 别名…" value="${esc(_modelFilterQ)}" oninput="setModelFilterQ(this.value)"/>
+          <div class="switch-row">
+            ${families.map(f => `<label class="chip-check"><input type="radio" name="mp_fam" ${ _modelFamily === f ? 'checked' : ''} onchange="setModelFamily('${esc(f)}')"/> ${f === 'all' ? '全部' : esc(f)}</label>`).join('')}
+          </div>
+          <div class="mp-actions" style="margin-left:auto">
+            <button class="btn btn-ghost btn-sm" onclick="batchModels('enable')">全开</button>
+            <button class="btn btn-ghost btn-sm" onclick="batchModels('disable')">全关</button>
+            <button class="btn btn-ghost btn-sm" onclick="batchModels('invert')">反选</button>
+          </div>
+        </div>
+        ${cards}
+        <p class="mp-hint">点击卡片展开可配置 Thinking / max_tokens。修改后点顶部「保存配置」立即对后续请求生效；禁用模型会从 /v1/models 移除并拒绝调用。</p>
+      </div>
+    </div>
+  </section>`
+}
+
+
 function renderProtocol() {
   const models = state.models?.items || []
   const base = (state.dashboard?.health?.base_url) || (location.origin) || 'https://ccmax20.cc'
@@ -2111,12 +3259,22 @@ function renderSettings() {
               ${[1,2,4,8,16,20,32,64].map(v => `<option value="${v}" ${(Number(c.default_max_per_account ?? 20)===v)?'selected':''}>${v}</option>`).join('')}
             </select>
           </div>
+          <div class="set-row"><span>Fable 并发帽</span>
+            <select id="c_fable" class="input">
+              ${[1,2,3,4,6,8,12,20].map(v => `<option value="${v}" ${(Number(c.fable_max_per_account ?? 4)===v)?'selected':''}>${v}</option>`).join('')}
+            </select>
+          </div>
           <div class="set-row"><span>拦截</span>
             <div class="switch-row">
               <label class="chip-check"><input id="q_block5" type="checkbox" ${q.block_on_5h !== false ? 'checked' : ''}/> 5h</label>
               <label class="chip-check"><input id="q_block7" type="checkbox" ${q.block_on_7d !== false ? 'checked' : ''}/> 7d</label>
             </div>
           </div>
+          <div class="set-sub">实验</div>
+          <div class="set-row"><span>周限 50/50 切分</span>
+            <label class="chip-check"><input id="q_wsplit" type="checkbox" ${q.weekly_split?.enabled === true ? 'checked' : ''}/> 启用</label>
+          </div>
+          <p class="text-xs faint" style="margin:4px 0 0">Fable / 普通各占周限一半；普通吃满只剩 Fable，Fable 吃满只剩普通。默认关闭。</p>
           <div class="set-sub">请求日志</div>
           <div class="set-row"><span>记录模式</span>
             <div class="switch-row">
@@ -2155,10 +3313,15 @@ async function saveRouting() {
         warn_ratio: Number(document.getElementById('q_warn')?.value || 0.85),
         block_on_5h: !!document.getElementById('q_block5')?.checked,
         block_on_7d: !!document.getElementById('q_block7')?.checked,
+        weekly_split: {
+          enabled: !!document.getElementById('q_wsplit')?.checked,
+          fable_share: 0.5,
+        },
       },
       concurrency: {
         default_max_per_account: Number(document.getElementById('c_max')?.value || 20),
         default_key_concurrency: Number(document.getElementById('c_max')?.value || 20),
+        fable_max_per_account: Number(document.getElementById('c_fable')?.value || 4),
       },
       logging: {
         mode: document.querySelector('input[name="log_mode"]:checked')?.value || 'normal',
@@ -2420,7 +3583,16 @@ async function doDeleteKey(id) {
 async function loadLogs(mode) {
   if (mode) state.logMode = mode
   try {
-    const r = await api('/api/panel/request-logs?mode=' + encodeURIComponent(state.logMode) + '&limit=50')
+    const qs = new URLSearchParams({
+      mode: state.logMode || 'normal',
+      limit: state.logKind === 'error' || state.logErrorClass ? '80' : '50',
+    })
+    if (state.logKind === 'error' || state.logErrorClass) {
+      qs.set('status', 'error')
+      qs.set('since', new Date(Date.now() - opsWindowMs(state.opsWindow)).toISOString())
+    }
+    if (state.logErrorClass) qs.set('error_class', state.logErrorClass)
+    const r = await api('/api/panel/request-logs?' + qs.toString())
     state.logs = r.data || r
   } catch (e) {
     if (state.logs == null) state.logs = { items: [] }
@@ -2446,9 +3618,12 @@ function logRow(l, debug) {
     <td><div class="mono num" title="${esc(l.ts || '')}">${hh}</div><div class="text-xs faint mono" title="${esc(rid)} · 点击复制" style="cursor:copy" onclick="copyText('${esc(rid)}')">${esc(rid.slice(0, 8))}</div></td>
     <td><div class="mono text-xs">${esc(l.method || '')} ${esc(l.path || '')}</div><div class="text-xs faint">${esc(l.protocol || '')}${l.stream ? ' · stream' : ''}</div></td>
     <td class="text-xs" title="${esc((l.requested_model || l.model || '') + (l.upstream_model && l.upstream_model !== (l.requested_model||l.model) ? ' → ' + l.upstream_model : ''))}">${esc(modelShort)}${l.model_mismatch ? ' ≠' : ''}</td>
-    <td>${err ? `<span class="badge danger">${Number(l.status) || '—'}</span><div class="text-xs danger">${esc(l.error_code || '')}</div>` : `<span class="badge ok">${Number(l.status) || '—'}</span>`}</td>
-    <td class="num right">${l.duration_ms != null ? l.duration_ms + 'ms' : '—'}</td>
+    <td>${l.error_label ? `<span class="badge danger">${esc(l.error_label)}</span><div class="text-xs faint">${esc(l.error_owner === 'provider' ? '上游' : l.error_owner === 'client' ? '客户端' : '平台')}</div>` : (err ? '<span class="badge danger">错误</span>' : '—')}</td>
+    <td>${err ? `<span class="badge danger">${Number(l.status) || '—'}</span><div class="text-xs danger">${esc(l.error_code || '')}</div>${l.error_message ? `<div class="text-xs faint" title="${esc(l.error_message)}">${esc(String(l.error_message).slice(0, 48))}</div>` : ''}` : `<span class="badge ok">${Number(l.status) || '—'}</span>`}</td>
+    <td class="num right">${l.duration_ms != null ? fmtMs(l.duration_ms) : '—'}</td>
+    <td class="num right" title="${l.first_token_ms != null ? 'ttft ' + l.first_token_ms + 'ms' : '无首字样本'}">${l.first_token_ms != null ? fmtMs(l.first_token_ms) : '—'}</td>
     <td class="num text-xs">${fmtTok(l)}</td>
+    <td class="num right text-xs" title="官方标准">${l.total_cost != null ? fmtUsd(l.total_cost) : '—'}</td>
     <td class="text-xs mono" title="${esc((l.stop_reason||'') + (l.first_token_ms!=null ? ' ttft '+l.first_token_ms+'ms' : '') + (l.attempt_count!=null ? ' attempts '+l.attempt_count : ''))}">${esc(l.via || (debug && l.hop_meta && l.hop_meta.via) || 'go-worker')}</td>
     <td class="text-xs">${l.vm_id ? `<a href="#/vm/${esc(l.vm_id)}">${esc(vmNameById(l.vm_id))}</a>` : '—'}</td>
     <td class="right"><button class="btn btn-ghost btn-sm" onclick="openLogDetail('${esc(rid)}')">详情</button></td>
@@ -2472,9 +3647,11 @@ function renderLogs() {
         <button class="btn btn-outline btn-sm" onclick="loadLogs()">刷新</button>
       </div>
     </div>
-    ${L == null ? skeleton('table') : items.length ? `<div class="card table-wrap" style="padding:8px 10px 4px">
+    ${renderTrafficOps(currentOps(), { showModels: true })}
+    ${renderErrorCollection(currentOps(), { inLogs: true })}
+    ${L == null ? skeleton('table') : items.length ? `<div class="card table-wrap" style="padding:8px 10px 4px;margin-top:12px">
       <table class="table">
-        <thead><tr><th>时间</th><th>请求</th><th>模型</th><th>状态</th><th class="right">耗时</th><th>Token</th><th>Worker</th><th>节点</th><th class="right"></th></tr></thead>
+        <thead><tr><th>时间</th><th>请求</th><th>模型</th><th>归类</th><th>状态</th><th class="right">耗时</th><th class="right">首字</th><th>Token</th><th class="right">费用</th><th>Worker</th><th>节点</th><th class="right"></th></tr></thead>
         <tbody>${items.map(l => logRow(l, debug)).join('')}</tbody>
       </table>
     </div>
@@ -2499,9 +3676,12 @@ async function openLogDetail(rid) {
       <p class="who mono">${esc(rid)} · ${esc(item.via || 'go-worker')} · ${esc(item.protocol || '')}${item.stream ? ' · stream' : ''}</p>
       <dl class="kv">
         <dt>状态</dt><dd>${esc(item.status)} / up ${esc(item.upstream_status || '—')} · ${esc(item.stop_reason || '—')}</dd>
+        <dt>归类</dt><dd>${item.error_label ? `${esc(item.error_label)} · ${esc(item.error_code || '')}` : (item.error_code || '—')}</dd>
+        <dt>错误</dt><dd>${esc(item.error_message || '—')}</dd>
         <dt>模型</dt><dd class="mono">${esc(mm)}${item.model_mismatch ? ' · mismatch' : ''}</dd>
         <dt>Token</dt><dd class="num">${fmtTok(item)}</dd>
-        <dt>首 token</dt><dd class="num">${item.first_token_ms != null ? item.first_token_ms + 'ms' : '—'}</dd>
+        <dt>首字延迟</dt><dd class="num">${item.first_token_ms != null ? fmtMs(item.first_token_ms) : '—'}</dd>
+        <dt>耗时</dt><dd class="num">${item.duration_ms != null ? fmtMs(item.duration_ms) : '—'}</dd>
         <dt>节点</dt><dd>${esc(item.vm_id || '—')} · attempts ${esc(item.attempt_count ?? attempts.length ?? '—')}</dd>
       </dl>
       ${attempts.length ? `<div class="text-xs faint" style="margin:8px 0 4px">Attempts</div>
@@ -2520,13 +3700,40 @@ async function openLogDetail(rid) {
 }
 
 /* ── proxies ─────────────────────────────────────────────── */
-async function importProxies() {
+function renderProxyImportFields(bindVmId, vmIds) {
+  const vms = Array.isArray(vmIds) ? vmIds : []
+  const fixed = !!bindVmId
+  return `
+    <div class="text-xs faint">自动识别 socks5:// · host:port:user:pass · user:pass@host:port · user:pass:host:port，导入后一律按 SOCKS5</div>
+    <textarea id="proxyImport" class="input" placeholder="154.9.177.229:5509:user:pass&#10;socks5://user:pass@host:1080" aria-label="代理列表"></textarea>
+    <div class="set-row"><span>Host</span><input id="pxHost" class="input" placeholder="154.9.177.229" autocomplete="off"></div>
+    <div class="set-row"><span>Port</span><input id="pxPort" class="input" placeholder="5509" inputmode="numeric"></div>
+    <div class="set-row"><span>用户名</span><input id="pxUser" class="input" placeholder="可选" autocomplete="off"></div>
+    <div class="set-row"><span>密码</span><input id="pxPass" class="input" type="password" placeholder="可选" autocomplete="new-password"></div>
+    ${fixed
+      ? `<input type="hidden" id="pxBindVm" value="${esc(bindVmId)}">`
+      : `<div class="set-row"><span>绑定槽位</span>
+          <select id="pxBindVm" class="input">
+            <option value="">不绑定</option>
+            ${vms.map(id => `<option value="${esc(id)}">${esc(id)}</option>`).join('')}
+          </select>
+        </div>`}
+    <div><button class="btn btn-primary btn-sm" onclick="importProxies('${esc(bindVmId || '')}')">导入${fixed ? '并绑定' : ''}</button></div>`
+}
+async function importProxies(vmId) {
   const text = document.getElementById('proxyImport')?.value || ''
-  if (!text.trim()) { toast('请粘贴 SOCKS5 列表'); return }
+  const host = document.getElementById('pxHost')?.value?.trim() || ''
+  const port = document.getElementById('pxPort')?.value?.trim() || ''
+  const username = document.getElementById('pxUser')?.value?.trim() || ''
+  const password = document.getElementById('pxPass')?.value || ''
+  const bind = vmId || document.getElementById('pxBindVm')?.value || ''
+  if (!text.trim() && !host) { toast('请填写 host:port 或粘贴 SOCKS5 行'); return }
   try {
-    const r = await api('/api/panel/proxies/import', { method: 'POST', body: JSON.stringify({ text }) })
+    const body = { text, bind_vm_id: bind || undefined }
+    if (host) Object.assign(body, { host, port, username, password })
+    const r = await api('/api/panel/proxies/import', { method: 'POST', body: JSON.stringify(body) })
     const d = r.data || r
-    toast(`导入 +${d.added} 跳过 ${d.skipped}`)
+    toast(`导入 +${d.added} 跳过 ${d.skipped}${d.bound?.id ? ' · 已绑 ' + (d.bound.bound_vm_id || bind) : ''}`)
     await refresh()
   } catch (e) { toast(e.message) }
 }
@@ -2603,12 +3810,9 @@ function renderProxies() {
         <button class="btn btn-outline btn-sm" onclick="probeProxies()">测通</button>
       </div>
     </div>
-    <details class="import-box">
-      <summary>导入</summary>
-      <div class="body">
-        <textarea id="proxyImport" class="input" placeholder="socks5://host:port" aria-label="代理列表"></textarea>
-        <div><button class="btn btn-primary btn-sm" onclick="importProxies()">导入</button></div>
-      </div>
+    <details class="import-box" open>
+      <summary>导入 SOCKS5</summary>
+      <div class="body">${renderProxyImportFields('', (state.dashboard?.vms || []).map(v => v.id))}</div>
     </details>
     <div class="card table-wrap" style="padding:8px 10px 4px">
       <table class="table">
@@ -2908,9 +4112,365 @@ async function doDeleteVm() {
   }
 }
 
+/* ── concurrent load test ───────────────────────────────── */
+const LS_LT = 'kin_lt_setup'
+const LT_MODELS = [
+  { id: 'claude-opus-5', label: 'Opus 5' },
+  { id: 'claude-sonnet-5', label: 'Sonnet 5' },
+  { id: 'claude-haiku-4-5', label: 'Haiku 4.5' },
+  { id: 'claude-fable-5', label: 'Fable 5' },
+]
+const LT_STOCKS = [
+  { ticker: 'TSLA', name: 'Tesla' },
+  { ticker: 'AAPL', name: 'Apple' },
+  { ticker: 'GOOGL', name: 'Google' },
+  { ticker: 'AMZN', name: 'AWS' },
+  { ticker: 'SNDK', name: 'Sandisk' },
+]
+const LT_TURNS = [
+  { n: 1, label: '只写研报' },
+  { n: 2, label: '研报 + 评级' },
+  { n: 3, label: '研报 + 评级 + 情景' },
+]
+let ltSetupLoaded = false
+
+function ltStocks() {
+  if (Array.isArray(state.loadtestStockList) && state.loadtestStockList.length) return state.loadtestStockList
+  const legacy = state.loadtestStocks || []
+  if (legacy.length) {
+    return legacy.map(t => LT_STOCKS.find(s => s.ticker === t) || { ticker: t, name: t })
+  }
+  return LT_STOCKS.map(s => ({ ...s }))
+}
+function ltSaveSetup() {
+  try {
+    localStorage.setItem(LS_LT, JSON.stringify({
+      stocks: ltStocks(),
+      models: state.loadtestModels,
+      concurrency: state.loadtestConcurrency,
+      turns: state.loadtestTurns,
+      maxTokens: state.loadtestMaxTokens,
+    }))
+  } catch {}
+}
+function ltLoadSetup() {
+  if (ltSetupLoaded) return
+  ltSetupLoaded = true
+  try {
+    const raw = JSON.parse(localStorage.getItem(LS_LT) || 'null')
+    if (!raw || typeof raw !== 'object') return
+    if (Array.isArray(raw.stocks) && raw.stocks.length) {
+      state.loadtestStockList = raw.stocks.map(s => ({
+        ticker: String(s.ticker || s).toUpperCase(),
+        name: String(s.name || s.ticker || s),
+      })).filter(s => s.ticker)
+    }
+    if (Array.isArray(raw.models) && raw.models.length) state.loadtestModels = raw.models
+    if (raw.concurrency) state.loadtestConcurrency = Math.max(1, Math.min(20, Number(raw.concurrency) || 10))
+    if (raw.turns) state.loadtestTurns = Math.max(1, Math.min(3, Number(raw.turns) || 2))
+    if (raw.maxTokens) state.loadtestMaxTokens = Math.min(128000, Math.max(1, Number(raw.maxTokens) || 32000))
+  } catch {}
+}
+function ltToggleModel(id) {
+  const cur = new Set(state.loadtestModels || [])
+  if (cur.has(id)) cur.delete(id); else cur.add(id)
+  state.loadtestModels = LT_MODELS.map(m => m.id).filter(x => cur.has(x))
+  if (!state.loadtestModels.length) state.loadtestModels = [id]
+  ltSaveSetup()
+  render()
+}
+function ltRemoveStock(ticker) {
+  const next = ltStocks().filter(s => s.ticker !== ticker)
+  if (!next.length) return toast('至少保留一只标的', 'err')
+  state.loadtestStockList = next
+  state.loadtestStocks = next.map(s => s.ticker)
+  ltSaveSetup()
+  render()
+}
+function ltAddStock(ticker, name) {
+  const code = String(ticker || '').trim().toUpperCase().replace(/[^A-Z0-9.]/g, '')
+  if (!code || code.length > 10) return toast('代码 1–10 位字母数字', 'err')
+  const list = ltStocks()
+  if (list.some(s => s.ticker === code)) return toast(code + ' 已在列表中', 'err')
+  const preset = LT_STOCKS.find(s => s.ticker === code)
+  list.push({ ticker: code, name: String(name || preset?.name || code).trim() || code })
+  state.loadtestStockList = list
+  state.loadtestStocks = list.map(s => s.ticker)
+  ltSaveSetup()
+  render()
+}
+function ltAddStockFromForm() {
+  ltAddStock(document.getElementById('ltTicker')?.value, document.getElementById('ltName')?.value)
+}
+function ltResetStocks() {
+  state.loadtestStockList = LT_STOCKS.map(s => ({ ...s }))
+  state.loadtestStocks = LT_STOCKS.map(s => s.ticker)
+  ltSaveSetup()
+  render()
+}
+function ltSetConcurrency(v) {
+  state.loadtestConcurrency = Math.max(1, Math.min(20, Number(v) || 10))
+  ltSaveSetup()
+}
+function ltSetTurns(v) {
+  state.loadtestTurns = Math.max(1, Math.min(3, Number(v) || 2))
+  ltSaveSetup()
+  render()
+}
+function ltSetMaxTokens(v) {
+  const n = Number(v)
+  state.loadtestMaxTokens = (!Number.isFinite(n) || n <= 0) ? 32000 : Math.min(128000, Math.max(1, Math.floor(n)))
+  ltSaveSetup()
+}
+function ltStatus(s) {
+  const k = String(s || '')
+  if (k === 'ok') return { cls: 'ok', text: '成功' }
+  if (k === 'error') return { cls: 'bad', text: '失败' }
+  if (k === 'running') return { cls: 'run', text: '进行中' }
+  if (k === 'cancelling') return { cls: 'run', text: '取消中' }
+  if (k === 'cancelled') return { cls: 'wait', text: '已取消' }
+  return { cls: 'wait', text: '排队' }
+}
+
+function stopLoadtestPoll() {
+  if (state.loadtestPoll) { clearInterval(state.loadtestPoll); state.loadtestPoll = null }
+}
+
+async function refreshLoadtest(id) {
+  try {
+    const path = id ? '/api/panel/concurrent-test/' + encodeURIComponent(id) : '/api/panel/concurrent-test'
+    const r = await api(path)
+    if (r) state.loadtest = r
+    const running = r && (r.status === 'running' || r.status === 'cancelling')
+    state.loadtestRunning = !!running
+    if (!running) {
+      stopLoadtestPoll()
+      loadLoadtestReports(r && r.report_day)
+    }
+    render()
+  } catch {}
+}
+
+function pollLoadtest() {
+  stopLoadtestPoll()
+  const id = state.loadtest && state.loadtest.id
+  state.loadtestPoll = setInterval(() => refreshLoadtest(id), 1200)
+}
+
+async function startLoadtest() {
+  if (state.loadtestRunning) return toast('已有压测在运行', 'err')
+  state.loadtestRunning = true
+  render()
+  try {
+    const r = await api('/api/panel/concurrent-test', {
+      method: 'POST',
+      body: JSON.stringify({
+        concurrency: Number(state.loadtestConcurrency) || 10,
+        turns: Number(state.loadtestTurns) || 2,
+        models: state.loadtestModels || LT_MODELS.map(m => m.id),
+        stocks: ltStocks(),
+        max_tokens: Number(state.loadtestMaxTokens) || 32000,
+        stream: true,
+      }),
+    })
+    state.loadtest = r
+    toast('压测已启动 · ' + (r.concurrency || 10) + ' 路')
+    pollLoadtest()
+    render()
+  } catch (e) {
+    state.loadtestRunning = false
+    toast('启动失败: ' + (e.message || e), 'err')
+    render()
+  }
+}
+
+async function loadLoadtestReports(day) {
+  try {
+    const q = day ? ('?day=' + encodeURIComponent(day)) : ''
+    const r = await api('/api/panel/concurrent-test-reports' + q)
+    state.loadtestReports = r
+    state.loadtestReportDay = (r && r.day) || day || ''
+    render()
+  } catch (e) {
+    toast('读取存档失败: ' + (e.message || e), 'err')
+  }
+}
+
+async function openLoadtestReport(day, name) {
+  try {
+    const r = await api('/api/panel/concurrent-test-reports/' + encodeURIComponent(day) + '/' + encodeURIComponent(name))
+    openModal(`
+      <div class="wb-head" style="margin-bottom:10px">
+        <div class="wb-id"><div class="nm">${esc(name)}</div><div class="hid">${esc((r && r.path) || (day + '/' + name))}</div></div>
+        <button class="btn btn-sm" onclick="closeModal()">关闭</button>
+      </div>
+      <pre class="lt-pre" style="max-height:62vh">${esc((r && r.text) || '')}</pre>
+    `)
+  } catch (e) {
+    toast('打开失败: ' + (e.message || e), 'err')
+  }
+}
+
+async function openLoadtestTurn(sessionIndex, turnN) {
+  const id = state.loadtest && state.loadtest.id
+  if (!id) return
+  try {
+    const r = await api('/api/panel/concurrent-test/' + encodeURIComponent(id) + '?text=1')
+    if (r) state.loadtest = r
+    const s = (r && r.sessions || []).find(x => x.index === sessionIndex)
+    const t = s && (s.turns || []).find(x => x.n === turnN)
+    if (t && t.saved_path) {
+      const [day, name] = String(t.saved_path).split('/')
+      if (day && name) return openLoadtestReport(day, name)
+    }
+    openModal(`
+      <div class="wb-head" style="margin-bottom:10px">
+        <div class="wb-id"><div class="nm">${esc((s && s.ticker) || '')} · T${turnN}</div><div class="hid">${esc((s && s.model) || '')}</div></div>
+        <button class="btn btn-sm" onclick="closeModal()">关闭</button>
+      </div>
+      <pre class="lt-pre" style="max-height:62vh">${esc((t && t.text) || (t && t.error) || '尚无正文')}</pre>
+    `)
+  } catch (e) {
+    toast('打开失败: ' + (e.message || e), 'err')
+  }
+}
+
+async function cancelLoadtest() {
+  const id = state.loadtest && state.loadtest.id
+  if (!id) return
+  try {
+    const r = await api('/api/panel/concurrent-test/' + encodeURIComponent(id) + '/cancel', { method: 'POST', body: '{}' })
+    state.loadtest = r
+    toast('已请求取消')
+    render()
+  } catch (e) {
+    toast('取消失败: ' + (e.message || e), 'err')
+  }
+}
+
+function renderLoadtest() {
+  ltLoadSetup()
+  if (state.loadtest === undefined) {
+    state.loadtest = null
+    refreshLoadtest()
+  }
+  const run = state.loadtest
+  const sum = run && run.summary
+  const models = state.loadtestModels || LT_MODELS.map(m => m.id)
+  const stocks = ltStocks()
+  const turns = Number(state.loadtestTurns) || 2
+  const conc = Number(state.loadtestConcurrency) || 10
+  const running = !!(run && (run.status === 'running' || run.status === 'cancelling')) || state.loadtestRunning
+  const unusedPresets = LT_STOCKS.filter(s => !stocks.some(x => x.ticker === s.ticker))
+  const runSt = ltStatus(run && run.status)
+  const rows = (run && run.sessions || []).map(s => {
+    const st = ltStatus(s.status)
+    const turnBtns = (s.turns || []).map(t => t.finished
+      ? `<button class="lt-turn" onclick="openLoadtestTurn(${s.index},${t.n})">第${t.n}轮${t.ok ? '' : ' · 失败'}</button>`
+      : '').filter(Boolean).join('')
+    return `<tr>
+      <td><b>${esc(s.ticker)}</b><div class="text-xs faint">${esc(s.name || '')}</div></td>
+      <td class="text-xs">${esc(String(s.model || '').replace(/^claude-/, ''))}</td>
+      <td><span class="lt-status ${st.cls}">${esc(st.text)}</span></td>
+      <td>${turnBtns || `<span class="faint text-xs">${esc((s.turn || 0) + ' / ' + (s.turns_planned || turns))}</span>`}</td>
+      <td class="num">${s.duration_ms ? s.duration_ms + 'ms' : '—'}</td>
+    </tr>`
+  }).join('')
+  const stat = (label, val) => `<div class="lt-stat"><span class="text-xs faint">${label}</span><b>${val ?? '—'}</b></div>`
+  return `
+  <div class="lt-page">
+    <section class="lt-card">
+      <div class="lt-card-h">
+        <div>
+          <h2>开始一轮</h2>
+          <p>${conc} 路并行 · 每路 ${turns} 轮 · ${models.length} 个模型 · ${stocks.length} 只标的</p>
+        </div>
+        <div class="actions">
+          <button class="btn btn-primary" ${running ? 'disabled' : ''} onclick="startLoadtest()">${running ? '进行中…' : '开始'}</button>
+          ${running ? '<button class="btn" onclick="cancelLoadtest()">取消</button>' : ''}
+        </div>
+      </div>
+      <div class="lt-field">
+        <div class="lt-lab">模型</div>
+        <div class="preset">${LT_MODELS.map(m => `<button class="${models.includes(m.id) ? 'on' : ''}" onclick="ltToggleModel('${m.id}')">${esc(m.label)}</button>`).join('')}</div>
+      </div>
+      <div class="lt-field">
+        <div class="lt-lab">标的<em>可增删，每路轮询一只</em></div>
+        <div class="preset">${stocks.map(s => `<span class="lt-chip"><b>${esc(s.ticker)}</b>${s.name && s.name !== s.ticker ? `<i>${esc(s.name)}</i>` : ''}<button type="button" onclick="ltRemoveStock('${esc(s.ticker)}')" aria-label="移除 ${esc(s.ticker)}">×</button></span>`).join('')}</div>
+        <div class="lt-add">
+          <input class="input" id="ltTicker" placeholder="代码 NVDA" maxlength="10" onkeydown="if(event.key==='Enter'){event.preventDefault();ltAddStockFromForm()}"/>
+          <input class="input wide" id="ltName" placeholder="名称（可选）" maxlength="32" onkeydown="if(event.key==='Enter'){event.preventDefault();ltAddStockFromForm()}"/>
+          <button class="btn btn-sm" onclick="ltAddStockFromForm()">添加</button>
+          <button class="btn btn-sm" onclick="ltResetStocks()">恢复默认</button>
+        </div>
+        ${unusedPresets.length ? `<div class="lt-quick">${unusedPresets.map(s => `<button type="button" onclick="ltAddStock('${s.ticker}','${esc(s.name)}')">+ ${esc(s.ticker)}</button>`).join('')}</div>` : ''}
+      </div>
+      <div class="lt-field">
+        <div class="lt-params">
+          <div>
+            <div class="lt-lab">轮次</div>
+            <div class="seg" role="group" aria-label="轮次">${LT_TURNS.map(t => `<button class="${turns===t.n?'on':''}" onclick="ltSetTurns(${t.n})">${t.n} · ${esc(t.label)}</button>`).join('')}</div>
+          </div>
+          <div class="lt-num">
+            <div class="lt-lab">并发</div>
+            <input class="input" type="number" min="1" max="20" value="${esc(conc)}" onchange="ltSetConcurrency(this.value)"/>
+          </div>
+          <div class="lt-num">
+            <div class="lt-lab">思考预算</div>
+            <input class="input" type="number" min="1" max="128000" step="1024" value="${esc(state.loadtestMaxTokens || 32000)}" onchange="ltSetMaxTokens(this.value)"/>
+          </div>
+        </div>
+      </div>
+    </section>
+    ${run ? `
+    <section class="lt-card">
+      <div class="lt-card-h">
+        <div>
+          <h2>本次结果</h2>
+          <p><span class="lt-status ${runSt.cls}">${esc(runSt.text)}</span> · ${esc(run.id || '')}</p>
+        </div>
+      </div>
+      <div class="lt-grid">
+        ${stat('成功', (sum && (sum.ok + '/' + sum.total)) || '—')}
+        ${stat('失败', sum && sum.error)}
+        ${stat('成功率', sum ? Math.round((sum.success_rate || 0) * 100) + '%' : '—')}
+        ${stat('p50', sum && sum.duration_ms && sum.duration_ms.p50 != null ? sum.duration_ms.p50 + 'ms' : '—')}
+        ${stat('tokens', sum && sum.tokens && sum.tokens.output)}
+      </div>
+      <table class="table">
+        <thead><tr><th>标的</th><th>模型</th><th>状态</th><th>正文</th><th>耗时</th></tr></thead>
+        <tbody>${rows || '<tr><td colspan="5" class="faint">等待会话…</td></tr>'}</tbody>
+      </table>
+      ${run.report_markdown ? `<details class="lt-details"><summary>运行汇总</summary><pre class="lt-pre">${esc(run.report_markdown)}</pre></details>` : ''}
+    </section>` : ''}
+    ${renderLoadtestArchive()}
+  </div>`
+}
+
+function renderLoadtestArchive() {
+  const bag = state.loadtestReports
+  const days = (bag && bag.days) || []
+  const day = state.loadtestReportDay || (bag && bag.day) || ''
+  const items = (bag && bag.items) || []
+  return `
+    <section class="lt-card">
+      <div class="lt-card-h">
+        <div>
+          <h2>已保存正文</h2>
+          <p>${day ? esc(day) + ' · ' + items.length + ' 篇' : '按日期查看落地的研报'}</p>
+        </div>
+        <div class="toolbar">
+          ${days.length ? `<select class="input" onchange="loadLoadtestReports(this.value)">${days.map(d => `<option value="${esc(d)}" ${d===day?'selected':''}>${esc(d)}</option>`).join('')}</select>` : ''}
+          <button class="btn btn-sm" onclick="loadLoadtestReports(state.loadtestReportDay || '')">刷新</button>
+        </div>
+      </div>
+      ${items.length ? `<div class="lt-files">${items.map(f => `<button class="lt-file" onclick="openLoadtestReport('${esc(f.day)}','${esc(f.name)}')"><b>${esc(f.name)}</b><span>${esc(String(f.bytes || 0))} B</span></button>`).join('')}</div>` : emptyBox('这一天还没有正文')}
+    </section>`
+}
+
 /* ── router ──────────────────────────────────────────────── */
 function render() {
-  const views = { overview: renderOverview, cluster: renderCluster, vm: renderVm, import: renderImport, usage: renderUsage, protocol: renderProtocol, keys: renderKeys, logs: renderLogs, proxies: renderProxies, settings: renderSettings }
+  const views = { overview: renderOverview, cluster: renderCluster, vm: renderVm, import: renderImport, usage: renderUsage, models: renderModels, loadtest: renderLoadtest, protocol: renderProtocol, keys: renderKeys, logs: renderLogs, proxies: renderProxies, settings: renderSettings }
   const fn = views[state.view] || renderOverview
   const main = document.getElementById('main')
   if (!key()) {
@@ -2965,9 +4525,18 @@ function applyRoute() {
     openVm(id)
     return
   }
+  if (known === 'vm' && !id) {
+    state.selectedVm = null
+    state.detail = null
+  }
   if (known === 'keys' && state.apiKeys == null) loadKeys()
   if (known === 'logs' && state.logs == null) loadLogs()
+  if ((known === 'logs' || known === 'overview') && state.logStats == null) loadLogStats().then(() => { if (state.view === known) render() })
+  if (known === 'models' && state.modelPolicy == null) loadModelPolicyView()
+  if (known === 'loadtest' && state.loadtest === undefined) refreshLoadtest()
+  if (known === 'loadtest' && state.loadtestReports == null) loadLoadtestReports()
   render()
+  arSync()
 }
 
 function bootstrap() {
@@ -2981,7 +4550,7 @@ function bootstrap() {
   if (tok) {
     setSession(tok, u || 'admin')
     showApp(u || 'admin')
-    refresh().then(() => applyRoute())
+    refresh().then(() => { applyRoute(); arSync() })
   } else {
     showLogin()
     document.getElementById('main').innerHTML = '<p class="text-sm faint">请登录后继续</p>'
