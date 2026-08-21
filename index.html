@@ -487,6 +487,7 @@ pre.json{font-size:11px;overflow:auto;max-height:200px;background:oklch(0 0 0/25
   border-radius:var(--r-lg);padding:18px;display:flex;flex-direction:column;gap:11px;
   box-shadow:0 24px 60px oklch(0 0 0/55%);animation:popIn .13s ease;
 }
+.modal.wide{max-width:860px}
 .modal h3{margin:0;font-size:14px;font-weight:600;letter-spacing:-0.01em}
 .modal .who{font-size:11.5px;color:var(--faint);margin:-7px 0 0}
 .modal .opt{display:flex;align-items:flex-start;gap:9px;padding:8px 10px;border:1px solid var(--line);border-radius:var(--r-sm);cursor:pointer;transition:background .12s,border-color .12s}
@@ -709,6 +710,16 @@ pre.json{font-size:11px;overflow:auto;max-height:200px;background:oklch(0 0 0/25
 .pr-pill.bad{background:rgba(239,68,68,.12);color:var(--bad)}
 .pr-pill.warn{background:rgba(245,158,11,.14);color:#fbbf24}
 .pr-mono{font-family:var(--mono);font-size:11px;word-break:break-all}
+.pr-track{min-width:110px}
+.pr-bar{height:6px;border-radius:99px;background:oklch(1 0 0/8%);overflow:hidden}
+.pr-bar>i{display:block;height:100%;width:0;border-radius:99px;background:#60a5fa;transition:width .25s ease}
+.pr-bar.ok>i{background:var(--ok)}
+.pr-bar.bad>i{background:var(--bad)}
+.pr-bar.run>i{background:#60a5fa}
+.pr-bar.run.pulse>i{animation:prPulse 1.1s ease-in-out infinite}
+@keyframes prPulse{0%,100%{opacity:1}50%{opacity:.55}}
+.pr-overall{margin:4px 0 12px}
+.pr-overall .pr-bar{height:8px}
 .mp-card{border:1px solid var(--line);border-radius:var(--r-md);background:rgba(248,250,252,.02);margin-bottom:8px;overflow:hidden}
 .mp-card.disabled{opacity:.62}
 .mp-card-head{display:flex;align-items:center;gap:10px;padding:12px 14px;cursor:pointer;user-select:none}
@@ -4346,10 +4357,10 @@ async function resetFingerprint(id) {
 
 /* ── 重置 / 删除 ─────────────────────────────────────────── */
 let modalVmId = null
-function openModal(html) {
+function openModal(html, opts) {
   const root = document.getElementById('modalRoot')
   if (!root) return
-  root.innerHTML = `<div class="modal" role="dialog" aria-modal="true">${html}</div>`
+  root.innerHTML = `<div class="modal${opts && opts.wide ? ' wide' : ''}" role="dialog" aria-modal="true">${html}</div>`
   root.classList.remove('hidden')
   enhanceSelects(root)
 }
@@ -4822,7 +4833,37 @@ async function refreshProbe(id) {
 }
 function startProbePoll(id) {
   stopProbePoll()
-  state.probePoll = setInterval(() => refreshProbe(id), 1200)
+  refreshProbe(id)
+  state.probePoll = setInterval(() => refreshProbe(id), 700)
+}
+function probeBar(it) {
+  const st = it && it.stream || {}
+  const max = Number(st.max_tokens) || 0
+  const out = Number(st.tokens_out) || 0
+  const chars = Number(st.chars) || 0
+  const think = Number(st.thinking_chars) || 0
+  let pct = 0
+  let lab = ''
+  let cls = 'run'
+  if (!it || it.status === 'pending') {
+    lab = '排队'
+  } else if (it.status === 'running' || it.status === 'cancelling') {
+    if (max && out) pct = Math.min(95, Math.round(out / max * 100))
+    else if (think || chars) pct = Math.min(88, 10 + Math.round(Math.min(think + chars, 8000) / 80))
+    else pct = 8
+    const phase = st.phase === 'thinking' ? '思考 ' + think + ' 字' : st.phase === 'text' ? '正文 ' + chars + ' 字' : '流式接收'
+    lab = st.turn ? ('第' + st.turn + '轮 · ' + phase) : phase
+    cls = 'run pulse'
+  } else if (it.status === 'error' || it.status === 'cancelled') {
+    pct = 100
+    cls = 'bad'
+    lab = it.status === 'cancelled' ? '已取消' : '失败'
+  } else {
+    pct = 100
+    cls = 'ok'
+    lab = (out ? out + ' tok · ' : '') + (it.duration_ms ? it.duration_ms + 'ms' : '完成')
+  }
+  return `<div class="pr-track"><div class="pr-bar ${cls}"><i style="width:${pct}%"></i></div><div class="text-xs faint">${esc(lab)}</div></div>`
 }
 async function startProbe(suite) {
   if (state.probeRunning || state.loadtestRunning) return toast('已有任务在运行', 'err')
@@ -4868,22 +4909,32 @@ async function cancelProbe() {
     toast('取消失败: ' + (e.message || e), 'err')
   }
 }
-async function openProbeItem(idx) {
+async function openProbeItem(idx, tab) {
   try {
     const id = state.probe && state.probe.id
     if (!id) return
-    const r = await api('/api/panel/probe-test/' + encodeURIComponent(id) + '?text=1')
+    const r = await api('/api/panel/probe-test/' + encodeURIComponent(id) + '?text=1&raw=1')
     if (r) state.probe = r
     const it = (r && r.items || [])[idx]
     if (!it) return
-    showModal(`
-      <div class="wb-id" style="margin-bottom:10px">
+    const pane = tab || (state.probeDetail && state.probeDetail.tab) || 'text'
+    state.probeDetail = { idx, tab: pane }
+    const body = pane === 'think'
+      ? (it.thinking || '无思考块')
+      : pane === 'raw'
+        ? JSON.stringify(it.raw || { note: '尚无 raw' }, null, 2)
+        : (it.text || it.error || '尚无正文')
+    const tabBtn = (id, label) => `<button class="${pane === id ? 'on' : ''}" onclick="openProbeItem(${idx},'${id}')">${label}</button>`
+    openModal(`
+      <div class="wb-id" style="margin-bottom:4px">
         <div class="nm">${esc(it.label || it.case_id || '')} · ${esc(it.form || '能力')}</div>
-        <div class="hid">${esc(it.model || '')}</div>
+        <div class="hid">${esc(it.model || '')}${it.http ? ' · HTTP ' + esc(String(it.http)) : ''}${it.stop_reason ? ' · ' + esc(it.stop_reason) : ''}</div>
       </div>
-      <div style="margin-bottom:10px">${(it.anomalies || []).map(a => `<span class="pr-pill bad">${esc(PROBE_ANOMALY[a] || a)}</span>`).join('') || '<span class="pr-pill ok">无异常</span>'}</div>
-      <pre class="lt-pre" style="max-height:62vh">${esc(it.text || it.error || '尚无正文')}</pre>
-    `)
+      <div>${(it.anomalies || []).map(a => `<span class="pr-pill ${(a === 'mismatch' || a === 'empty' || a === 'http') ? 'bad' : 'warn'}">${esc(PROBE_ANOMALY[a] || a)}</span>`).join('') || '<span class="pr-pill ok">无异常</span>'}</div>
+      <div class="preset">${tabBtn('text', '正文')}${tabBtn('think', '思考')}${tabBtn('raw', 'Raw')}</div>
+      <pre class="lt-pre" style="max-height:58vh">${esc(body)}</pre>
+      <div class="foot"><button class="btn" onclick="closeModal()">关闭</button></div>
+    `, { wide: true })
   } catch (e) {
     toast('打开失败: ' + (e.message || e), 'err')
   }
@@ -4901,16 +4952,22 @@ function renderProbeResults(suite) {
   const formLabel = (id) => (PROBE_FORMS.find(f => f.id === id) || { label: id || '—' }).label
   const rows = items.map((it, i) => {
     const pills = (it.anomalies || []).map(a => `<span class="pr-pill ${(a === 'mismatch' || a === 'empty' || a === 'http') ? 'bad' : 'warn'}">${esc(PROBE_ANOMALY[a] || a)}</span>`).join('')
+    const exactCell = it.status === 'pending' || it.status === 'running'
+      ? '<span class="faint text-xs">…</span>'
+      : (it.exact ? '<span class="pr-pill ok">准确</span>' : '<span class="pr-pill bad">不准</span>')
     return `<tr>
       <td class="text-xs">${esc(String(it.model || '').replace(/^claude-/, ''))}</td>
       <td>${esc(it.label || it.case_id || '')}${it.form ? `<div class="text-xs faint">${esc(formLabel(it.form))}</div>` : ''}</td>
-      <td>${it.exact ? '<span class="pr-pill ok">准确</span>' : '<span class="pr-pill bad">不准</span>'}</td>
+      <td>${exactCell}</td>
       <td>${pills || '<span class="faint text-xs">—</span>'}</td>
+      <td>${probeBar(it)}</td>
       <td class="text-xs">${it.http || '—'}${it.stop_reason ? `<div class="faint">${esc(it.stop_reason)}</div>` : ''}</td>
-      <td class="num">${it.duration_ms ? it.duration_ms + 'ms' : '—'}</td>
-      <td>${it.status === 'pending' || it.status === 'running' ? '<span class="faint text-xs">…</span>' : `<button class="lt-turn" onclick="openProbeItem(${i})">正文</button>`}</td>
+      <td><button class="lt-turn" onclick="openProbeItem(${i})">详情</button></td>
     </tr>`
   }).join('')
+  const tot = sum.total || items.length || 0
+  const fin = sum.finished != null ? sum.finished : items.filter(x => x.status !== 'pending' && x.status !== 'running' && x.status !== 'cancelling').length
+  const overall = tot ? Math.round((fin / tot) * 100) : 0
   return `
     <section class="lt-card">
       <div class="lt-card-h">
@@ -4918,6 +4975,10 @@ function renderProbeResults(suite) {
           <h2>本次结果</h2>
           <p><span class="lt-status ${st.cls}">${esc(st.text)}</span> · ${esc(run.id || '')}${drawn.length ? ' · 抽到 ' + esc(drawn.join(' / ')) : ''}${run.seed != null ? ' · seed ' + esc(run.seed) : ''}</p>
         </div>
+      </div>
+      <div class="pr-overall">
+        <div class="pr-bar ${run.status === 'running' || run.status === 'cancelling' ? 'run pulse' : (run.status === 'error' ? 'bad' : 'ok')}"><i style="width:${overall}%"></i></div>
+        <div class="text-xs faint" style="margin-top:6px">流式进度 ${fin}/${tot}${sum.running ? ' · 进行中 ' + sum.running : ''}${sum.pending ? ' · 排队 ' + sum.pending : ''}</div>
       </div>
       <div class="lt-grid">
         ${stat('准确', (sum.exact != null && sum.total) ? (sum.exact + '/' + sum.total) : '—')}
@@ -4928,7 +4989,7 @@ function renderProbeResults(suite) {
         ${stat('拒答', sum.refusal)}
       </div>
       <table class="table">
-        <thead><tr><th>模型</th><th>用例</th><th>准确</th><th>异常</th><th>HTTP</th><th>耗时</th><th></th></tr></thead>
+        <thead><tr><th>模型</th><th>用例</th><th>准确</th><th>异常</th><th>流式</th><th>HTTP</th><th></th></tr></thead>
         <tbody>${rows || '<tr><td colspan="7" class="faint">等待…</td></tr>'}</tbody>
       </table>
     </section>`
