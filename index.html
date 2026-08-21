@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="color-scheme" content="dark" />
   <title>种核 KIN</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -137,6 +138,41 @@ textarea.input{height:auto;min-height:92px;padding:9px 11px;resize:vertical;font
 .input:focus{border-color:oklch(1 0 0/30%);box-shadow:0 0 0 3px oklch(1 0 0/6%)}
 .input::placeholder{color:var(--faint)}
 input[type=checkbox]{width:15px;height:15px;accent-color:oklch(0.76 0.15 152);cursor:pointer}
+select,select.input,option{color-scheme:dark}
+select.input option,select.input optgroup{background:var(--panel);color:var(--fg)}
+select.input.dd-native{
+  position:absolute!important;width:1px!important;height:1px!important;padding:0!important;margin:0!important;
+  border:0!important;opacity:0;pointer-events:none;clip:rect(0,0,0,0);overflow:hidden
+}
+.dd{position:relative;display:block;min-width:0}
+.set-row .dd{width:100%;max-width:260px}
+.toolbar .dd{width:auto;min-width:120px}
+.dd-btn{
+  width:100%;height:34px;border-radius:var(--r-sm);border:1px solid var(--line-2);
+  background:oklch(1 0 0/4%);color:var(--fg);padding:0 30px 0 11px;outline:none;
+  font:inherit;font-size:13px;text-align:left;display:flex;align-items:center;cursor:pointer;
+  position:relative;transition:border-color .12s,box-shadow .12s,background .12s
+}
+.dd-btn:hover{border-color:oklch(1 0 0/22%);background:oklch(1 0 0/6%)}
+.dd.open .dd-btn,.dd-btn:focus{border-color:oklch(1 0 0/30%);box-shadow:0 0 0 3px oklch(1 0 0/6%)}
+.dd.off .dd-btn{opacity:.5;cursor:not-allowed}
+.dd-lab{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.dd-caret{
+  position:absolute;right:10px;top:50%;width:12px;height:12px;margin-top:-6px;pointer-events:none;opacity:.7;
+  background:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23999' stroke-width='2.5' stroke-linecap='round'><path d='M6 9l6 6 6-6'/></svg>") center/12px no-repeat
+}
+.dd-list{
+  position:fixed;z-index:96;min-width:140px;max-height:260px;overflow:auto;padding:4px;
+  border:1px solid var(--line-2);border-radius:var(--r-md);background:var(--panel);color:var(--fg);
+  box-shadow:0 12px 32px oklch(0 0 0/50%)
+}
+.dd-opt{
+  display:block;width:100%;border:0;border-radius:6px;background:transparent;color:var(--fg);
+  font:inherit;font-size:13px;text-align:left;padding:7px 10px;cursor:pointer
+}
+.dd-opt:hover,.dd-opt:focus{background:oklch(1 0 0/8%);outline:none}
+.dd-opt.on{background:oklch(1 0 0/10%)}
+.dd-opt:disabled{opacity:.45;cursor:not-allowed}
 
 .card{background:var(--panel);border:1px solid var(--line);border-radius:var(--r-lg);padding:16px}
 .card-pad-lg{padding:18px 20px}
@@ -616,8 +652,14 @@ pre.json{font-size:11px;overflow:auto;max-height:200px;background:oklch(0 0 0/25
 .set-row{display:grid;grid-template-columns:108px minmax(0,1fr);gap:8px 16px;align-items:center;padding:10px 0;border-bottom:1px solid var(--line)}
 .set-row:last-child{border-bottom:none}
 .set-row>span{font-size:12px;color:var(--faint)}
-.set-row .input{max-width:260px}
+.set-row .input,.set-row .dd{max-width:260px}
 .set-row .chip-check{height:30px}
+.set-page{display:flex;flex-direction:column;gap:0;max-width:720px}
+.set-bar{display:flex;align-items:flex-end;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.set-bar .tabs{flex:1;min-width:0;flex-wrap:wrap}
+.set-pane{padding:16px 0 0}
+.set-lead{margin:0 0 4px;font-size:12px;color:var(--faint);line-height:1.5}
+.set-page .import-box{margin-top:16px}
 .ep-row{display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid var(--line)}
 .ep-row:last-child{border-bottom:0}
 .ep-row .nm{width:132px;flex-shrink:0;font-size:12.5px}
@@ -661,6 +703,12 @@ pre.json{font-size:11px;overflow:auto;max-height:200px;background:oklch(0 0 0/25
 .lt-turn:hover{color:var(--fg)}
 .lt-details{margin-top:12px}
 .lt-details summary{cursor:pointer;color:var(--faint);font-size:12px}
+.lt-page>.set-bar{margin-bottom:4px}
+.pr-pill{display:inline-block;padding:2px 7px;border-radius:999px;font-size:11px;margin:0 4px 4px 0;background:oklch(1 0 0/6%);color:var(--muted)}
+.pr-pill.ok{background:rgba(34,197,94,.12);color:var(--ok)}
+.pr-pill.bad{background:rgba(239,68,68,.12);color:var(--bad)}
+.pr-pill.warn{background:rgba(245,158,11,.14);color:#fbbf24}
+.pr-mono{font-family:var(--mono);font-size:11px;word-break:break-all}
 .mp-card{border:1px solid var(--line);border-radius:var(--r-md);background:rgba(248,250,252,.02);margin-bottom:8px;overflow:hidden}
 .mp-card.disabled{opacity:.62}
 .mp-card-head{display:flex;align-items:center;gap:10px;padding:12px 14px;cursor:pointer;user-select:none}
@@ -672,8 +720,37 @@ pre.json{font-size:11px;overflow:auto;max-height:200px;background:oklch(0 0 0/25
 .mp-hint{font-size:11.5px;color:var(--faint);margin:4px 0 0;line-height:1.5}
 .mp-badges{display:flex;flex-wrap:wrap;gap:4px}
 .mp-actions{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
-.mp-stat{display:flex;gap:10px;flex-wrap:wrap;font-size:12px;color:var(--muted);margin-bottom:4px}
+.mp-stat{display:flex;gap:10px;flex-wrap:wrap;font-size:12px;color:var(--muted)}
 .mp-stat b{color:var(--fg);font-weight:600}
+.mp-lead{margin:0 0 12px;font-size:12px;color:var(--faint);line-height:1.55;max-width:76ch}
+.mp-list{border:1px solid var(--line);border-radius:var(--r-md);overflow:hidden;background:rgba(248,250,252,.015)}
+.mp-lh,.mp-row{display:grid;grid-template-columns:52px minmax(168px,1.5fr) 72px 118px minmax(88px,.85fr) 64px 36px;gap:8px 10px;align-items:center;padding:8px 12px}
+.mp-lh{padding-top:7px;padding-bottom:7px;background:oklch(1 0 0/2%);border-bottom:1px solid var(--line);font-size:11px;color:var(--faint)}
+.mp-item{border-bottom:1px solid var(--line)}
+.mp-item:last-child{border-bottom:0}
+.mp-item.disabled{opacity:.58}
+.mp-item.open{background:oklch(1 0 0/2.2%)}
+.mp-row{min-height:46px;cursor:pointer}
+.mp-row:hover{background:oklch(1 0 0/2.5%)}
+.mp-id .nm{font-size:13px;font-weight:600;letter-spacing:-.02em}
+.mp-id .hid{font-family:var(--mono);font-size:10.5px;color:var(--faint);margin-top:2px;word-break:break-all}
+.mp-win{font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums}
+.mp-win i{font-style:normal;display:block;font-size:10px;color:var(--faint);margin-top:1px}
+.mp-beta{height:30px;max-width:118px;padding:0 6px;font-size:12px}
+.mp-beta.hit{border-color:rgba(34,197,94,.42)}
+.mp-think{font-size:11.5px;color:var(--faint)}
+.mp-more{padding:2px 12px 12px;border-top:1px dashed var(--line)}
+.mp-adv{margin-top:14px;border:1px solid var(--line);border-radius:var(--r-md);padding:10px 12px;background:rgba(248,250,252,.02)}
+.mp-adv>summary{cursor:pointer;font-size:12px;color:var(--faint);user-select:none}
+.mp-adv[open]>summary{margin-bottom:10px;color:var(--fg)}
+.mp-on{height:28px;padding:0 8px;justify-content:center}
+.mp-tog{border:0;background:transparent;color:var(--faint);cursor:pointer;width:28px;height:28px;border-radius:6px;font-size:12px;line-height:1}
+.mp-tog:hover{color:var(--fg);background:oklch(1 0 0/6%)}
+@media(max-width:900px){
+  .mp-lh{display:none}
+  .mp-row{grid-template-columns:52px minmax(0,1fr) 110px 28px}
+  .mp-win,.mp-think,.mp-live{display:none}
+}
 
 @media(max-width:760px){
   .dock,.fact-grid{grid-template-columns:1fr}
@@ -768,14 +845,21 @@ const titles = {
   vm: ['虚拟机', '列表 · 点击进入详情'],
   import: ['导入', 'sessionKey 必须经槽 SOCKS5'],
   usage: ['用量', '5h / 7d / fable / 缓存 token'],
-  models: ['模型', '能力矩阵 · 可用性 · 参数'],
-  loadtest: ['压测', '选模型、标的、轮次后开跑 · 正文按日可查'],
+  models: ['模型', '矩阵 · 1M beta · 可用性'],
+  loadtest: ['压测', '研报 · 能力 · 答题'],
   protocol: ['协议', 'Go worker · 强制 SOCKS5'],
   keys: ['密钥', 'sk-kin 只能调 /v1 · HMAC 落库'],
   logs: ['日志', '错误归类 · 首字 · attempts'],
   proxies: ['代理池', '每槽必须绑 SOCKS5'],
-  settings: ['设置', '粘性 · 池 · failover · 日志'],
+  settings: ['设置', '粘性 · 账号池 · 配额 · 日志 · 协议'],
 }
+const SETTINGS_TABS = [
+  ['sticky', '粘性', '同一会话粘到同一账号'],
+  ['pool', '账号池', '选号策略与故障切换'],
+  ['quota', '配额', '额度线 · 并发 · 周限实验'],
+  ['logs', '日志', '记录模式与保留天数'],
+  ['protocol', '协议', '非官方 mimic / 人设'],
+]
 
 
 /* 官方内核档案 */
@@ -1117,7 +1201,7 @@ function setClusterSort(k) {
 }
 
 
-let state = { view: 'overview', selectedVm: null, dashboard: null, usage: null, models: null, routing: null, detail: null, proxies: null, apiKeys: null, logs: null, logStats: null, opsWindow: '1h', logKind: 'all', logErrorClass: '', logMode: 'normal', clusterQ: '', clusterFilter: 'all', clusterView: 'grid', clusterSort: 'name', clusterDir: 'asc', vmTab: 'overview', testModels: null, testModel: '', testPrompt: 'hello', testRunning: false, testResult: null, loadtest: undefined, loadtestRunning: false, loadtestPoll: null, loadtestConcurrency: 10, loadtestTurns: 2, loadtestModels: ['claude-opus-5','claude-sonnet-5','claude-fable-5'], loadtestStocks: ['TSLA','AAPL','GOOGL','AMZN','SNDK'], loadtestStockList: null, loadtestMaxTokens: 32000, loadtestReports: null, loadtestReportDay: '', testMaxTokens: 8192, loading: false, kernel: 'ubuntu-24.04', createName: '', advOpen: false, usageSort: 'u5', usageDir: 'desc', proxySort: 'status', proxyDir: 'asc', seedPreset: 'strict', createPreset: 'strict', createAfter: 'proxy', createTemplate: 'std-ubuntu' }
+let state = { view: 'overview', selectedVm: null, dashboard: null, usage: null, models: null, routing: null, detail: null, proxies: null, apiKeys: null, logs: null, logStats: null, opsWindow: '1h', logKind: 'all', logErrorClass: '', logMode: 'normal', clusterQ: '', clusterFilter: 'all', clusterView: 'grid', clusterSort: 'name', clusterDir: 'asc', vmTab: 'overview', settingsTab: 'sticky', testModels: null, testModel: '', testPrompt: 'hello', testRunning: false, testResult: null, loadtest: undefined, loadtestRunning: false, loadtestPoll: null, loadtestConcurrency: 10, loadtestTurns: 2, loadtestModels: ['claude-opus-5','claude-sonnet-5','claude-fable-5'], loadtestStocks: ['TSLA','AAPL','GOOGL','AMZN','SNDK'], loadtestStockList: null, loadtestMaxTokens: 32000, loadtestReports: null, loadtestReportDay: '', loadtestTab: 'reports', probe: undefined, probeRunning: false, probePoll: null, probeModels: ['claude-sonnet-5','claude-haiku-4-5'], probeCases: ['follow','spatial','needle','numbers','extract'], probeForms: ['answer','reason','mixed'], probeSample: 4, probeCapSample: 1, probeRandom: true, probeMaxTokens: 32000, probeConcurrency: 1, testMaxTokens: 8192, loading: false, kernel: 'ubuntu-24.04', createName: '', advOpen: false, usageSort: 'u5', usageDir: 'desc', proxySort: 'status', proxyDir: 'asc', seedPreset: 'strict', createPreset: 'strict', createAfter: 'proxy', createTemplate: 'std-ubuntu' }
 let bootstrapped = false
 
 function sameOriginPanel(host) {
@@ -1515,6 +1599,127 @@ function openLogErrors(cls) {
   else { render(); loadLogs() }
 }
 function esc(s) { return String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c])) }
+function closeDarkSelects(except) {
+  document.querySelectorAll('.dd.open').forEach(el => {
+    if (except && el === except) return
+    el.classList.remove('open')
+    el.querySelector('.dd-list')?.classList.add('hidden')
+    el.querySelector('.dd-btn')?.setAttribute('aria-expanded', 'false')
+  })
+}
+function placeDarkSelect(wrap) {
+  const btn = wrap.querySelector('.dd-btn')
+  const list = wrap.querySelector('.dd-list')
+  if (!btn || !list) return
+  const r = btn.getBoundingClientRect()
+  const gap = 4
+  const maxH = 260
+  const below = window.innerHeight - r.bottom - 8
+  const above = r.top - 8
+  const up = below < 140 && above > below
+  list.style.left = Math.max(8, Math.min(r.left, window.innerWidth - Math.max(r.width, 132) - 8)) + 'px'
+  list.style.width = Math.max(r.width, 132) + 'px'
+  list.style.right = 'auto'
+  if (up) {
+    list.style.top = 'auto'
+    list.style.bottom = (window.innerHeight - r.top + gap) + 'px'
+    list.style.maxHeight = Math.min(maxH, above) + 'px'
+  } else {
+    list.style.top = (r.bottom + gap) + 'px'
+    list.style.bottom = 'auto'
+    list.style.maxHeight = Math.min(maxH, Math.max(120, below)) + 'px'
+  }
+}
+function bindDarkSelect(sel) {
+  if (sel.dataset.dd === '1' || sel.closest('.dd')) return
+  sel.dataset.dd = '1'
+  const wrap = document.createElement('div')
+  wrap.className = 'dd'
+  if (sel.style.width) wrap.style.width = sel.style.width
+  if (sel.disabled) wrap.classList.add('off')
+  sel.parentNode.insertBefore(wrap, sel)
+  wrap.appendChild(sel)
+  sel.classList.add('dd-native')
+  sel.tabIndex = -1
+  const btn = document.createElement('button')
+  btn.type = 'button'
+  btn.className = 'dd-btn'
+  if (sel.style.height) btn.style.height = sel.style.height
+  btn.setAttribute('aria-haspopup', 'listbox')
+  btn.setAttribute('aria-expanded', 'false')
+  const al = sel.getAttribute('aria-label')
+  if (al) btn.setAttribute('aria-label', al)
+  const list = document.createElement('div')
+  list.className = 'dd-list hidden'
+  list.setAttribute('role', 'listbox')
+  wrap.appendChild(btn)
+  wrap.appendChild(list)
+  const sync = () => {
+    const o = sel.selectedOptions[0]
+    btn.innerHTML = `<span class="dd-lab">${esc(o ? o.textContent : '选择')}</span><i class="dd-caret" aria-hidden="true"></i>`
+  }
+  const rebuild = () => {
+    list.innerHTML = Array.from(sel.options).map((o, i) =>
+      `<button type="button" role="option" class="dd-opt${o.selected ? ' on' : ''}" data-i="${i}"${o.disabled ? ' disabled' : ''} aria-selected="${o.selected}">${esc(o.textContent)}</button>`
+    ).join('')
+  }
+  const close = () => {
+    wrap.classList.remove('open')
+    list.classList.add('hidden')
+    btn.setAttribute('aria-expanded', 'false')
+  }
+  const open = () => {
+    closeDarkSelects(wrap)
+    rebuild()
+    list.classList.remove('hidden')
+    wrap.classList.add('open')
+    btn.setAttribute('aria-expanded', 'true')
+    placeDarkSelect(wrap)
+    list.querySelector('.dd-opt.on')?.scrollIntoView({ block: 'nearest' })
+  }
+  btn.addEventListener('click', e => {
+    e.preventDefault()
+    e.stopPropagation()
+    if (sel.disabled) return
+    wrap.classList.contains('open') ? close() : open()
+  })
+  list.addEventListener('click', e => {
+    const opt = e.target.closest('.dd-opt')
+    if (!opt || opt.disabled) return
+    const i = Number(opt.dataset.i)
+    if (!sel.options[i] || sel.options[i].disabled) return
+    sel.selectedIndex = i
+    sel.dispatchEvent(new Event('change', { bubbles: true }))
+    sync()
+    close()
+  })
+  sel.addEventListener('change', sync)
+  wrap.addEventListener('keydown', e => {
+    if (e.key === 'Escape') { close(); btn.focus(); return }
+    if ((e.key === 'Enter' || e.key === ' ') && document.activeElement === btn) {
+      e.preventDefault()
+      wrap.classList.contains('open') ? close() : open()
+    }
+    if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
+      e.preventDefault()
+      if (!wrap.classList.contains('open')) { open(); return }
+      const opts = [...list.querySelectorAll('.dd-opt:not([disabled])')]
+      const cur = Math.max(0, opts.findIndex(o => o === document.activeElement || o.classList.contains('on')))
+      const next = e.key === 'ArrowDown' ? opts[Math.min(opts.length - 1, cur + 1)] : opts[Math.max(0, cur - 1)]
+      next?.focus()
+    }
+  })
+  sync()
+}
+function enhanceSelects(root) {
+  ;(root || document).querySelectorAll('select.input').forEach(bindDarkSelect)
+}
+document.addEventListener('click', e => { if (!e.target.closest('.dd')) closeDarkSelects() })
+window.addEventListener('scroll', e => {
+  if (e.target && e.target.closest && e.target.closest('.dd-list')) return
+  closeDarkSelects()
+}, true)
+window.addEventListener('resize', () => closeDarkSelects())
 function copyText(text) {
   const v = String(text || '')
   if (!v) return
@@ -2303,7 +2508,7 @@ function applyVmTemplate(id) {
   state.createConc = tpl.conc
   state.createWeight = tpl.weight
   const dlg = document.querySelector('#modalRoot .modal')
-  if (dlg) { dlg.innerHTML = createSheetHTML(); dlg.classList.add('sheet') }
+  if (dlg) { dlg.innerHTML = createSheetHTML(); dlg.classList.add('sheet'); enhanceSelects(dlg) }
 }
 function setCreatePreset(name) {
   state.createPreset = name
@@ -2580,6 +2785,28 @@ function renderVm() {
       </div>` : ''}
 
       ${tab === 'account' ? `
+      <div class="zone" style="margin-bottom:14px">
+        <div class="section-title">OAuth 票</div>
+        <dl class="kv" style="max-width:640px">
+          <dt>状态</dt><dd><span class="acc-pill ${credExpiry(vm).cls}">${credExpiry(vm).text}</span>${vm.has_refresh ? ' · 有 refresh' : ''}</dd>
+          <dt>Access</dt><dd class="mono">${esc(vm.access_preview || (vm.has_token ? '已绑定' : '—'))}</dd>
+          <dt>Refresh</dt><dd class="mono">${esc(vm.refresh_preview || (vm.has_refresh ? '已绑定' : '—'))}</dd>
+          <dt>邮箱</dt><dd>${esc(vm.email || acc.email || '—')}</dd>
+          <dt>过期</dt><dd class="mono">${esc(fmtExpiresAt(vm.expires_at))}</dd>
+          <dt>写入时间</dt><dd class="mono">${esc(fmtExpiresAt(vm.refreshed_at))}</dd>
+          <dt>来源</dt><dd class="mono">${esc(vm.oauth_source || '—')}</dd>
+          <dt>Worker</dt><dd>${vm.worker_credential?.has_access ? '已同步' : (vm.has_token ? '仅控制面' : '未写入')}</dd>
+          <dt>UUID</dt><dd class="mono">${esc(vm.account_uuid || acc.account_id || '—')}</dd>
+          <dt>Org</dt><dd class="mono">${esc(vm.org_uuid || '—')}</dd>
+        </dl>
+        <label class="text-xs faint" style="display:flex;flex-direction:column;gap:6px;margin-top:12px;max-width:640px">sessionKey
+          <textarea id="accountImportSessionKey" class="input" placeholder="sk-ant-sid… 换票成功后直接显示在上方" aria-label="sessionKey"></textarea>
+        </label>
+        <div class="actions" style="margin-top:8px">
+          <button class="btn btn-primary btn-sm" onclick="importOAuthWorkflow(true)">换票写入</button>
+          <button class="btn btn-outline btn-sm" onclick="refreshOauth('${esc(vm.id)}')">刷新凭证</button>
+        </div>
+      </div>
       <div class="qgrid">
         ${quotaCard('5 小时', acc.utilization_5h ?? vm.utilization_5h, acc.reset_5h || vm.reset_5h)}
         ${quotaCard('7 天', acc.utilization_7d ?? vm.utilization_7d, acc.reset_7d || vm.reset_7d)}
@@ -2805,7 +3032,9 @@ function renderUsage() {
 let _modelPolicyDraft = null
 let _modelFilterQ = ''
 let _modelFamily = 'all'
+let _modelBetaFilter = 'all'
 let _modelExpanded = null
+let _modelAdvanced = false
 
 async function loadModelPolicyView() {
   try {
@@ -2814,9 +3043,12 @@ async function loadModelPolicyView() {
     if (!data.policy) data.policy = {}
     if (!data.policy.models) data.policy.models = {}
     if (!data.policy.defaults) data.policy.defaults = {}
+    if (!Array.isArray(data.policy.defaults.context_1m_whitelist)) {
+      data.policy.defaults.context_1m_whitelist = ['claude-sonnet-5', 'claude-sonnet-5-*']
+    }
     if (!data.policy.catalog_mode) data.policy.catalog_mode = 'worker_intersect_policy'
     state.modelPolicy = data
-    _modelPolicyDraft = JSON.parse(JSON.stringify(data.policy))
+    _modelPolicyDraft = hydrateModelPolicyDraft(JSON.parse(JSON.stringify(data.policy)))
   } catch (e) {
     state.modelPolicy = { error: String(e.message || e) }
     _modelPolicyDraft = null
@@ -2824,12 +3056,18 @@ async function loadModelPolicyView() {
   render()
 }
 
+function adoptModelPolicyResponse(r) {
+  const pol = hydrateModelPolicyDraft(JSON.parse(JSON.stringify((r && r.policy) || {})))
+  state.modelPolicy = r && typeof r === 'object' ? r : { policy: pol }
+  state.modelPolicy.policy = JSON.parse(JSON.stringify(pol))
+  _modelPolicyDraft = pol
+}
+
 async function saveModelPolicyView() {
   if (!_modelPolicyDraft) return
   try {
     const r = await api('/api/panel/model-policy', { method: 'PUT', body: JSON.stringify({ policy: _modelPolicyDraft }) })
-    state.modelPolicy = r
-    _modelPolicyDraft = JSON.parse(JSON.stringify(r.policy || {}))
+    adoptModelPolicyResponse(r)
     toast('模型策略已保存')
   } catch (e) {
     toast('保存失败: ' + (e.message || e), 'err')
@@ -2841,8 +3079,7 @@ async function resetModelPolicyView() {
   if (!confirm('恢复官方默认模型矩阵？自定义开关与参数将丢失。')) return
   try {
     const r = await api('/api/panel/model-policy/reset', { method: 'POST', body: '{}' })
-    state.modelPolicy = r
-    _modelPolicyDraft = JSON.parse(JSON.stringify(r.policy || {}))
+    adoptModelPolicyResponse(r)
     toast('已恢复默认')
   } catch (e) {
     toast('重置失败: ' + (e.message || e), 'err')
@@ -2853,8 +3090,7 @@ async function resetModelPolicyView() {
 async function syncWorkerModelPolicy() {
   try {
     const r = await api('/api/panel/model-policy/sync-worker', { method: 'POST', body: '{}' })
-    state.modelPolicy = r
-    _modelPolicyDraft = JSON.parse(JSON.stringify(r.policy || {}))
+    adoptModelPolicyResponse(r)
     toast('已同步 Worker 目录 (' + (r.synced || 0) + ')')
   } catch (e) {
     toast('同步失败: ' + (e.message || e), 'err')
@@ -2871,7 +3107,9 @@ function toggleModelEnabled(id, checked) {
 function setModelParam(id, key, value) {
   if (!_modelPolicyDraft?.models?.[id]) return
   _modelPolicyDraft.models[id].params = _modelPolicyDraft.models[id].params || {}
+  if (key === 'on_enabled' && value === 'convert_to_adaptive') value = 'passthrough'
   _modelPolicyDraft.models[id].params[key] = value
+  render()
 }
 
 function setModelCap(id, key, value) {
@@ -2891,16 +3129,73 @@ function setPolicyDefault(key, value) {
   _modelPolicyDraft.defaults = _modelPolicyDraft.defaults || {}
   if (key === 'strip_context_1m' || key === 'normalize_thinking') {
     _modelPolicyDraft.defaults[key] = !!value
+    render()
   } else if (key === 'thinking_fallback_budget' || key === 'max_tokens') {
     _modelPolicyDraft.defaults[key] = Number(value) || 0
+    render()
+  } else if (key === 'context_1m_whitelist') {
+    _modelPolicyDraft.defaults.context_1m_whitelist = String(value || '')
+      .split(/[\n,]+/).map(s => s.trim()).filter(Boolean)
   } else {
     _modelPolicyDraft.defaults[key] = value
   }
 }
 
+function context1mWhitelist(pol) {
+  const list = (pol || _modelPolicyDraft || {}).defaults?.context_1m_whitelist
+  return Array.isArray(list) ? list : ['claude-sonnet-5', 'claude-sonnet-5-*']
+}
+
+function matchContext1mPattern(pattern, model) {
+  const p = String(pattern || '').trim().toLowerCase()
+  if (!p) return false
+  const m = String(model || '').trim().split('/').filter(Boolean).pop() || ''
+  const bare = m.replace(/(\[1m\])+$/i, '').toLowerCase()
+  if (p.endsWith('*')) return bare.startsWith(p.slice(0, -1))
+  return bare === p
+}
+
+function modelPassContext1mMode(m) {
+  const v = m && m.betas ? m.betas.pass_context_1m : undefined
+  if (v === true) return 'true'
+  if (v === false) return 'false'
+  return 'inherit'
+}
+
+function modelPassContext1mEffective(m, pol) {
+  if (typeof (m && m.betas && m.betas.pass_context_1m) === 'boolean') return m.betas.pass_context_1m
+  return context1mWhitelist(pol).some(p => matchContext1mPattern(p, m && m.id))
+}
+
+function setModelPassContext1m(id, value) {
+  if (!_modelPolicyDraft?.models?.[id]) return
+  _modelPolicyDraft.models[id].betas = _modelPolicyDraft.models[id].betas || {}
+  if (value === 'inherit') delete _modelPolicyDraft.models[id].betas.pass_context_1m
+  else _modelPolicyDraft.models[id].betas.pass_context_1m = value === 'true'
+  render()
+}
+
 function setCatalogMode(value) {
   if (!_modelPolicyDraft) return
   _modelPolicyDraft.catalog_mode = value
+  render()
+}
+
+function setModelBetaFilter(v) {
+  _modelBetaFilter = v || 'all'
+  render()
+}
+
+function onModelAdvancedToggle(el) {
+  _modelAdvanced = !!(el && el.open)
+}
+
+function modelPolicyDirty() {
+  try {
+    return JSON.stringify(_modelPolicyDraft || {}) !== JSON.stringify((state.modelPolicy && state.modelPolicy.policy) || {})
+  } catch {
+    return false
+  }
 }
 
 function setModelFilterQ(v) {
@@ -2940,6 +3235,33 @@ function thinkingLabel(mode) {
   return map[mode] || mode || '—'
 }
 
+function thinkingPolicyLabel(params, caps) {
+  const en = (params && params.on_enabled) || 'passthrough'
+  const ad = (params && params.on_adaptive) || ((caps && caps.supports_adaptive) ? 'passthrough' : 'convert_to_enabled')
+  if (en === 'convert_to_adaptive') return 'enabled→adaptive'
+  if (ad === 'convert_to_enabled') return 'adaptive→enabled'
+  if (en === 'strip' || ad === 'strip') return '剥离'
+  return '透传'
+}
+
+function hydrateModelPolicyDraft(pol) {
+  if (!pol || typeof pol !== 'object') return pol
+  pol.defaults = pol.defaults || {}
+  if (!Array.isArray(pol.defaults.context_1m_whitelist)) {
+    pol.defaults.context_1m_whitelist = ['claude-sonnet-5', 'claude-sonnet-5-*']
+  }
+  for (const [id, m] of Object.entries(pol.models || {})) {
+    if (!m || typeof m !== 'object') continue
+    m.params = m.params || {}
+    if (m.params.on_enabled === 'convert_to_adaptive') m.params.on_enabled = 'passthrough'
+    m.betas = m.betas || {}
+    if (typeof m.betas.pass_context_1m !== 'boolean') {
+      m.betas.pass_context_1m = matchContext1mPattern('claude-sonnet-5', id) || matchContext1mPattern('claude-sonnet-5-*', id)
+    }
+  }
+  return pol
+}
+
 function onAdaptiveLabel(v) {
   const map = {
     passthrough: '透传',
@@ -2977,6 +3299,9 @@ function renderModels() {
   const q = _modelFilterQ.trim().toLowerCase()
   const models = allModels.filter(m => {
     if (_modelFamily !== 'all' && String(m.family || '').toLowerCase() !== _modelFamily) return false
+    if (_modelBetaFilter === 'pass' && !modelPassContext1mEffective(m, pol)) return false
+    if (_modelBetaFilter === 'strip' && modelPassContext1mEffective(m, pol)) return false
+    if (_modelBetaFilter === 'inherit' && modelPassContext1mMode(m) !== 'inherit') return false
     if (!q) return true
     const hay = [m.id, m.display_name, m.family, ...(m.aliases || [])].join(' ').toLowerCase()
     return hay.includes(q)
@@ -2984,63 +3309,70 @@ function renderModels() {
 
   const enabledCount = allModels.filter(m => m.enabled !== false).length
   const liveCount = effective.length
+  const passCount = allModels.filter(m => modelPassContext1mEffective(m, pol)).length
+  const dirty = modelPolicyDirty()
   const families = ['all', ...Array.from(new Set(allModels.map(m => String(m.family || 'other').toLowerCase()))).sort()]
+  const betaFilters = [['all', '全部'], ['pass', '透传 1M'], ['strip', '剥离'], ['inherit', '跟随通配']]
 
   function opt(val, cur, label) {
     return '<option value="' + val + '"' + (cur === val ? ' selected' : '') + '>' + (label || val) + '</option>'
   }
 
-  const cards = models.map(m => {
+  const rows = models.map(m => {
     const caps = m.capabilities || {}
     const params = m.params || {}
     const live = effective.indexOf(m.id) >= 0
     const on = m.enabled !== false
-    const ctx = caps.context_window >= 1000000 ? '1M' : (Math.floor((caps.context_window || 0) / 1000) + 'K')
+    const native1m = !!caps.supports_1m
+    const ctx = (caps.context_window >= 1000000 || native1m) ? '1M' : (Math.floor((caps.context_window || 0) / 1000) + 'K')
     const open = _modelExpanded === m.id
     const drop = ((m.betas && m.betas.drop) || []).join(', ') || '—'
+    const passMode = modelPassContext1mMode(m)
+    const on1m = modelPassContext1mEffective(m, pol)
+    const inheritHit = passMode === 'inherit' && on1m
     return `
-    <div class="mp-card ${on ? '' : 'disabled'}">
-      <div class="mp-card-head" onclick="toggleModelExpand('${esc(m.id)}')">
-        <label class="chip-check" onclick="event.stopPropagation()">
-          <input type="checkbox" ${on ? 'checked' : ''} onchange="toggleModelEnabled('${esc(m.id)}', this.checked)"/>
-          ${on ? '启用' : '停用'}
+    <div class="mp-item ${on ? '' : 'disabled'} ${open ? 'open' : ''}">
+      <div class="mp-row" onclick="toggleModelExpand('${esc(m.id)}')">
+        <label class="chip-check mp-on" onclick="event.stopPropagation()">
+          <input type="checkbox" ${on ? 'checked' : ''} onchange="toggleModelEnabled('${esc(m.id)}', this.checked)" aria-label="启用 ${esc(m.display_name || m.id)}"/>
         </label>
-        <div class="info">
-          <div class="title">
-            ${esc(m.display_name || m.id)}
-            <span class="badge ${live ? 'ok' : ''}">${live ? '对外' : '未暴露'}</span>
-            <span class="badge">${esc(m.family || '')}</span>
-            <span class="badge">${ctx}</span>
-            <span class="badge">${esc(thinkingLabel(caps.thinking_mode))}</span>
-          </div>
-          <div class="meta">${esc(m.id)}</div>
+        <div class="mp-id">
+          <div class="nm">${esc(m.display_name || m.id)}</div>
+          <div class="hid">${esc(m.id)}${(m.aliases && m.aliases.length) ? ' · ' + esc(m.aliases.join(', ')) : ''}</div>
         </div>
-        <span class="text-xs faint">${open ? '收起 ▴' : '展开 ▾'}</span>
+        <div class="mp-win">${esc(ctx)}${native1m ? '<i>原生窗</i>' : ''}</div>
+        <select class="input mp-beta ${inheritHit ? 'hit' : ''}" onclick="event.stopPropagation()" onchange="setModelPassContext1m('${esc(m.id)}', this.value)" title="${inheritHit ? '未设开关，命中回退通配' : (passMode === 'true' ? '矩阵指定透传' : passMode === 'false' ? '矩阵指定剥离' : '未设，走回退通配')}">
+          ${opt('true', passMode, '透传')}
+          ${opt('false', passMode, '剥离')}
+          ${opt('inherit', passMode, on1m ? '通配 → 透传' : '通配 → 剥离')}
+        </select>
+        <div class="mp-think" title="${esc(thinkingLabel(caps.thinking_mode))}">${esc(thinkingPolicyLabel(params, caps))}</div>
+        <div class="mp-live">${live ? '<span class="badge ok">对外</span>' : '<span class="badge">隐藏</span>'}</div>
+        <button type="button" class="mp-tog" onclick="event.stopPropagation();toggleModelExpand('${esc(m.id)}')" aria-label="${open ? '收起' : '展开'}">${open ? '▴' : '▾'}</button>
       </div>
       ${open ? `
-      <div class="mp-card-body">
+      <div class="mp-more">
         <div class="set-list">
-          <div class="set-sub">Thinking 策略</div>
-          <div class="set-row"><span>adaptive 请求</span>
+          <div class="set-sub">Thinking</div>
+          <div class="set-row"><span>adaptive</span>
             <select class="input" onchange="setModelParam('${esc(m.id)}','on_adaptive',this.value)">
               ${opt('passthrough', params.on_adaptive, '透传')}
               ${opt('convert_to_enabled', params.on_adaptive, '转为 enabled + budget')}
               ${opt('strip', params.on_adaptive, '剥离 thinking')}
             </select>
           </div>
-          <p class="mp-hint">Haiku 等不支持 adaptive 时，建议「转为 enabled」。Opus 5 等仅 adaptive 时保持透传。</p>
-          <div class="set-row"><span>enabled 请求</span>
+          <div class="set-row"><span>enabled</span>
             <select class="input" onchange="setModelParam('${esc(m.id)}','on_enabled',this.value)">
-              ${opt('passthrough', params.on_enabled, '透传')}
-              ${opt('convert_to_adaptive', params.on_enabled, '转为 adaptive')}
+              ${opt('passthrough', params.on_enabled === 'convert_to_adaptive' ? 'passthrough' : params.on_enabled, '透传')}
               ${opt('strip', params.on_enabled, '剥离 thinking')}
             </select>
           </div>
-          <div class="set-row"><span>fallback budget</span>
+          <p class="mp-hint">OAuth 保留客户端的 enabled / adaptive，不再把 enabled 转成 adaptive。</p>
+          <div class="set-row"><span>fallback</span>
             <input class="input" type="number" value="${esc(String(params.thinking_fallback_budget != null ? params.thinking_fallback_budget : (defs.thinking_fallback_budget || 4096)))}"
               onchange="setModelParam('${esc(m.id)}','thinking_fallback_budget', Number(this.value)||0)"/>
           </div>
-          <div class="set-sub">参数上限</div>
+          <div class="set-sub">上限</div>
           <div class="set-row"><span>默认 max_tokens</span>
             <input class="input" type="number" value="${esc(String(params.max_tokens_default != null ? params.max_tokens_default : 8192))}"
               onchange="setModelParam('${esc(m.id)}','max_tokens_default', Number(this.value)||0)"/>
@@ -3049,82 +3381,43 @@ function renderModels() {
             <input class="input" type="number" value="${esc(String(params.max_tokens_cap != null ? params.max_tokens_cap : 64000))}"
               onchange="setModelParam('${esc(m.id)}','max_tokens_cap', Number(this.value)||0)"/>
           </div>
-          <div class="set-sub">能力只读</div>
-          <div class="set-row"><span>Context</span><div class="text-sm">${ctx} · supports_1m=${caps.supports_1m ? '是' : '否'}</div></div>
-          <div class="set-row"><span>Thinking 模式</span><div class="text-sm">${esc(thinkingLabel(caps.thinking_mode))}</div></div>
+          <div class="set-sub">只读</div>
+          <div class="set-row"><span>窗口</span><div class="text-sm">${esc(ctx)}${native1m ? ' · 原生 1M（一般不要透传 beta）' : ''}</div></div>
           <div class="set-row"><span>Beta drop</span><div class="text-sm mono" style="word-break:break-all">${esc(drop)}</div></div>
-          ${(m.aliases && m.aliases.length) ? `<div class="set-row"><span>别名</span><div class="text-sm mono">${esc(m.aliases.join(', '))}</div></div>` : ''}
         </div>
       </div>` : ''}
     </div>`
-  }).join('') || emptyBox(q || _modelFamily !== 'all' ? '无匹配模型' : '暂无模型配置')
+  }).join('') || `<div class="empty-box" style="border:0">${esc(q || _modelFamily !== 'all' || _modelBetaFilter !== 'all' ? '无匹配模型' : '暂无模型配置')}</div>`
 
   return `
   <section class="section">
     <div class="workbench">
       <div class="wb-head">
         <div class="wb-id">
-          <div class="nm">模型策略</div>
-          <div class="hid">参考 sub2api · 热更新 · 能力矩阵</div>
+          <div class="nm">模型矩阵</div>
+          <div class="mp-stat" style="margin:0">
+            <span>配置 <b>${allModels.length}</b></span>
+            <span>启用 <b>${enabledCount}</b></span>
+            <span>对外 <b>${liveCount}</b></span>
+            <span>1M beta <b>${passCount}</b></span>
+          </div>
         </div>
         <div class="mp-actions">
           <button class="btn btn-ghost btn-sm" onclick="loadModelPolicyView()">刷新</button>
           <button class="btn btn-ghost btn-sm" onclick="syncWorkerModelPolicy()">同步 Worker</button>
           <button class="btn btn-ghost btn-sm" onclick="resetModelPolicyView()">恢复默认</button>
-          <button class="btn btn-sm" onclick="saveModelPolicyView()">保存配置</button>
+          <button class="btn btn-sm ${dirty ? 'btn-primary' : ''}" onclick="saveModelPolicyView()">${dirty ? '保存更改' : '已保存'}</button>
         </div>
       </div>
       <div class="wb-body">
-        <div class="mp-stat">
-          <span>配置 <b>${allModels.length}</b></span>
-          <span>已启用 <b>${enabledCount}</b></span>
-          <span>对外暴露 <b>${liveCount}</b></span>
-          <span>模式 <b>${esc(pol.catalog_mode || 'worker_intersect_policy')}</b></span>
-        </div>
-
-        <div class="set-list">
-          <div class="set-sub">全局默认</div>
-          <div class="set-row"><span>目录模式</span>
-            <select class="input" onchange="setCatalogMode(this.value)">
-              ${opt('worker_intersect_policy', pol.catalog_mode, 'Worker ∩ 策略（推荐）')}
-              ${opt('worker_only', pol.catalog_mode, '仅 Worker 目录')}
-              ${opt('policy_only', pol.catalog_mode, '仅策略矩阵')}
-            </select>
-          </div>
-          <p class="mp-hint">推荐 Worker ∩ 策略：既保证上游真实可用，又可用策略关闭不需要的模型。</p>
-
-          <div class="set-row"><span>剥离 context-1m</span>
-            <label class="chip-check"><input type="checkbox" ${defs.strip_context_1m !== false ? 'checked' : ''} onchange="setPolicyDefault('strip_context_1m', this.checked)"/> ${defs.strip_context_1m !== false ? '已开启' : '已关闭'}</label>
-          </div>
-          <p class="mp-hint">对不支持 1M 的模型（如 Haiku）自动去掉 context-1m-2025-08-07 beta，避免 400。</p>
-
-          <div class="set-row"><span>规范化 thinking</span>
-            <label class="chip-check"><input type="checkbox" ${defs.normalize_thinking !== false ? 'checked' : ''} onchange="setPolicyDefault('normalize_thinking', this.checked)"/> ${defs.normalize_thinking !== false ? '已开启' : '已关闭'}</label>
-          </div>
-          <p class="mp-hint">按模型能力把 adaptive / enabled 互相转换，避免 "adaptive thinking is not supported"。</p>
-
-          <div class="set-row"><span>fallback budget</span>
-            <input class="input" type="number" value="${esc(String(defs.thinking_fallback_budget != null ? defs.thinking_fallback_budget : 4096))}" onchange="setPolicyDefault('thinking_fallback_budget', this.value)"/>
-          </div>
-          <div class="set-row"><span>默认 max_tokens</span>
-            <input class="input" type="number" value="${esc(String(defs.max_tokens != null ? defs.max_tokens : 16384))}" onchange="setPolicyDefault('max_tokens', this.value)"/>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="workbench">
-      <div class="wb-head">
-        <div class="wb-id">
-          <div class="nm">模型矩阵</div>
-          <div class="hid">启用控制 · Thinking 策略 · 参数上限</div>
-        </div>
-      </div>
-      <div class="wb-body">
+        <p class="mp-lead">窗口是上下文长度；<b>官方 1M beta</b> 只给需要解锁的模型（默认 Sonnet 5）。Fable / Opus 是原生 1M，保持「剥离」。行内即可改，展开只调 Thinking / 上限。</p>
         <div class="mp-toolbar">
           <input class="input" type="search" placeholder="搜索模型 / 别名…" value="${esc(_modelFilterQ)}" oninput="setModelFilterQ(this.value)"/>
           <div class="switch-row">
-            ${families.map(f => `<label class="chip-check"><input type="radio" name="mp_fam" ${ _modelFamily === f ? 'checked' : ''} onchange="setModelFamily('${esc(f)}')"/> ${f === 'all' ? '全部' : esc(f)}</label>`).join('')}
+            ${families.map(f => `<label class="chip-check"><input type="radio" name="mp_fam" ${_modelFamily === f ? 'checked' : ''} onchange="setModelFamily('${esc(f)}')"/> ${f === 'all' ? '全部' : esc(f)}</label>`).join('')}
+          </div>
+          <div class="switch-row">
+            ${betaFilters.map(([id, lab]) => `<label class="chip-check"><input type="radio" name="mp_beta" ${_modelBetaFilter === id ? 'checked' : ''} onchange="setModelBetaFilter('${id}')"/> ${lab}</label>`).join('')}
           </div>
           <div class="mp-actions" style="margin-left:auto">
             <button class="btn btn-ghost btn-sm" onclick="batchModels('enable')">全开</button>
@@ -3132,8 +3425,38 @@ function renderModels() {
             <button class="btn btn-ghost btn-sm" onclick="batchModels('invert')">反选</button>
           </div>
         </div>
-        ${cards}
-        <p class="mp-hint">点击卡片展开可配置 Thinking / max_tokens。修改后点顶部「保存配置」立即对后续请求生效；禁用模型会从 /v1/models 移除并拒绝调用。</p>
+        <div class="mp-list">
+          <div class="mp-lh"><span>启用</span><span>模型</span><span>窗口</span><span>官方 1M beta</span><span>Thinking</span><span>目录</span><span></span></div>
+          ${rows}
+        </div>
+        <details class="mp-adv" ${_modelAdvanced ? 'open' : ''} ontoggle="onModelAdvancedToggle(this)">
+          <summary>高级：目录模式 · 未入库通配 · 默认参数</summary>
+          <div class="set-list">
+            <div class="set-row"><span>目录模式</span>
+              <select class="input" onchange="setCatalogMode(this.value)">
+                ${opt('worker_intersect_policy', pol.catalog_mode, 'Worker ∩ 策略（推荐）')}
+                ${opt('worker_only', pol.catalog_mode, '仅 Worker 目录')}
+                ${opt('policy_only', pol.catalog_mode, '仅策略矩阵')}
+              </select>
+            </div>
+            <div class="set-row"><span>过滤 1M beta</span>
+              <label class="chip-check"><input type="checkbox" ${defs.strip_context_1m !== false ? 'checked' : ''} onchange="setPolicyDefault('strip_context_1m', this.checked)"/> ${defs.strip_context_1m !== false ? '已开启' : '已关闭'}</label>
+            </div>
+            <div class="set-row" style="align-items:flex-start"><span>未入库通配</span>
+              <textarea class="input" rows="3" style="min-height:72px;font-family:ui-monospace,monospace" oninput="setPolicyDefault('context_1m_whitelist', this.value)" onchange="render()" placeholder="只兜底未设开关的新 id">${esc(context1mWhitelist(pol).join('\n'))}</textarea>
+            </div>
+            <p class="mp-hint">行内「透传 / 剥离」优先。通配只覆盖未设开关的 dated id，例如 <span class="mono">claude-sonnet-5-日期</span>。不要把 Fable / Opus 写进来。</p>
+            <div class="set-row"><span>规范化 thinking</span>
+              <label class="chip-check"><input type="checkbox" ${defs.normalize_thinking !== false ? 'checked' : ''} onchange="setPolicyDefault('normalize_thinking', this.checked)"/> ${defs.normalize_thinking !== false ? '已开启' : '已关闭'}</label>
+            </div>
+            <div class="set-row"><span>fallback budget</span>
+              <input class="input" type="number" value="${esc(String(defs.thinking_fallback_budget != null ? defs.thinking_fallback_budget : 4096))}" onchange="setPolicyDefault('thinking_fallback_budget', this.value)"/>
+            </div>
+            <div class="set-row"><span>默认 max_tokens</span>
+              <input class="input" type="number" value="${esc(String(defs.max_tokens != null ? defs.max_tokens : 16384))}" onchange="setPolicyDefault('max_tokens', this.value)"/>
+            </div>
+          </div>
+        </details>
       </div>
     </div>
   </section>`
@@ -3187,6 +3510,29 @@ function renderProtocol() {
 
 
 /* ── settings ────────────────────────────────────────────── */
+function settingsTabMeta(id) {
+  return SETTINGS_TABS.find(t => t[0] === id) || SETTINGS_TABS[0]
+}
+function paintSettingsTab(tab) {
+  const meta = settingsTabMeta(tab)
+  state.settingsTab = meta[0]
+  const page = document.querySelector('.set-page')
+  if (page) {
+    page.querySelectorAll('.tabs [data-tab]').forEach(b => {
+      const on = b.dataset.tab === meta[0]
+      b.classList.toggle('on', on)
+      b.setAttribute('aria-selected', String(on))
+    })
+    page.querySelectorAll('.set-pane').forEach(p => p.classList.toggle('hidden', p.dataset.tab !== meta[0]))
+  }
+  const pd = document.getElementById('pageDesc')
+  if (pd) pd.textContent = meta[2]
+}
+function setSettingsTab(tab) {
+  paintSettingsTab(tab)
+  const path = `#/settings/${state.settingsTab}`
+  if (location.hash !== path) history.replaceState(null, '', path)
+}
 function renderSettings() {
   const r = state.routing || {}
   if (r.error) return emptyBox('加载失败: ' + r.error)
@@ -3196,106 +3542,135 @@ function renderSettings() {
   const sessions = r.sessions || {}
   const active = sessions.sessions || sessions
   const sessionCount = sessions.active_sessions ?? (active && typeof active === 'object' && !Array.isArray(active) ? Object.keys(active).length : 0)
+  const tab = settingsTabMeta(state.settingsTab)[0]
+  const pane = (id, html) => `<div class="set-pane${tab === id ? '' : ' hidden'}" data-tab="${id}" role="tabpanel">${html}</div>`
   return `
-  <section class="section">
-    <div class="workbench">
-      <div class="wb-head">
-        <div class="nm">路由</div>
-        <button class="btn btn-primary btn-sm" onclick="saveRouting()">保存</button>
+  <section class="section set-page">
+    <div class="set-bar">
+      <div class="tabs" role="tablist">
+        ${SETTINGS_TABS.map(([k, l]) => `<button type="button" role="tab" data-tab="${k}" class="${tab === k ? 'on' : ''}" aria-selected="${tab === k}" onclick="setSettingsTab('${k}')">${l}</button>`).join('')}
       </div>
-      <div class="wb-body">
-        <div class="set-list">
-          <div class="set-sub">路由</div>
-          <div class="set-row"><span>粘性</span>
-            <label class="chip-check"><input id="st_enabled" type="checkbox" ${sticky.enabled !== false ? 'checked' : ''}/> 启用</label>
-          </div>
-          <div class="set-row"><span>模式</span>
-            <select id="st_mode" class="input">
-              <option value="conversation" ${sticky.mode === 'conversation' ? 'selected' : ''}>会话</option>
-              <option value="session" ${sticky.mode === 'session' ? 'selected' : ''}>登录态</option>
-              <option value="ip" ${sticky.mode === 'ip' ? 'selected' : ''}>IP</option>
-            </select>
-          </div>
-          <div class="set-row"><span>TTL</span>
-            <select id="st_ttl" class="input">
-              ${[[3600,'1 小时'],[21600,'6 小时'],[86400,'24 小时'],[604800,'7 天'],[2592000,'30 天']].map(([v,l]) => `<option value="${v}" ${(Number(sticky.ttl_seconds ?? 86400)===v)?'selected':''}>${l}</option>`).join('')}
-            </select>
-          </div>
-          <div class="set-sub">账号池</div>
-          <div class="set-row"><span>策略</span>
-            <select id="pool_strategy" class="input">
-              ${[['weighted-round-robin','平滑 WRR'],['round-robin','轮询'],['lru','LRU']].map(([v,l]) => `<option value="${v}" ${((r.pool||{}).strategy||'weighted-round-robin')===v?'selected':''}>${l}</option>`).join('')}
-            </select>
-          </div>
-          <div class="set-row"><span>切号上限</span>
-            <select id="fo_switches" class="input">
-              ${[1,3,5,8,10,16].map(v => `<option value="${v}" ${Number((r.failover||{}).max_account_switches ?? 10)===v?'selected':''}>${v}</option>`).join('')}
-            </select>
-          </div>
-          <div class="set-row"><span>总尝试</span>
-            <select id="fo_attempts" class="input">
-              ${[4,8,12,16,24].map(v => `<option value="${v}" ${Number((r.failover||{}).max_total_attempts ?? 12)===v?'selected':''}>${v}</option>`).join('')}
-            </select>
-          </div>
-          <div class="set-row"><span>流式交付</span>
-            <select id="fo_delivery" class="input">
-              <option value="realtime" ${((r.failover||{}).delivery_mode||'realtime')==='realtime'?'selected':''}>realtime（默认可切号）</option>
-              <option value="verified" ${(r.failover||{}).delivery_mode==='verified'?'selected':''}>verified（缓冲到 stop）</option>
-            </select>
-          </div>
-          <div class="set-sub">配额与并发</div>
-          <div class="set-row"><span>安全线</span>
-            <select id="q_safety" class="input">
-              ${[[0.80,'80%'],[0.85,'85%'],[0.90,'90%'],[0.95,'95%'],[0.98,'98%']].map(([v,l]) => `<option value="${v}" ${(Number(q.safety_ratio ?? 0.95)===v)?'selected':''}>${l}</option>`).join('')}
-            </select>
-          </div>
-          <div class="set-row"><span>警告线</span>
-            <select id="q_warn" class="input">
-              ${[[0.70,'70%'],[0.80,'80%'],[0.85,'85%'],[0.90,'90%']].map(([v,l]) => `<option value="${v}" ${(Number(q.warn_ratio ?? 0.85)===v)?'selected':''}>${l}</option>`).join('')}
-            </select>
-          </div>
-          <div class="set-row"><span>默认并发（热更新）</span>
-            <select id="c_max" class="input">
-              ${[1,2,4,8,16,20,32,64].map(v => `<option value="${v}" ${(Number(c.default_max_per_account ?? 20)===v)?'selected':''}>${v}</option>`).join('')}
-            </select>
-          </div>
-          <div class="set-row"><span>Fable 并发帽</span>
-            <select id="c_fable" class="input">
-              ${[1,2,3,4,6,8,12,20].map(v => `<option value="${v}" ${(Number(c.fable_max_per_account ?? 4)===v)?'selected':''}>${v}</option>`).join('')}
-            </select>
-          </div>
-          <div class="set-row"><span>拦截</span>
-            <div class="switch-row">
-              <label class="chip-check"><input id="q_block5" type="checkbox" ${q.block_on_5h !== false ? 'checked' : ''}/> 5h</label>
-              <label class="chip-check"><input id="q_block7" type="checkbox" ${q.block_on_7d !== false ? 'checked' : ''}/> 7d</label>
-            </div>
-          </div>
-          <div class="set-sub">实验</div>
-          <div class="set-row"><span>周限 50/50 切分</span>
-            <label class="chip-check"><input id="q_wsplit" type="checkbox" ${q.weekly_split?.enabled === true ? 'checked' : ''}/> 启用</label>
-          </div>
-          <p class="text-xs faint" style="margin:4px 0 0">Fable / 普通各占周限一半；普通吃满只剩 Fable，Fable 吃满只剩普通。默认关闭。</p>
-          <div class="set-sub">请求日志</div>
-          <div class="set-row"><span>记录模式</span>
-            <div class="switch-row">
-              <label class="chip-check"><input type="radio" name="log_mode" id="log_off" value="off" ${(r.logging?.mode || state.logs?.config?.mode) === 'off' ? 'checked' : ''}/> 关闭</label>
-              <label class="chip-check"><input type="radio" name="log_mode" id="log_normal" value="normal" ${(r.logging?.mode || state.logs?.config?.mode || 'normal') === 'normal' ? 'checked' : ''}/> 普通</label>
-              <label class="chip-check"><input type="radio" name="log_mode" id="log_debug" value="debug" ${(r.logging?.mode || state.logs?.config?.mode) === 'debug' ? 'checked' : ''}/> Debug</label>
-            </div>
-          </div>
-          <div class="set-row"><span>保留天数</span>
-            <select id="log_retain" class="input">
-              ${[1,3,7,14,30].map(v => `<option value="${v}" ${(Number((r.logging||{}).retain_days ?? state.logs?.config?.retain_days ?? 7)===v)?'selected':''}>${v} 天</option>`).join('')}
-            </select>
-          </div>
-          <p class="text-xs faint" style="margin:4px 0 0">普通记摘要（含缓存 token / 模型 mismatch / 首 token）。Debug 另存清洗后的请求体。保存即生效。</p>
+      <button class="btn btn-primary btn-sm" onclick="saveRouting()">保存</button>
+    </div>
+    ${pane('sticky', `
+      <p class="set-lead">同一会话落到同一账号，靠 <code>x-session-id</code> / 登录态 / IP。</p>
+      <div class="set-list">
+        <div class="set-row"><span>粘性</span>
+          <label class="chip-check"><input id="st_enabled" type="checkbox" ${sticky.enabled !== false ? 'checked' : ''}/> 启用</label>
+        </div>
+        <div class="set-row"><span>模式</span>
+          <select id="st_mode" class="input">
+            <option value="conversation" ${sticky.mode === 'conversation' ? 'selected' : ''}>会话</option>
+            <option value="session" ${sticky.mode === 'session' ? 'selected' : ''}>登录态</option>
+            <option value="ip" ${sticky.mode === 'ip' ? 'selected' : ''}>IP</option>
+          </select>
+        </div>
+        <div class="set-row"><span>TTL</span>
+          <select id="st_ttl" class="input">
+            ${[[3600,'1 小时'],[21600,'6 小时'],[86400,'24 小时'],[604800,'7 天'],[2592000,'30 天']].map(([v,l]) => `<option value="${v}" ${(Number(sticky.ttl_seconds ?? 86400)===v)?'selected':''}>${l}</option>`).join('')}
+          </select>
         </div>
       </div>
-    </div>
-    <details class="import-box">
-      <summary>会话 ${sessionCount}</summary>
-      <div class="body"><pre class="json">${esc(JSON.stringify(sessions, null, 2))}</pre></div>
-    </details>
+      <details class="import-box">
+        <summary>当前会话 ${sessionCount}</summary>
+        <div class="body"><pre class="json">${esc(JSON.stringify(sessions, null, 2))}</pre></div>
+      </details>
+    `)}
+    ${pane('pool', `
+      <p class="set-lead">选号策略、切号上限和流式交付。realtime 默认可切号，verified 缓冲到 stop。</p>
+      <div class="set-list">
+        <div class="set-sub">调度</div>
+        <div class="set-row"><span>策略</span>
+          <select id="pool_strategy" class="input">
+            ${[['weighted-round-robin','平滑 WRR'],['round-robin','轮询'],['lru','LRU']].map(([v,l]) => `<option value="${v}" ${((r.pool||{}).strategy||'weighted-round-robin')===v?'selected':''}>${l}</option>`).join('')}
+          </select>
+        </div>
+        <div class="set-sub">故障切换</div>
+        <div class="set-row"><span>切号上限</span>
+          <select id="fo_switches" class="input">
+            ${[1,3,5,8,10,16].map(v => `<option value="${v}" ${Number((r.failover||{}).max_account_switches ?? 10)===v?'selected':''}>${v}</option>`).join('')}
+          </select>
+        </div>
+        <div class="set-row"><span>总尝试</span>
+          <select id="fo_attempts" class="input">
+            ${[4,8,12,16,24].map(v => `<option value="${v}" ${Number((r.failover||{}).max_total_attempts ?? 12)===v?'selected':''}>${v}</option>`).join('')}
+          </select>
+        </div>
+        <div class="set-row"><span>流式交付</span>
+          <select id="fo_delivery" class="input">
+            <option value="realtime" ${((r.failover||{}).delivery_mode||'realtime')==='realtime'?'selected':''}>realtime（默认可切号）</option>
+            <option value="verified" ${(r.failover||{}).delivery_mode==='verified'?'selected':''}>verified（缓冲到 stop）</option>
+          </select>
+        </div>
+      </div>
+    `)}
+    ${pane('quota', `
+      <p class="set-lead">额度线决定能不能接新请求；并发是热更新，不必进容器。</p>
+      <div class="set-list">
+        <div class="set-sub">额度线</div>
+        <div class="set-row"><span>安全线</span>
+          <select id="q_safety" class="input">
+            ${[[0.80,'80%'],[0.85,'85%'],[0.90,'90%'],[0.95,'95%'],[0.98,'98%']].map(([v,l]) => `<option value="${v}" ${(Number(q.safety_ratio ?? 0.95)===v)?'selected':''}>${l}</option>`).join('')}
+          </select>
+        </div>
+        <div class="set-row"><span>警告线</span>
+          <select id="q_warn" class="input">
+            ${[[0.70,'70%'],[0.80,'80%'],[0.85,'85%'],[0.90,'90%']].map(([v,l]) => `<option value="${v}" ${(Number(q.warn_ratio ?? 0.85)===v)?'selected':''}>${l}</option>`).join('')}
+          </select>
+        </div>
+        <div class="set-row"><span>拦截</span>
+          <div class="switch-row">
+            <label class="chip-check"><input id="q_block5" type="checkbox" ${q.block_on_5h !== false ? 'checked' : ''}/> 5h</label>
+            <label class="chip-check"><input id="q_block7" type="checkbox" ${q.block_on_7d !== false ? 'checked' : ''}/> 7d</label>
+          </div>
+        </div>
+        <div class="set-sub">并发</div>
+        <div class="set-row"><span>默认并发</span>
+          <select id="c_max" class="input">
+            ${[1,2,4,8,16,20,32,64].map(v => `<option value="${v}" ${(Number(c.default_max_per_account ?? 20)===v)?'selected':''}>${v}</option>`).join('')}
+          </select>
+        </div>
+        <div class="set-row"><span>Fable 并发帽</span>
+          <select id="c_fable" class="input">
+            ${[1,2,3,4,6,8,12,20].map(v => `<option value="${v}" ${(Number(c.fable_max_per_account ?? 4)===v)?'selected':''}>${v}</option>`).join('')}
+          </select>
+        </div>
+        <div class="set-sub">实验</div>
+        <div class="set-row"><span>周限 50/50 切分</span>
+          <label class="chip-check"><input id="q_wsplit" type="checkbox" ${q.weekly_split?.enabled === true ? 'checked' : ''}/> 启用</label>
+        </div>
+        <p class="text-xs faint" style="margin:4px 0 0">Fable / 普通各占周限一半；普通吃满只剩 Fable，Fable 吃满只剩普通。默认关闭。</p>
+      </div>
+    `)}
+    ${pane('logs', `
+      <p class="set-lead">只记 /v1。普通记摘要，Debug 另存清洗后的请求体。</p>
+      <div class="set-list">
+        <div class="set-row"><span>记录模式</span>
+          <div class="switch-row">
+            <label class="chip-check"><input type="radio" name="log_mode" id="log_off" value="off" ${(r.logging?.mode || state.logs?.config?.mode) === 'off' ? 'checked' : ''}/> 关闭</label>
+            <label class="chip-check"><input type="radio" name="log_mode" id="log_normal" value="normal" ${(r.logging?.mode || state.logs?.config?.mode || 'normal') === 'normal' ? 'checked' : ''}/> 普通</label>
+            <label class="chip-check"><input type="radio" name="log_mode" id="log_debug" value="debug" ${(r.logging?.mode || state.logs?.config?.mode) === 'debug' ? 'checked' : ''}/> Debug</label>
+          </div>
+        </div>
+        <div class="set-row"><span>保留天数</span>
+          <select id="log_retain" class="input">
+            ${[1,3,7,14,30].map(v => `<option value="${v}" ${(Number((r.logging||{}).retain_days ?? state.logs?.config?.retain_days ?? 7)===v)?'selected':''}>${v} 天</option>`).join('')}
+          </select>
+        </div>
+      </div>
+      <p class="text-xs faint" style="margin:10px 0 0">普通含缓存 token / 模型 mismatch / 首 token。保存即生效。</p>
+    `)}
+    ${pane('protocol', `
+      <p class="set-lead">只动非官方流量。官方 Claude Code（<code>claude-cli/x.y.z</code> + 合法 metadata.user_id）始终跳过。</p>
+      <div class="set-list">
+        <div class="set-row"><span>非官方 mimic</span>
+          <select id="persona_inject" class="input">
+            ${[['append','默认：附加一句'],['rewrite','覆盖（3 块）'],['none','关闭']].map(([v,l]) => `<option value="${v}" ${((r.compatibility||{}).persona_inject || 'append')===v?'selected':''}>${l}</option>`).join('')}
+          </select>
+        </div>
+      </div>
+      <p class="text-xs faint" style="margin:10px 0 0">默认整包覆盖（billing / 身份 / 扩充，原文落到 messages）。可改附加一句或关闭。关闭时剥 system 上的 cache_control。保存即生效。</p>
+    `)}
   </section>`
 }
 
@@ -3336,6 +3711,10 @@ async function saveRouting() {
         max_account_switches: Number(document.getElementById('fo_switches')?.value || 10),
         max_total_attempts: Number(document.getElementById('fo_attempts')?.value || 12),
         delivery_mode: document.getElementById('fo_delivery')?.value || 'realtime',
+      },
+      compatibility: {
+        ...(state.routing?.compatibility || {}),
+        persona_inject: document.getElementById('persona_inject')?.value || 'append',
       },
     }
     await api('/api/panel/routing', { method: 'PUT', body: JSON.stringify(body) })
@@ -3900,22 +4279,26 @@ async function createVmFromPage() {
   }
 }
 
-async function importOAuthWorkflow() {
-  const id = state.importVmId || document.getElementById('importVmSelect')?.value
-  const sessionKey = document.getElementById('importSessionKey')?.value?.trim() || ''
+async function importOAuthWorkflow(fromAccount) {
+  const id = fromAccount
+    ? (state.selectedVm || state.detail?.vm?.id || '')
+    : (state.importVmId || document.getElementById('importVmSelect')?.value)
+  const keyEl = document.getElementById(fromAccount ? 'accountImportSessionKey' : 'importSessionKey')
+  const sessionKey = keyEl?.value?.trim() || ''
   if (!id) { toast('请选择虚拟机', 'err'); return }
   if (!sessionKey) { toast('请填写 sessionKey', 'err'); return }
   try {
-    toast('经槽 SOCKS5 导入…')
+    toast('经槽 SOCKS5 换票…')
     const body = { vm_id: id, start: false, activate: false }
     if (/^sk-ant-sid/i.test(sessionKey)) body.sessionKey = sessionKey
     else body.access_token = sessionKey
     const r = await api('/api/panel/vms/import', { method: 'POST', body: JSON.stringify(body) })
     const d = r.data || r
-    toast('已导入 ' + (d.oauth_email || id) + ' · 写入 Go worker')
-    const el = document.getElementById('importSessionKey')
-    if (el) el.value = ''
+    if (keyEl) keyEl.value = ''
+    if (d.worker_ok === false) toast('票已落盘 ' + (d.oauth_email || id) + ' · worker 未写入', 'err')
+    else toast('已导入 ' + (d.oauth_email || d.vm?.email || id) + (d.vm?.access_preview ? ' · ' + d.vm.access_preview : ''))
     await refresh()
+    await openVm(id, 'account')
   } catch (e) { toast(e.message, 'err') }
 }
 
@@ -3968,6 +4351,7 @@ function openModal(html) {
   if (!root) return
   root.innerHTML = `<div class="modal" role="dialog" aria-modal="true">${html}</div>`
   root.classList.remove('hidden')
+  enhanceSelects(root)
 }
 function closeModal() {
   const root = document.getElementById('modalRoot')
@@ -4132,6 +4516,55 @@ const LT_TURNS = [
   { n: 2, label: '研报 + 评级' },
   { n: 3, label: '研报 + 评级 + 情景' },
 ]
+const LOADTEST_TABS = [
+  ['reports', '研报', '选模型、标的、轮次后开跑 · 正文按日可查'],
+  ['probe', '能力', '指令 / 空间 / 长文 / 计算 / 抽取 · 核对准确与异常'],
+  ['forms', '答题', '题库随机抽题 · 只答 / 分步 / 先答后补'],
+]
+const PROBE_MODELS = [
+  { id: 'claude-opus-5', label: 'Opus 5' },
+  { id: 'claude-sonnet-5', label: 'Sonnet 5' },
+  { id: 'claude-haiku-4-5', label: 'Haiku 4.5' },
+  { id: 'claude-fable-5', label: 'Fable 5' },
+  { id: 'claude-opus-4-8', label: 'Opus 4.8' },
+  { id: 'claude-opus-4-5', label: 'Opus 4.5' },
+]
+const PROBE_CASES = [
+  { id: 'follow', label: '指令复述' },
+  { id: 'spatial', label: '空间颜色' },
+  { id: 'needle', label: '长文检索' },
+  { id: 'numbers', label: '计算' },
+  { id: 'extract', label: '字段抽取' },
+]
+const PROBE_FORMS = [
+  { id: 'answer', label: '只答' },
+  { id: 'reason', label: '分步' },
+  { id: 'mixed', label: '先答后补' },
+]
+const PROBE_BANK = 24
+const PROBE_SAMPLE_MAX = 12
+const PROBE_ANOMALY = {
+  http: 'HTTP',
+  empty: '空正文',
+  thinking_only: '只思考',
+  truncated: '截断',
+  refusal: '拒答',
+  deflected: '绕开',
+  mismatch: '答错',
+  no_reason: '无过程',
+}
+function loadtestTabMeta(id) {
+  return LOADTEST_TABS.find(t => t[0] === id) || LOADTEST_TABS[0]
+}
+function setLoadtestTab(tab) {
+  const meta = loadtestTabMeta(tab)
+  state.loadtestTab = meta[0]
+  const path = `#/loadtest/${state.loadtestTab}`
+  if (location.hash !== path) history.replaceState(null, '', path)
+  const pd = document.getElementById('pageDesc')
+  if (pd) pd.textContent = meta[2]
+  render()
+}
 let ltSetupLoaded = false
 
 function ltStocks() {
@@ -4258,7 +4691,7 @@ function pollLoadtest() {
 }
 
 async function startLoadtest() {
-  if (state.loadtestRunning) return toast('已有压测在运行', 'err')
+  if (state.loadtestRunning || state.probeRunning) return toast('已有任务在运行', 'err')
   state.loadtestRunning = true
   render()
   try {
@@ -4348,11 +4781,234 @@ async function cancelLoadtest() {
   }
 }
 
+function prToggle(key, id, all) {
+  const cur = new Set(state[key] || [])
+  if (cur.has(id) && cur.size === 1) return
+  if (cur.has(id)) cur.delete(id)
+  else cur.add(id)
+  state[key] = all.map(x => x.id).filter(x => cur.has(x))
+  render()
+}
+function prSetMaxTokens(v) {
+  const n = Number(v)
+  state.probeMaxTokens = (!Number.isFinite(n) || n <= 0) ? 32000 : Math.min(128000, Math.max(1, Math.floor(n)))
+}
+function prSetConcurrency(v) {
+  state.probeConcurrency = Math.max(1, Math.min(4, Number(v) || 1))
+}
+function prSetSample(v) {
+  state.probeSample = Math.max(1, Math.min(PROBE_SAMPLE_MAX, Number(v) || 4))
+}
+function prSetCapSample(v) {
+  state.probeCapSample = Math.max(1, Math.min(PROBE_CASES.length, Number(v) || 1))
+}
+function prToggleRandom() {
+  state.probeRandom = !state.probeRandom
+  render()
+}
+function stopProbePoll() {
+  if (state.probePoll) { clearInterval(state.probePoll); state.probePoll = null }
+}
+async function refreshProbe(id) {
+  try {
+    const path = id ? '/api/panel/probe-test/' + encodeURIComponent(id) : '/api/panel/probe-test'
+    const r = await api(path)
+    if (r) state.probe = r
+    const running = !!(r && (r.status === 'running' || r.status === 'cancelling'))
+    state.probeRunning = running
+    if (!running) stopProbePoll()
+    if (state.view === 'loadtest') render()
+  } catch {}
+}
+function startProbePoll(id) {
+  stopProbePoll()
+  state.probePoll = setInterval(() => refreshProbe(id), 1200)
+}
+async function startProbe(suite) {
+  if (state.probeRunning || state.loadtestRunning) return toast('已有任务在运行', 'err')
+  state.probeRunning = true
+  render()
+  try {
+    const body = {
+      suite,
+      models: state.probeModels || PROBE_MODELS.map(m => m.id),
+      max_tokens: Number(state.probeMaxTokens) || 32000,
+      concurrency: Number(state.probeConcurrency) || 1,
+    }
+    if (suite === 'capability') {
+      body.cases = state.probeCases || PROBE_CASES.map(c => c.id)
+      body.sample = Number(state.probeCapSample) || 1
+      body.random = state.probeRandom !== false
+    }
+    if (suite === 'forms') {
+      body.forms = state.probeForms || PROBE_FORMS.map(f => f.id)
+      body.sample = Number(state.probeSample) || 4
+      body.random = state.probeRandom !== false
+    }
+    const r = await api('/api/panel/probe-test', { method: 'POST', body: JSON.stringify(body) })
+    state.probe = r
+    toast((suite === 'forms' ? '答题' : '能力') + '探针已启动 · ' + ((r && r.items && r.items.length) || 0) + ' 条')
+    startProbePoll(r && r.id)
+    render()
+  } catch (e) {
+    state.probeRunning = false
+    toast('启动失败: ' + (e.message || e), 'err')
+    render()
+  }
+}
+async function cancelProbe() {
+  const id = state.probe && state.probe.id
+  if (!id) return
+  try {
+    const r = await api('/api/panel/probe-test/' + encodeURIComponent(id) + '/cancel', { method: 'POST', body: '{}' })
+    state.probe = r
+    toast('已请求取消')
+    render()
+  } catch (e) {
+    toast('取消失败: ' + (e.message || e), 'err')
+  }
+}
+async function openProbeItem(idx) {
+  try {
+    const id = state.probe && state.probe.id
+    if (!id) return
+    const r = await api('/api/panel/probe-test/' + encodeURIComponent(id) + '?text=1')
+    if (r) state.probe = r
+    const it = (r && r.items || [])[idx]
+    if (!it) return
+    showModal(`
+      <div class="wb-id" style="margin-bottom:10px">
+        <div class="nm">${esc(it.label || it.case_id || '')} · ${esc(it.form || '能力')}</div>
+        <div class="hid">${esc(it.model || '')}</div>
+      </div>
+      <div style="margin-bottom:10px">${(it.anomalies || []).map(a => `<span class="pr-pill bad">${esc(PROBE_ANOMALY[a] || a)}</span>`).join('') || '<span class="pr-pill ok">无异常</span>'}</div>
+      <pre class="lt-pre" style="max-height:62vh">${esc(it.text || it.error || '尚无正文')}</pre>
+    `)
+  } catch (e) {
+    toast('打开失败: ' + (e.message || e), 'err')
+  }
+}
+function renderProbeResults(suite) {
+  const run = state.probe
+  if (!run || (run.suite && run.suite !== suite && !(suite === 'capability' && run.suite === 'all') && !(suite === 'forms' && run.suite === 'all'))) {
+    return ''
+  }
+  const sum = run.summary || {}
+  const st = ltStatus(run.status)
+  const items = run.items || []
+  const drawn = [...new Set(items.map(it => it.label).filter(Boolean))]
+  const stat = (label, val) => `<div class="lt-stat"><span class="text-xs faint">${label}</span><b>${val ?? '—'}</b></div>`
+  const formLabel = (id) => (PROBE_FORMS.find(f => f.id === id) || { label: id || '—' }).label
+  const rows = items.map((it, i) => {
+    const pills = (it.anomalies || []).map(a => `<span class="pr-pill ${(a === 'mismatch' || a === 'empty' || a === 'http') ? 'bad' : 'warn'}">${esc(PROBE_ANOMALY[a] || a)}</span>`).join('')
+    return `<tr>
+      <td class="text-xs">${esc(String(it.model || '').replace(/^claude-/, ''))}</td>
+      <td>${esc(it.label || it.case_id || '')}${it.form ? `<div class="text-xs faint">${esc(formLabel(it.form))}</div>` : ''}</td>
+      <td>${it.exact ? '<span class="pr-pill ok">准确</span>' : '<span class="pr-pill bad">不准</span>'}</td>
+      <td>${pills || '<span class="faint text-xs">—</span>'}</td>
+      <td class="text-xs">${it.http || '—'}${it.stop_reason ? `<div class="faint">${esc(it.stop_reason)}</div>` : ''}</td>
+      <td class="num">${it.duration_ms ? it.duration_ms + 'ms' : '—'}</td>
+      <td>${it.status === 'pending' || it.status === 'running' ? '<span class="faint text-xs">…</span>' : `<button class="lt-turn" onclick="openProbeItem(${i})">正文</button>`}</td>
+    </tr>`
+  }).join('')
+  return `
+    <section class="lt-card">
+      <div class="lt-card-h">
+        <div>
+          <h2>本次结果</h2>
+          <p><span class="lt-status ${st.cls}">${esc(st.text)}</span> · ${esc(run.id || '')}${drawn.length ? ' · 抽到 ' + esc(drawn.join(' / ')) : ''}${run.seed != null ? ' · seed ' + esc(run.seed) : ''}</p>
+        </div>
+      </div>
+      <div class="lt-grid">
+        ${stat('准确', (sum.exact != null && sum.total) ? (sum.exact + '/' + sum.total) : '—')}
+        ${stat('准确率', sum.accuracy != null ? Math.round((sum.accuracy || 0) * 100) + '%' : '—')}
+        ${stat('空正文', sum.empty)}
+        ${stat('截断', sum.truncated)}
+        ${stat('只思考', sum.thinking_only)}
+        ${stat('拒答', sum.refusal)}
+      </div>
+      <table class="table">
+        <thead><tr><th>模型</th><th>用例</th><th>准确</th><th>异常</th><th>HTTP</th><th>耗时</th><th></th></tr></thead>
+        <tbody>${rows || '<tr><td colspan="7" class="faint">等待…</td></tr>'}</tbody>
+      </table>
+    </section>`
+}
+function renderProbePane(suite) {
+  const running = !!(state.probe && (state.probe.status === 'running' || state.probe.status === 'cancelling')) || state.probeRunning
+  const models = state.probeModels || ['claude-sonnet-5']
+  const cases = state.probeCases || PROBE_CASES.map(c => c.id)
+  const forms = state.probeForms || PROBE_FORMS.map(f => f.id)
+  const sample = Number(state.probeSample) || 4
+  const capSample = Math.min(cases.length, Number(state.probeCapSample) || 1)
+  const count = suite === 'forms'
+    ? models.length * forms.length * sample
+    : models.length * capSample
+  return `
+    <section class="lt-card">
+      <div class="lt-card-h">
+        <div>
+          <h2>${suite === 'forms' ? '答题形态' : '能力探针'}</h2>
+          <p>${suite === 'forms' ? `题库 ${PROBE_BANK} 道有金标的题，每次随机抽 ${sample} 道，再按只答 / 分步 / 先答后补各跑一遍。` : `5 个用例里${state.probeRandom !== false ? '随机' : '按序'}抽 ${capSample} 条。计算题预算 32000，避免只出思考没有正文。`}</p>
+        </div>
+        <div class="actions">
+          <button class="btn btn-primary" ${running ? 'disabled' : ''} onclick="startProbe('${suite}')">${running ? '进行中…' : '开始 · ' + count + ' 条'}</button>
+          ${running ? '<button class="btn" onclick="cancelProbe()">取消</button>' : ''}
+        </div>
+      </div>
+      <div class="lt-field">
+        <div class="lt-lab">模型</div>
+        <div class="preset">${PROBE_MODELS.map(m => `<button class="${models.includes(m.id) ? 'on' : ''}" onclick="prToggle('probeModels','${m.id}',PROBE_MODELS)">${esc(m.label)}</button>`).join('')}</div>
+      </div>
+      ${suite === 'capability' ? `
+      <div class="lt-field">
+        <div class="lt-lab">用例<em>作为抽选池 · ${state.probeRandom !== false ? '随机抽选' : '按序取前 N 条'}</em></div>
+        <div class="preset">${PROBE_CASES.map(c => `<button class="${cases.includes(c.id) ? 'on' : ''}" onclick="prToggle('probeCases','${c.id}',PROBE_CASES)">${esc(c.label)}</button>`).join('')}
+          <button class="${state.probeRandom !== false ? 'on' : ''}" onclick="prToggleRandom()">随机抽选</button>
+        </div>
+      </div>` : `
+      <div class="lt-field">
+        <div class="lt-lab">形态</div>
+        <div class="preset">${PROBE_FORMS.map(f => `<button class="${forms.includes(f.id) ? 'on' : ''}" onclick="prToggle('probeForms','${f.id}',PROBE_FORMS)">${esc(f.label)}</button>`).join('')}</div>
+      </div>
+      <div class="lt-field">
+        <div class="lt-lab">题库<em>${PROBE_BANK} 道 · ${state.probeRandom !== false ? '随机抽选' : '按库序取前 N 道'}</em></div>
+        <div class="preset">
+          <button class="${state.probeRandom !== false ? 'on' : ''}" onclick="prToggleRandom()">随机抽选</button>
+        </div>
+      </div>`}
+      <div class="lt-field">
+        <div class="lt-params">
+          <div class="lt-num">
+            <div class="lt-lab">思考预算上限</div>
+            <input class="input" type="number" min="2048" max="128000" step="1024" value="${esc(state.probeMaxTokens || 32000)}" onchange="prSetMaxTokens(this.value)"/>
+          </div>
+          <div class="lt-num">
+            <div class="lt-lab">并发</div>
+            <input class="input" type="number" min="1" max="4" value="${esc(state.probeConcurrency || 1)}" onchange="prSetConcurrency(this.value)"/>
+          </div>
+          ${suite === 'forms' ? `
+          <div class="lt-num">
+            <div class="lt-lab">抽题数</div>
+            <input class="input" type="number" min="1" max="${PROBE_SAMPLE_MAX}" value="${esc(sample)}" onchange="prSetSample(this.value)"/>
+          </div>` : `
+          <div class="lt-num">
+            <div class="lt-lab">抽条数</div>
+            <input class="input" type="number" min="1" max="${PROBE_CASES.length}" value="${esc(capSample)}" onchange="prSetCapSample(this.value)"/>
+          </div>`}
+        </div>
+      </div>
+    </section>
+    ${renderProbeResults(suite)}`
+}
 function renderLoadtest() {
   ltLoadSetup()
   if (state.loadtest === undefined) {
     state.loadtest = null
     refreshLoadtest()
+  }
+  if (state.probe === undefined && (state.loadtestTab === 'probe' || state.loadtestTab === 'forms')) {
+    state.probe = null
+    refreshProbe()
   }
   const run = state.loadtest
   const sum = run && run.summary
@@ -4377,8 +5033,8 @@ function renderLoadtest() {
     </tr>`
   }).join('')
   const stat = (label, val) => `<div class="lt-stat"><span class="text-xs faint">${label}</span><b>${val ?? '—'}</b></div>`
-  return `
-  <div class="lt-page">
+  const tab = loadtestTabMeta(state.loadtestTab)[0]
+  const reportsPane = `
     <section class="lt-card">
       <div class="lt-card-h">
         <div>
@@ -4443,7 +5099,17 @@ function renderLoadtest() {
       </table>
       ${run.report_markdown ? `<details class="lt-details"><summary>运行汇总</summary><pre class="lt-pre">${esc(run.report_markdown)}</pre></details>` : ''}
     </section>` : ''}
-    ${renderLoadtestArchive()}
+    ${renderLoadtestArchive()}`
+  return `
+  <div class="lt-page">
+    <div class="set-bar">
+      <div class="tabs" role="tablist">
+        ${LOADTEST_TABS.map(([k, l]) => `<button type="button" role="tab" class="${tab === k ? 'on' : ''}" aria-selected="${tab === k}" onclick="setLoadtestTab('${k}')">${l}</button>`).join('')}
+      </div>
+    </div>
+    <div class="${tab === 'reports' ? '' : 'hidden'}">${reportsPane}</div>
+    <div class="${tab === 'probe' ? '' : 'hidden'}">${tab === 'probe' ? renderProbePane('capability') : ''}</div>
+    <div class="${tab === 'forms' ? '' : 'hidden'}">${tab === 'forms' ? renderProbePane('forms') : ''}</div>
   </div>`
 }
 
@@ -4483,6 +5149,7 @@ function render() {
       return
     }
     main.innerHTML = fn()
+    enhanceSelects(main)
   } catch (e) {
     main.innerHTML = '<p class="text-sm danger">渲染错误: ' + esc(e.message) + '</p>'
   }
@@ -4491,7 +5158,10 @@ function render() {
 document.getElementById('nav')?.addEventListener('click', (e) => {
   const item = e.target.closest('.nav-item')
   if (!item) return
-  go(item.dataset.view)
+  const view = item.dataset.view
+  if (view === 'settings') go('settings', state.settingsTab || 'sticky')
+  else if (view === 'loadtest') go('loadtest', state.loadtestTab || 'reports')
+  else go(view)
 })
 window.addEventListener('hashchange', () => applyRoute())
 
@@ -4514,13 +5184,15 @@ function applyRoute() {
   const { view, id } = parseHash()
   const known = titles[view] ? view : 'overview'
   state.view = known
-  if (id) state.selectedVm = id
+  if (known === 'settings' && SETTINGS_TABS.some(t => t[0] === id)) state.settingsTab = id
+  if (known === 'loadtest' && LOADTEST_TABS.some(t => t[0] === id)) state.loadtestTab = id
+  if (known === 'loadtest' && !id) state.loadtestTab = state.loadtestTab || 'reports'
   document.querySelectorAll('.nav-item').forEach(n => n.classList.toggle('active', n.dataset.view === known))
   const pair = titles[known] || ['', '']
   const pt = document.getElementById('pageTitle')
   const pd = document.getElementById('pageDesc')
   if (pt) pt.textContent = pair[0]
-  if (pd) pd.textContent = pair[1]
+  if (pd) pd.textContent = known === 'settings' ? settingsTabMeta(state.settingsTab)[2] : (known === 'loadtest' ? loadtestTabMeta(state.loadtestTab)[2] : pair[1])
   if (known === 'vm' && id) {
     openVm(id)
     return
@@ -4535,6 +5207,7 @@ function applyRoute() {
   if (known === 'models' && state.modelPolicy == null) loadModelPolicyView()
   if (known === 'loadtest' && state.loadtest === undefined) refreshLoadtest()
   if (known === 'loadtest' && state.loadtestReports == null) loadLoadtestReports()
+  if (known === 'loadtest' && (state.loadtestTab === 'probe' || state.loadtestTab === 'forms') && state.probe === undefined) refreshProbe()
   render()
   arSync()
 }
